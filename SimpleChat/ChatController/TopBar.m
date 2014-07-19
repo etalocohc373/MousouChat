@@ -64,7 +64,7 @@
         [_rightBtn setTintColor:_tintColor];
         [_rightBtn addTarget:self action:@selector(topRightBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
         _rightBtn.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-        [_rightBtn setImage:[UIImage imageNamed:@"words.png"] forState:UIControlStateNormal];
+        [_rightBtn setImage:[UIImage imageNamed:@"addword.png"] forState:UIControlStateNormal];
         [self addSubview:_rightBtn];
         
         _middleBtn = [UIButton buttonWithType:UIButtonTypeSystem];

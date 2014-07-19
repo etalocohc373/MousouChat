@@ -38,27 +38,29 @@
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
-    NSArray *mar3 = [store objectForKey:@"users"];
+    NSArray *mar3 = [store objectForKey:@"talks"];
     
+    talks = [NSMutableArray array];
     if(mar3){
-        users = [NSMutableArray array];
-        users = [mar3 copy];
-    }else{
-        users = [NSMutableArray arrayWithObjects:@"まっすー", nil];
-        [store setObject:users forKey:@"users"];
+        talks = [mar3 mutableCopy];
     }
     
-    mar3 = [NSArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"pimages"]];
+    users = [NSArray arrayWithArray:[store objectForKey:@"users"]];
     
-    if([mar3 count]){
-        images = [NSMutableArray array];
-        images = [mar3 copy];
-    }else{
-        NSData *pngData = [[NSData alloc] initWithData:UIImagePNGRepresentation([UIImage imageNamed:@"massu.png"])];
-        
-        images = [NSMutableArray arrayWithObjects:pngData, nil];
-        [store setObject:images forKey:@"pimages"];
+    userimages = [NSArray arrayWithArray:[store objectForKey:@"pimages"]];
+    
+    if([store integerForKey:@"addtalk"]){
+        [talks addObject:[users objectAtIndex:[store integerForKey:@"addtalk"] - 1]];
+        [images addObject:[userimages objectAtIndex:[store integerForKey:@"addtalk"] - 1]];
+        [store setInteger:0 forKey:@"addtalk"];
+        [store setObject:talks forKey:@"talks"];
+    }else{images = [NSMutableArray array];
+        if(mar3){
+            images = [mar3 mutableCopy];
+        }
     }
+    
+    mar3 = [store objectForKey:@"talkimages"];
     
     [store synchronize];
     [tv reloadData];
@@ -176,7 +178,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [users count];
+    return [talks count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -189,7 +191,7 @@
     // Configure the cell...
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
-    cell.textLabel.text = [users objectAtIndex:indexPath.row];
+    cell.textLabel.text = [talks objectAtIndex:indexPath.row];
     cell.imageView.image = [[UIImage alloc] initWithData:[images objectAtIndex:indexPath.row]];
     
     return cell;
@@ -208,10 +210,10 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        [users removeObjectAtIndex:indexPath.row];
-        [[NSUserDefaults standardUserDefaults] setObject:users forKey:@"users"];
+        [talks removeObjectAtIndex:indexPath.row];
+        [[NSUserDefaults standardUserDefaults] setObject:talks forKey:@"talks"];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }

@@ -13,8 +13,10 @@
 @interface ViewController : UIViewController <ChatControllerDelegate, UITableViewDelegate, UITableViewDataSource>{
     IBOutlet UITableView *tv;
     
-    NSMutableArray *users;
+    NSArray *users;
+    NSMutableArray *talks;
     NSMutableArray *images;
+    NSArray *userimages;
     NSDictionary *keyword;
     
     int hantei;

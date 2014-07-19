@@ -29,6 +29,7 @@
 		809B51A618DABBA90032A48D /* License in Resources */ = {isa = PBXBuildFile; fileRef = 809B51A518DABBA90032A48D /* License */; };
 		EC18ECA51915D507004B4215 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC18ECA41915D507004B4215 /* SettingViewController.m */; };
 		EC18ECA91915DE48004B4215 /* Previous2.png in Resources */ = {isa = PBXBuildFile; fileRef = EC18ECA81915DE48004B4215 /* Previous2.png */; };
+		EC5AC8E2197A9FA900869567 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC5AC8E1197A9FA900869567 /* FriendsViewController.m */; };
 		EC6800D01917AB2B00DEE8CF /* pimage.png in Resources */ = {isa = PBXBuildFile; fileRef = EC6800CF1917AB2A00DEE8CF /* pimage.png */; };
 		EC6800D21917ABD500DEE8CF /* words.png in Resources */ = {isa = PBXBuildFile; fileRef = EC6800D11917ABD500DEE8CF /* words.png */; };
 		EC6800D41917ADB000DEE8CF /* addword.png in Resources */ = {isa = PBXBuildFile; fileRef = EC6800D31917ADB000DEE8CF /* addword.png */; };
@@ -39,6 +40,8 @@
 		EC6800E219187F5700DEE8CF /* EditProfoleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6800E119187F5700DEE8CF /* EditProfoleViewController.m */; };
 		EC6800E6191882E300DEE8CF /* savebt.png in Resources */ = {isa = PBXBuildFile; fileRef = EC6800E5191882E300DEE8CF /* savebt.png */; };
 		EC6800E81918B25500DEE8CF /* massu.png in Resources */ = {isa = PBXBuildFile; fileRef = EC6800E71918B25500DEE8CF /* massu.png */; };
+		ECC2ADB3197AA2B00015CCF5 /* addchat.png in Resources */ = {isa = PBXBuildFile; fileRef = ECC2ADB2197AA2B00015CCF5 /* addchat.png */; };
+		ECC2ADB6197AA5AB0015CCF5 /* AddTalkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC2ADB5197AA5AB0015CCF5 /* AddTalkViewController.m */; };
 		ECF3653F191616CF002EFD3A /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF3653E191616CF002EFD3A /* MasterViewController.m */; };
 		ECF365771917152E002EFD3A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF365761917152E002EFD3A /* ViewController.m */; };
 		ECF3657A19171928002EFD3A /* AddUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF3657919171928002EFD3A /* AddUserViewController.m */; };
@@ -91,6 +94,8 @@
 		EC18ECA31915D507004B4215 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		EC18ECA41915D507004B4215 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		EC18ECA81915DE48004B4215 /* Previous2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Previous2.png; path = ChatController/Previous2.png; sourceTree = "<group>"; };
+		EC5AC8E0197A9FA900869567 /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
+		EC5AC8E1197A9FA900869567 /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
 		EC6800CF1917AB2A00DEE8CF /* pimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pimage.png; sourceTree = "<group>"; };
 		EC6800D11917ABD500DEE8CF /* words.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = words.png; sourceTree = "<group>"; };
 		EC6800D31917ADB000DEE8CF /* addword.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addword.png; sourceTree = "<group>"; };
@@ -104,6 +109,9 @@
 		EC6800E119187F5700DEE8CF /* EditProfoleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfoleViewController.m; sourceTree = "<group>"; };
 		EC6800E5191882E300DEE8CF /* savebt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = savebt.png; sourceTree = "<group>"; };
 		EC6800E71918B25500DEE8CF /* massu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = massu.png; sourceTree = "<group>"; };
+		ECC2ADB2197AA2B00015CCF5 /* addchat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addchat.png; sourceTree = "<group>"; };
+		ECC2ADB4197AA5AB0015CCF5 /* AddTalkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTalkViewController.h; sourceTree = "<group>"; };
+		ECC2ADB5197AA5AB0015CCF5 /* AddTalkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTalkViewController.m; sourceTree = "<group>"; };
 		ECF3653D191616CF002EFD3A /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		ECF3653E191616CF002EFD3A /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		ECF365751917152E002EFD3A /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
@@ -183,6 +191,10 @@
 				809B507C18D7B55B0032A48D /* Main.storyboard */,
 				ECF365751917152E002EFD3A /* ViewController.h */,
 				ECF365761917152E002EFD3A /* ViewController.m */,
+				ECC2ADB4197AA5AB0015CCF5 /* AddTalkViewController.h */,
+				ECC2ADB5197AA5AB0015CCF5 /* AddTalkViewController.m */,
+				EC5AC8E0197A9FA900869567 /* FriendsViewController.h */,
+				EC5AC8E1197A9FA900869567 /* FriendsViewController.m */,
 				ECF3657819171928002EFD3A /* AddUserViewController.h */,
 				ECF3657919171928002EFD3A /* AddUserViewController.m */,
 				EC6800DD1918796800DEE8CF /* ProfileViewController.h */,
@@ -252,6 +264,7 @@
 		EC6800D51917ADB400DEE8CF /* images */ = {
 			isa = PBXGroup;
 			children = (
+				ECC2ADB2197AA2B00015CCF5 /* addchat.png */,
 				EC6800E5191882E300DEE8CF /* savebt.png */,
 				EC6800D61917AECD00DEE8CF /* done.png */,
 				EC6800D71917AECD00DEE8CF /* cancel.png */,
@@ -357,6 +370,7 @@
 				EC6800D91917AECD00DEE8CF /* cancel.png in Resources */,
 				809B507518D7B55B0032A48D /* InfoPlist.strings in Resources */,
 				809B507E18D7B55B0032A48D /* Main.storyboard in Resources */,
+				ECC2ADB3197AA2B00015CCF5 /* addchat.png in Resources */,
 				809B50CF18D814AC0032A48D /* tempUser.png in Resources */,
 				EC6800E81918B25500DEE8CF /* massu.png in Resources */,
 				EC6800D21917ABD500DEE8CF /* words.png in Resources */,
@@ -378,11 +392,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC5AC8E2197A9FA900869567 /* FriendsViewController.m in Sources */,
 				ECF365771917152E002EFD3A /* ViewController.m in Sources */,
 				EC6800DC1917B3EF00DEE8CF /* TouchableTableView.m in Sources */,
 				ECF3657A19171928002EFD3A /* AddUserViewController.m in Sources */,
 				809B507B18D7B55B0032A48D /* AppDelegate.m in Sources */,
 				809B507718D7B55B0032A48D /* main.m in Sources */,
+				ECC2ADB6197AA5AB0015CCF5 /* AddTalkViewController.m in Sources */,
 				809B50CB18D80E040032A48D /* MessageCell.m in Sources */,
 				ECF3658219177D6B002EFD3A /* CoreImageHelper.m in Sources */,
 				EC18ECA51915D507004B4215 /* SettingViewController.m in Sources */,

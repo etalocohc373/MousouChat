@@ -34,7 +34,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="設定" id="jum-VE-kcl">
-                        <barButtonItem key="rightBarButtonItem" image="addword.png" id="z5w-z4-8WF">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="z5w-z4-8WF">
                             <connections>
                                 <segue destination="k9x-X5-dkT" kind="modal" id="SKV-1i-ARX"/>
                             </connections>
@@ -47,7 +47,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EGW-Dj-8IH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2366" y="10"/>
+            <point key="canvasLocation" x="2338" y="10"/>
         </scene>
         <!--Setting View Controller-->
         <scene sceneID="pUd-BG-9Uc">
@@ -132,7 +132,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Evj-wY-YMb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3280" y="689"/>
+            <point key="canvasLocation" x="3236" y="10"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4MW-cx-0sV">
@@ -150,7 +150,57 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fX7-Bn-ixK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2892" y="689"/>
+            <point key="canvasLocation" x="2766" y="10"/>
+        </scene>
+        <!--Add Talk View Controller - トーク追加-->
+        <scene sceneID="2jj-Xb-3fK">
+            <objects>
+                <tableViewController id="srI-ah-r4r" customClass="AddTalkViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gS1-OQ-S76">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="d3n-0N-uOR">
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="d3n-0N-uOR" id="fZg-ss-JnG">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="srI-ah-r4r" id="tIT-nM-Efj"/>
+                            <outlet property="delegate" destination="srI-ah-r4r" id="wie-nI-Zr2"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="トーク追加" id="ViZ-MV-HPd">
+                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="aYB-K4-pAf">
+                            <connections>
+                                <action selector="cancel" destination="srI-ah-r4r" id="wIe-Sy-WTP"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1Nk-qg-ps6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2338" y="-662"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="F5v-sp-icp">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="4Sw-Kv-Sh8" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="GeT-VU-bXb">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="srI-ah-r4r" kind="relationship" relationship="rootViewController" id="lpq-ES-2Ci"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VSr-T2-xC4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1954" y="-662"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ZX5-Eu-CYR">
@@ -168,7 +218,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8bX-PZ-em5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1986" y="10"/>
+            <point key="canvasLocation" x="1954" y="10"/>
         </scene>
         <!--Add User View Controller-->
         <scene sceneID="CuE-Q0-3m8">
@@ -233,7 +283,58 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4XO-c5-o87" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1986" y="-663"/>
+            <point key="canvasLocation" x="2338" y="-1363"/>
+        </scene>
+        <!--Friends View Controller - フレンド-->
+        <scene sceneID="ypm-g6-f9g">
+            <objects>
+                <tableViewController id="1g9-4h-YwN" customClass="FriendsViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Pox-wn-gdy">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="UoT-qO-blm">
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UoT-qO-blm" id="nps-x1-YCn">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="1g9-4h-YwN" id="j7F-Fa-dxP"/>
+                            <outlet property="delegate" destination="1g9-4h-YwN" id="Sjh-Jj-s6k"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="フレンド" id="UTQ-6G-3CK">
+                        <barButtonItem key="rightBarButtonItem" image="plus.png" id="OZN-kD-CmY">
+                            <connections>
+                                <segue destination="1dA-Ul-KrY" kind="modal" id="OX3-7f-afP"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JdJ-Go-5t0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1574" y="-1363"/>
+        </scene>
+        <!--Navigation Controller - Friends-->
+        <scene sceneID="0ue-WI-nZK">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="a2d-Q5-8mg" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Friends" image="friends.png" id="fmh-fJ-K9k"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1Vl-q8-SSb">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="1g9-4h-YwN" kind="relationship" relationship="rootViewController" id="qQE-4V-H4g"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vqW-Gz-K1f" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1180" y="-1363"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="HVd-u0-CR6">
@@ -248,9 +349,9 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b4P-Ro-aOc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1592" y="-663"/>
+            <point key="canvasLocation" x="1954" y="-1363"/>
         </scene>
-        <!--View Controller - フレンド-->
+        <!--View Controller - トーク-->
         <scene sceneID="qlJ-j5-lwY">
             <objects>
                 <viewController id="1en-54-erm" customClass="ViewController" sceneMemberID="viewController">
@@ -274,11 +375,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Friends" image="friends.png" id="Jki-R3-47j"/>
-                    <navigationItem key="navigationItem" title="フレンド" id="kiB-bB-LfL">
-                        <barButtonItem key="rightBarButtonItem" image="plus.png" id="Sfx-LE-H7W">
+                    <tabBarItem key="tabBarItem" title="Talks" image="words.png" id="Jki-R3-47j"/>
+                    <navigationItem key="navigationItem" title="トーク" id="kiB-bB-LfL">
+                        <barButtonItem key="rightBarButtonItem" image="addchat.png" id="Rhn-Ii-Pac">
                             <connections>
-                                <segue destination="1dA-Ul-KrY" kind="modal" id="HJ3-6r-H5X"/>
+                                <segue destination="4Sw-Kv-Sh8" kind="modal" id="TF7-RT-RkE"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -289,7 +390,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x4h-32-KLd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1592" y="10"/>
+            <point key="canvasLocation" x="1574" y="10"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="Wf2-Jd-Wpz">
@@ -394,7 +495,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nfd-QC-Syd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1592" y="689"/>
+            <point key="canvasLocation" x="1574" y="691"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="cvD-L4-y6C">
@@ -428,7 +529,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="15O-9L-yNT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1986" y="689"/>
+            <point key="canvasLocation" x="1954" y="691"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="KZL-vb-5zc">
@@ -441,6 +542,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
+                        <segue destination="a2d-Q5-8mg" kind="relationship" relationship="viewControllers" id="b5Z-28-eDO"/>
                         <segue destination="CkY-Vk-Cwu" kind="relationship" relationship="viewControllers" id="OhB-hZ-1NF"/>
                         <segue destination="e3n-Tv-pSo" kind="relationship" relationship="viewControllers" id="7SF-lf-5LI"/>
                     </connections>
@@ -468,11 +570,11 @@
             </objects>
             <point key="canvasLocation" x="1180" y="10"/>
         </scene>
-        <!--Navigation Controller - Item-->
+        <!--Navigation Controller-->
         <scene sceneID="iXD-33-XtE">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="e3n-Tv-pSo" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="AgX-ik-21k"/>
+                    <tabBarItem key="tabBarItem" systemItem="more" id="AgX-ik-21k"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="MWN-0e-4IJ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -485,16 +587,17 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NOL-1l-795" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1180" y="689"/>
+            <point key="canvasLocation" x="1180" y="691"/>
         </scene>
     </scenes>
     <resources>
-        <image name="addword.png" width="25" height="22"/>
+        <image name="addchat.png" width="25" height="22"/>
         <image name="cancel.png" width="20" height="20"/>
         <image name="done.png" width="25" height="17"/>
         <image name="friends.png" width="35" height="25"/>
         <image name="plus.png" width="21" height="20"/>
         <image name="savebt.png" width="439" height="108"/>
+        <image name="words.png" width="31" height="30"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
