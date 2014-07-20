@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <CoreImage/CoreImage.h>
 #import "CoreImageHelper.h"
+#import "EditProfileViewController.h"
 
-@interface ProfileViewController : UITableViewController {
+@interface ProfileViewController : UITableViewController
+<UITableViewDelegate, UITableViewDataSource>
+{
     IBOutlet UIImageView *imgView;
     IBOutlet UILabel *name;
     IBOutlet UILabel *about;

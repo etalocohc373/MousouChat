@@ -120,13 +120,11 @@
 
 - (void) setTitle:(NSString *)title2 {
     NSArray *array = [NSArray array];
-    array = [[NSUserDefaults standardUserDefaults] objectForKey:@"users"];
+    array = [[NSUserDefaults standardUserDefaults] objectForKey:@"talks"];
     NSString *title = [array objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]];
     
     if (_middleBtn) [_middleBtn setTitle:title forState:UIControlStateNormal];
     _title = title;
-    
-    NSLog(@"selecteduser: %d", [[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]);
 }
 
 - (void) setTintColor:(UIColor *)tintColor {

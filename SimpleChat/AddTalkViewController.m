@@ -33,10 +33,12 @@
     users = [NSMutableArray array];
     users = [mar3 mutableCopy];
     
-    mar3 = [NSArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"pimages"]];
+    mar3 = [NSArray arrayWithArray:[store objectForKey:@"pimages"]];
     
     images = [NSMutableArray array];
     images = [mar3 mutableCopy];
+    
+    talks = [NSArray arrayWithArray:[store objectForKey:@"talks"]];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -81,9 +83,13 @@
 #pragma mark - Navigation
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [[NSUserDefaults standardUserDefaults] setInteger:indexPath.row + 1 forKey:@"addtalk"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if([talks indexOfObject:[users objectAtIndex:indexPath.row]] == NSNotFound){
+        [[NSUserDefaults standardUserDefaults] setInteger:indexPath.row + 1 forKey:@"addtalk"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }else{
+        [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+    }
 }
 
 -(IBAction)cancel{

@@ -49,18 +49,20 @@
     
     userimages = [NSArray arrayWithArray:[store objectForKey:@"pimages"]];
     
+    mar3 = [store objectForKey:@"talkimages"];
+    
     if([store integerForKey:@"addtalk"]){
         [talks addObject:[users objectAtIndex:[store integerForKey:@"addtalk"] - 1]];
         [images addObject:[userimages objectAtIndex:[store integerForKey:@"addtalk"] - 1]];
         [store setInteger:0 forKey:@"addtalk"];
         [store setObject:talks forKey:@"talks"];
-    }else{images = [NSMutableArray array];
+        [store setObject:images forKey:@"talkimages"];
+    }else{
+        images = [NSMutableArray array];
         if(mar3){
             images = [mar3 mutableCopy];
         }
     }
-    
-    mar3 = [store objectForKey:@"talkimages"];
     
     [store synchronize];
     [tv reloadData];
@@ -94,8 +96,6 @@
     
     tv.delegate = self;
     tv.dataSource = self;
-    
-    NSLog(@"%@",keyword);
 }
 
 
@@ -117,7 +117,7 @@
     
     NSString *str = message[@"content"];
     
-    NSString *key = [NSString stringWithFormat:@"keywords%d", [[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]];
+    NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]]];
     keyword = [NSDictionary new];
     if([[NSUserDefaults standardUserDefaults] objectForKey:key]) keyword = [[NSUserDefaults standardUserDefaults] objectForKey:key];
     
@@ -128,8 +128,17 @@
         for (int i = 0; i < [keyword count]; i++) {
             NSRange range = [str rangeOfString:[hoge objectAtIndex:i]];
             if (range.location != NSNotFound) {
-                [self performSelector:@selector(henshin) withObject:nil afterDelay:arc4random()%1+1];
+                float delay = arc4random()% 5 + 5;
+                
+                [self performSelector:@selector(henshin) withObject:nil afterDelay:delay];
+                
                 hantei = i;
+                
+                NSArray *hoge = [NSArray arrayWithArray:[keyword allKeys]];
+                NSString *str = [NSString stringWithFormat:@"%@: %@", [talks objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]], [keyword objectForKey:[hoge objectAtIndex:hantei]]];
+                
+                [self localNotify:str withDelay:delay];
+                
                 break;
             }
         }
@@ -192,6 +201,7 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     cell.textLabel.text = [talks objectAtIndex:indexPath.row];
+    
     cell.imageView.image = [[UIImage alloc] initWithData:[images objectAtIndex:indexPath.row]];
     
     return cell;
@@ -212,6 +222,10 @@
         // Delete the row from the data source
         [talks removeObjectAtIndex:indexPath.row];
         [[NSUserDefaults standardUserDefaults] setObject:talks forKey:@"talks"];
+        
+        NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:indexPath.row]];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDictionary new] forKey:key];
+        
         [[NSUserDefaults standardUserDefaults] synchronize];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -237,18 +251,19 @@
     NSLog(@"selectedrow: %d", indexPath.row);
 }
 
-
-#pragma mark - Navigation
-
-/*
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    UIViewController *dvc = (UIViewController *)[segue destinationViewController];
-    dvc.hidesBottomBarWhenPushed = YES;
+-(void)localNotify:(NSString *)message withDelay:(float)delay{
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
+    // 5分後に通知をする（設定は秒単位）
+    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:delay];
+    // タイムゾーンの設定
+    notification.timeZone = [NSTimeZone defaultTimeZone];
+    // 通知時に表示させるメッセージ内容
+    notification.alertBody = message;
+    // 通知に鳴る音の設定
+    notification.soundName = UILocalNotificationDefaultSoundName;
+    
+    // 通知の登録
+    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 }
-*/
 
 @end

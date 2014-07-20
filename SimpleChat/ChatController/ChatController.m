@@ -231,7 +231,6 @@ static int chatInputStartingHeight = 40;
     NSString *key = [NSString stringWithFormat:@"message%d", [ud integerForKey:@"selecteduser"]];
     NSLog(@"%@",_messagesArray);
     [ud setObject:_messagesArray forKey:key];*/
-    NSLog(@"223行目");
     
     // add extra cell, and load it into view;
     [_myCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:_messagesArray.count -1 inSection:0]]];

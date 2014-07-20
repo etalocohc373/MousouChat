@@ -16,6 +16,7 @@
     IBOutlet UIBarButtonItem *done;
     
     NSMutableDictionary *keyword;
+    NSArray *talks;
     
     int kaisu;
 }

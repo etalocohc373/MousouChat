@@ -18,8 +18,18 @@
 {
     [super viewDidLoad];
     
+    
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [self back];
+    [self save];
 }
 
 - (void)didReceiveMemoryWarning
@@ -30,18 +40,47 @@
 
 -(void)back{
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
+    
     if(![store objectForKey:@"myimage"]){
         NSData *pngData = [[NSData alloc] initWithData:UIImagePNGRepresentation([UIImage imageNamed:@"pimage.png"])];
         [store setObject:pngData forKey:@"myimage"];
     }
     if(![store objectForKey:@"myname"]) [store setObject:@"Hoge" forKey:@"myname"];
-    if(![store objectForKey:@"aboutme"]) [store setObject:@"特になし" forKey:@"aboutme"];
+    if(![store objectForKey:@"aboutme"]) [store setObject:@"Hello World!" forKey:@"aboutme"];
+    
     [store synchronize];
     
     imgView.image = [[UIImage alloc] initWithData:[store objectForKey:@"myimage"]];
     name.text = [store objectForKey:@"myname"];
+    
+    about.font = [UIFont fontWithName:@"APJapanesefont" size:25];
     about.text = [store objectForKey:@"aboutme"];
+    
+    NSLog(@"%@", about.font);
+    
 }
+
+-(void)save{
+    NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
+    
+    [store setObject:[[NSData alloc] initWithData:UIImagePNGRepresentation(imgView.image)] forKey:@"myimage"];
+    
+    [store synchronize];
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.row){
+        [[NSUserDefaults standardUserDefaults] setInteger:indexPath.row - 1 forKey:@"editprof"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        EditProfileViewController *gameViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"edit"];
+        [self.navigationController pushViewController:gameViewController animated:YES];
+    }
+    
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - Image Picker
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {

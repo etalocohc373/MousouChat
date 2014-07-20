@@ -27,11 +27,8 @@
 {
     [super viewDidLoad];
     
-    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    /*NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];*/
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
@@ -54,7 +51,7 @@
         [store setObject:users forKey:@"users"];
     }
     
-    mar3 = [NSArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"pimages"]];
+    mar3 = [NSArray arrayWithArray:[store objectForKey:@"pimages"]];
     
     if([mar3 count]){
         images = [NSMutableArray array];
@@ -64,6 +61,13 @@
         
         images = [NSMutableArray arrayWithObjects:pngData, nil];
         [store setObject:images forKey:@"pimages"];
+    }
+    
+    mar3 = [NSArray arrayWithArray:[store objectForKey:@"talks"]];
+    
+    talks = [NSMutableArray array];
+    if(mar3){
+        talks = [mar3 mutableCopy];
     }
     
     [store synchronize];
@@ -118,13 +122,44 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        [users removeObjectAtIndex:indexPath.row];
-        [[NSUserDefaults standardUserDefaults] setObject:users forKey:@"users"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        deletepath = indexPath;
+        [self showAlert:@"警告" message:@"本当にフレンドを削除しますか？"];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }
+}
+
+-(void)showAlert:(NSString *)title message:(NSString *)text{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:text delegate:self cancelButtonTitle:@"キャンセル" otherButtonTitles:@"削除", nil];
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 1:
+            if([talks indexOfObject:[users objectAtIndex:deletepath.row]] != NSNotFound){
+                [talks removeObjectAtIndex:[talks indexOfObject:[users objectAtIndex:deletepath.row]]];
+                [[NSUserDefaults standardUserDefaults] setObject:talks forKey:@"talks"];
+                
+                NSString *key = [NSString stringWithFormat:@"keyword%@", [users objectAtIndex:deletepath.row]];
+                [[NSUserDefaults standardUserDefaults] setObject:[NSDictionary new] forKey:key];
+            }
+            
+            [users removeObjectAtIndex:deletepath.row];
+            [[NSUserDefaults standardUserDefaults] setObject:users forKey:@"users"];
+            
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [self.tableView deleteRowsAtIndexPaths:@[deletepath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
 /*

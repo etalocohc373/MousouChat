@@ -41,11 +41,13 @@
     
     [tf becomeFirstResponder];
     
+    talks = [NSArray arrayWithArray:[store objectForKey:@"talks"]];
+    
     keyword = [NSMutableDictionary new];
     
     NSDictionary *keywordmodoki = [NSDictionary new];
     
-    NSString *key = [NSString stringWithFormat:@"keywords%d", [store integerForKey:@"selecteduser"]];
+    NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
     keywordmodoki = [store objectForKey:key];
     
     if(keywordmodoki){
@@ -91,7 +93,7 @@
     
     [keyword setObject:tf2.text forKey:tf.text];
     
-    NSString *key = [NSString stringWithFormat:@"keywords%d", [store integerForKey:@"selecteduser"]];
+    NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
     [store setObject:keyword forKey:key];
     
     NSLog(@"%@", keyword);

@@ -11,6 +11,9 @@
 @interface FriendsViewController : UITableViewController{
     NSMutableArray *users;
     NSMutableArray *images;
+    NSMutableArray *talks;
+    
+    NSIndexPath *deletepath;
 }
 
 @end

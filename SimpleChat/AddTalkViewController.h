@@ -11,6 +11,7 @@
 @interface AddTalkViewController : UITableViewController{
     NSMutableArray *users;
     NSMutableArray *images;
+    NSArray *talks;
 }
 
 @end

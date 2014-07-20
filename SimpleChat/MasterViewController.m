@@ -64,11 +64,13 @@
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
     //rows = [store integerForKey:@"kaisu"];
     
+    talks = [NSArray arrayWithArray:[store objectForKey:@"talks"]];
+    
     keyword = [NSMutableDictionary new];
     
     NSDictionary *keywordmodoki = [NSDictionary new];
     
-    NSString *key = [NSString stringWithFormat:@"keywords%d", [store integerForKey:@"selecteduser"]];
+    NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
     keywordmodoki = [store objectForKey:key];
     
     if(keywordmodoki){
@@ -103,7 +105,6 @@
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
     //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     NSArray *hoge;
-    NSLog(@"%d", [keyword count]);
     hoge = [NSArray arrayWithArray:[keyword allKeys]];
     
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[keyword objectForKey:[hoge objectAtIndex:indexPath.row]]];
@@ -142,7 +143,7 @@
     }
     
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
-    NSString *key = [NSString stringWithFormat:@"keywords%d", [store integerForKey:@"selecteduser"]];
+    NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
     [store setObject:keyword forKey:key];
     
     [store synchronize];
@@ -166,7 +167,7 @@
     [keyword removeObjectForKey:[hoge objectAtIndex:from]];
     [keyword setObject:[hoge objectAtIndex:to] forKey:hoge2];
     
-    NSString *key = [NSString stringWithFormat:@"keywords%d", [[NSUserDefaults standardUserDefaults] integerForKey:@"sekecteduser"]];
+    NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]]];
     [[NSUserDefaults standardUserDefaults] setObject:keyword forKey:key];
     
     [[NSUserDefaults standardUserDefaults] synchronize];
