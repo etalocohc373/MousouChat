@@ -47,7 +47,8 @@
         
         _bgToolbar = [[UIToolbar alloc]init];
         _bgToolbar.frame = self.bounds;
-        _bgToolbar.autoresizingMask= UIViewAutoresizingFlexibleWidth;
+        _bgToolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        _bgToolbar.backgroundColor = [UIColor blackColor];
         [self addSubview:_bgToolbar];
         
         _leftBtn = [UIButton buttonWithType:UIButtonTypeSystem];

@@ -56,8 +56,7 @@
     about.font = [UIFont fontWithName:@"APJapanesefont" size:25];
     about.text = [store objectForKey:@"aboutme"];
     
-    NSLog(@"%@", about.font);
-    
+    self.navigationController.navigationBar.barTintColor = [UIColor purpleColor];
 }
 
 -(void)save{
@@ -96,7 +95,7 @@
 }
 
 - (void)selectPhoto {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera",@"Photo Library",nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:(id<UIActionSheetDelegate>)self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera",@"Photo Library",nil];
     [actionSheet showInView:self.view];
 }
 
@@ -124,7 +123,7 @@
     
     picker.sourceType = sourceType;
     picker.allowsEditing = true;
-    picker.delegate = self;
+    picker.delegate = (id<UINavigationControllerDelegate, UIImagePickerControllerDelegate>)self;
     
     [self presentViewController:picker animated:YES completion:nil];
 }

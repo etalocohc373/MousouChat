@@ -52,6 +52,8 @@ static int minimumHeight = 30;
 // Bubble, Text, ImgV
 @property (strong, nonatomic) UILabel *textLabel;
 @property (strong, nonatomic) UILabel *bgLabel;
+@property (strong, nonatomic) UILabel *readLabel;
+@property (strong, nonatomic) UILabel *timeLabel;
 @property (strong, nonatomic) UIImageView *imageView;
 
 @end
@@ -92,9 +94,33 @@ static int minimumHeight = 30;
             _textLabel.numberOfLines = 0;
             [self.contentView addSubview:_textLabel];
         }
+        
+        if(!_timeLabel) {
+            _timeLabel = [UILabel new];
+            _timeLabel.font = [UIFont systemFontOfSize:10.0f];
+            _timeLabel.textColor = [UIColor darkTextColor];
+            _timeLabel.numberOfLines = 1;
+            [self.contentView addSubview:_timeLabel];
+        }
     }
     
+    [self performSelector:@selector(makeReadLabel) withObject:nil afterDelay:[[NSUserDefaults standardUserDefaults]floatForKey:@"kidokuDelay"]];
+    
     return self;
+}
+
+#pragma mark - Make 既読Label
+- (void)makeReadLabel
+{
+    if(!_readLabel) {
+        _readLabel = [UILabel new];
+        _readLabel.frame = CGRectMake(_textLabel.center.x - (_textLabel.bounds.size.width / 2 + 35), 0, 30, _textLabel.bounds.size.height / 2);
+        _readLabel.text = @"既読";
+        _readLabel.font = [UIFont systemFontOfSize:10.0f];
+        _readLabel.textColor = [UIColor darkTextColor];
+        _readLabel.numberOfLines = 1;
+        [self.contentView addSubview:_readLabel];
+    }
 }
 
 #pragma mark GETTERS | SETTERS
@@ -155,6 +181,16 @@ static int minimumHeight = 30;
     _textLabel.text = _message[kMessageContent];
     _sentBy = [_message[kMessageRuntimeSentBy] intValue];
     
+    //現在時刻の取得
+    NSDate *now = [NSDate date];
+    
+    // NsDate→NSString変換用のフォーマッタを作成
+    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+    [outputFormatter setDateFormat:@"HH:mm"];
+    
+    _timeLabel.text = [NSString stringWithFormat:@"%@", [outputFormatter stringFromDate:now]];
+    
+    
     // the height that we want our text bubble to be
     CGFloat height = self.contentView.bounds.size.height - 10;
     if (height < minimumHeight) height = minimumHeight;
@@ -175,8 +211,7 @@ static int minimumHeight = 30;
         // If sentby current user, or no image, hide imageView;
         _imageView.image = nil;
         _imageView.hidden = YES;
-    }
-    else {
+    } else {
         for (UIView * v in @[_bgLabel, _textLabel]) {
             v.center = CGPointMake(v.center.x + _imageView.bounds.size.width, v.center.y);
         }
@@ -185,6 +220,13 @@ static int minimumHeight = 30;
     
     // position _textLabel in the _bgLabel;
     _textLabel.frame = CGRectMake(_bgLabel.frame.origin.x + (outlineSpace / 2), 0, _bgLabel.bounds.size.width - outlineSpace, _bgLabel.bounds.size.height);
+    
+    if(_sentBy == kSentByUser){
+        _timeLabel.frame = CGRectMake(_textLabel.center.x - (_textLabel.bounds.size.width / 2 + 40), _textLabel.bounds.size.height / 2, 30, _textLabel.bounds.size.height / 2);
+    }
+    else _timeLabel.frame = CGRectMake(_textLabel.center.x + (_textLabel.bounds.size.width / 2 + 15), _textLabel.bounds.size.height / 2, 30, _textLabel.bounds.size.height / 2);
+    
+    _bgLabel.layer.backgroundColor = [[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.9] CGColor];
 }
 
 @end

@@ -43,6 +43,7 @@
 		ECC2ADB6197AA5AB0015CCF5 /* AddTalkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC2ADB5197AA5AB0015CCF5 /* AddTalkViewController.m */; };
 		ECC2ADB9197B7F490015CCF5 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC2ADB8197B7F490015CCF5 /* EditProfileViewController.m */; };
 		ECC2ADBB197B91EA0015CCF5 /* APJapanesefont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ECC2ADBA197B8BC10015CCF5 /* APJapanesefont.ttf */; };
+		ECEF183A19A220B600511EA5 /* mizutama.png in Resources */ = {isa = PBXBuildFile; fileRef = ECEF183919A220B600511EA5 /* mizutama.png */; };
 		ECF3653F191616CF002EFD3A /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF3653E191616CF002EFD3A /* MasterViewController.m */; };
 		ECF365771917152E002EFD3A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF365761917152E002EFD3A /* ViewController.m */; };
 		ECF3657A19171928002EFD3A /* AddUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF3657919171928002EFD3A /* AddUserViewController.m */; };
@@ -114,6 +115,7 @@
 		ECC2ADB7197B7F490015CCF5 /* EditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
 		ECC2ADB8197B7F490015CCF5 /* EditProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileViewController.m; sourceTree = "<group>"; };
 		ECC2ADBA197B8BC10015CCF5 /* APJapanesefont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = APJapanesefont.ttf; sourceTree = "<group>"; };
+		ECEF183919A220B600511EA5 /* mizutama.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mizutama.png; sourceTree = "<group>"; };
 		ECF3653D191616CF002EFD3A /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		ECF3653E191616CF002EFD3A /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		ECF365751917152E002EFD3A /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 		EC6800D51917ADB400DEE8CF /* images */ = {
 			isa = PBXGroup;
 			children = (
+				ECEF183919A220B600511EA5 /* mizutama.png */,
 				ECC2ADB2197AA2B00015CCF5 /* addchat.png */,
 				EC6800E5191882E300DEE8CF /* savebt.png */,
 				EC6800D61917AECD00DEE8CF /* done.png */,
@@ -362,6 +365,7 @@
 			files = (
 				EC18ECA91915DE48004B4215 /* Previous2.png in Resources */,
 				ECF3658419178148002EFD3A /* friends.png in Resources */,
+				ECEF183A19A220B600511EA5 /* mizutama.png in Resources */,
 				EC6800D81917AECD00DEE8CF /* done.png in Resources */,
 				ECF36586191781F9002EFD3A /* plus.png in Resources */,
 				EC6800E6191882E300DEE8CF /* savebt.png in Resources */,

@@ -8,12 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FriendsViewController : UITableViewController{
+@interface FriendsViewController : UITableViewController<UISearchBarDelegate>{
     NSMutableArray *users;
     NSMutableArray *images;
     NSMutableArray *talks;
     
     NSIndexPath *deletepath;
+    
+    BOOL searching;
+    
+    NSMutableArray *searchArray;
+    NSMutableArray *searchArrayImg;
 }
 
 @end

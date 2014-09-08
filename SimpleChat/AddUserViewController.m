@@ -129,9 +129,11 @@
 
     picker.sourceType = sourceType;
     picker.allowsEditing = true;
-    picker.delegate = self;
+    picker.delegate = (id<UINavigationControllerDelegate, UIImagePickerControllerDelegate>)self;
     
     [self presentViewController:picker animated:YES completion:nil];
+    
+    //<UINavigetionControllerDelegate, UIImagePickerControllerDelegate>
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info

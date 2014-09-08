@@ -7,6 +7,9 @@
 //
 
 #import "ViewController.h"
+
+
+
 #define SCREEN_HEIGHT [UIScreen mainScreen].applicationFrame.size.height
 
 @interface ViewController ()
@@ -28,6 +31,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
     [self back];
     
     /*NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
@@ -41,9 +45,7 @@
     NSArray *mar3 = [store objectForKey:@"talks"];
     
     talks = [NSMutableArray array];
-    if(mar3){
-        talks = [mar3 mutableCopy];
-    }
+    if(mar3) talks = [mar3 mutableCopy];
     
     users = [NSArray arrayWithArray:[store objectForKey:@"users"]];
     
@@ -96,6 +98,11 @@
     
     tv.delegate = self;
     tv.dataSource = self;
+    
+    self.navigationController.navigationBar.barTintColor = [UIColor purpleColor];
+    
+    searchArray = [NSMutableArray array];
+    searchArrayImg = [NSMutableArray array];
 }
 
 
@@ -129,8 +136,13 @@
             NSRange range = [str rangeOfString:[hoge objectAtIndex:i]];
             if (range.location != NSNotFound) {
                 float delay = arc4random()% 5 + 5;
+                float kidokuDelay = arc4random()% 5 + 5;
+                NSLog(@"delay: %.0f", kidokuDelay);
                 
-                [self performSelector:@selector(henshin) withObject:nil afterDelay:delay];
+                [self performSelector:@selector(henshin) withObject:nil afterDelay:delay + kidokuDelay];
+                
+                [[NSUserDefaults standardUserDefaults] setFloat:kidokuDelay forKey:@"kidokuDelay"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
                 
                 hantei = i;
                 
@@ -144,6 +156,8 @@
         }
     }
 }
+
+
 
 -(void)henshin{
     NSArray *hoge = [NSArray arrayWithArray:[keyword allKeys]];
@@ -187,7 +201,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [talks count];
+    if(!searching) return [talks count];
+    else return [searchArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -200,9 +215,13 @@
     // Configure the cell...
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
-    cell.textLabel.text = [talks objectAtIndex:indexPath.row];
-    
-    cell.imageView.image = [[UIImage alloc] initWithData:[images objectAtIndex:indexPath.row]];
+    if(!searching){
+        cell.textLabel.text = [talks objectAtIndex:indexPath.row];
+        cell.imageView.image = [[UIImage alloc] initWithData:[images objectAtIndex:indexPath.row]];
+    }else{
+        cell.textLabel.text = [searchArray objectAtIndex:indexPath.row];
+        cell.imageView.image = [[UIImage alloc] initWithData:[searchArrayImg objectAtIndex:indexPath.row]];
+    }
     
     return cell;
 }
@@ -264,6 +283,35 @@
     
     // 通知の登録
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+}
+
+-(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
+    [searchBar showsCancelButton];
+}
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    for (int i = 0; i < users.count; i++) {
+        NSRange range = [[talks objectAtIndex:i] rangeOfString:searchBar.text];
+        if (range.location != NSNotFound) {
+            [searchArray addObject:[talks objectAtIndex:i]];
+            [searchArrayImg addObject:[images objectAtIndex:i]];
+        }
+    }
+    searching = YES;
+    [tv reloadData];
+    
+    searchBar.showsCancelButton = NO;
+    [searchBar resignFirstResponder];
+}
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+    searchBar.text = @"";
+    
+    searching = NO;
+    [tv reloadData];
+    
+    searchBar.showsCancelButton = NO;
+    [searchBar resignFirstResponder];
 }
 
 @end

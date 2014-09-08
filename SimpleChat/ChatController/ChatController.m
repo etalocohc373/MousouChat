@@ -17,6 +17,9 @@
 #import "MessageCell.h"
 #import "MyMacros.h"
 
+#define SCREEN_HEIGHT [[UIScreen mainScreen] applicationFrame].size.height
+#define SCREEN_WIDTH [[UIScreen mainScreen] applicationFrame].size.width
+
 static NSString * kMessageCellReuseIdentifier = @"MessageCell";
 static int connectionStatusViewTag = 1701;
 static int chatInputStartingHeight = 40;
@@ -47,11 +50,30 @@ static int chatInputStartingHeight = 40;
         // Custom initialization
         self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         
+        [self.navigationController setNavigationBarHidden:YES animated:NO];
+        //_topBar.frame = CGRectMake(0, 0, 320, 44);
+        
+        UIBarButtonItem *btn =
+        [[UIBarButtonItem alloc]
+         initWithImage:[UIImage imageNamed:@"addword.png"]  // 画像を指定
+         style:UIBarButtonItemStylePlain  // スタイルを指定（※下記表参照）
+         target:self  // デリゲートのターゲットを指定
+         action:@selector(topRightPressed)  // ボタンが押されたときに呼ばれるメソッドを指定
+         ];
+        
+        self.navigationItem.rightBarButtonItem = btn;
+
+        
         // TopBar
         _topBar = [[TopBar alloc]init];
         //_topBar.title = @"Chat Controller";
-        _topBar.backgroundColor = [UIColor colorWithWhite:1 alpha:0.5];
+        //_topBar.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.5];
+        _topBar.backgroundColor = [UIColor blackColor];
         _topBar.delegate = self;
+        
+        
+        [self.view addSubview:_topBar];
+        
         
         // ChatInput
         _chatInput = [[ChatInput alloc]init];
@@ -66,11 +88,16 @@ static int chatInputStartingHeight = 40;
         flow.scrollDirection = UICollectionViewScrollDirectionVertical;
         flow.minimumLineSpacing = 6;
         
+        //BackGround
+        //_backgroundImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, SCREEN_HEIGHT)];
+        //_backgroundImg.image = [UIImage imageNamed:@"mizutama.png"];
+        
         // Set Up CollectionView
         CGRect myFrame = (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication]statusBarOrientation])) ? CGRectMake(0, 0, ScreenHeight(), ScreenWidth() - height(_chatInput)) : CGRectMake(0, 0, ScreenWidth(), ScreenHeight() - height(_chatInput));
         _myCollectionView = [[UICollectionView alloc]initWithFrame:myFrame collectionViewLayout:flow];
         //_myCollectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
-        _myCollectionView.backgroundColor = [UIColor whiteColor];
+        //_myCollectionView.backgroundColor = [UIColor whiteColor];
+        _myCollectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"mizutama.png"]];
         _myCollectionView.delegate = self;
         _myCollectionView.dataSource = self;
         _myCollectionView.indicatorStyle = UIScrollViewIndicatorStyleDefault;
@@ -109,12 +136,7 @@ static int chatInputStartingHeight = 40;
     
     NSArray *array = [NSArray array];
     array = [[NSUserDefaults standardUserDefaults] objectForKey:@"users"];
-    NSString *title = [array objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]];
-    
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
-    _topBar.frame = CGRectMake(0, 0, 320, 44);
-    _topBar.title = title;
-    [self.view addSubview:_topBar];
+    self.title = [array objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]];
     
     // Scroll CollectionView Before We Start
     [self.view addSubview:_chatInput];
@@ -124,6 +146,33 @@ static int chatInputStartingHeight = 40;
     [_myCollectionView reloadData];
     
     //[_TopBar setTitle];
+    
+    NSString *key = [NSString stringWithFormat:@"message%@", [[[NSUserDefaults standardUserDefaults] objectForKey:@"talks"] objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]]];
+    
+    
+    
+    if([[NSUserDefaults standardUserDefaults] objectForKey:key]){
+        NSData *hogeData = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+        
+        NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithData:hogeData];
+        
+        _messagesArray = [array mutableCopy];
+    }
+    
+    // Fix if we receive Null
+    if (![_messagesArray.class isSubclassOfClass:[NSArray class]]) {
+        _messagesArray = [NSMutableArray new];
+    }
+    
+    [_myCollectionView reloadData];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    NSString *key = [NSString stringWithFormat:@"message%@", [[[NSUserDefaults standardUserDefaults] objectForKey:@"talks"] objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]]];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_messagesArray];
+    [userDefaults setObject:data  forKey:key];
+    [userDefaults synchronize];
 }
 
 - (void)didReceiveMemoryWarning
@@ -199,6 +248,8 @@ static int chatInputStartingHeight = 40;
         NSLog(@"ChatController: AutoClosing");
         [self.navigationController popViewControllerAnimated:YES];
     }
+    
+    
 }
 
 - (void) topMiddlePressed {
@@ -416,6 +467,7 @@ static int chatInputStartingHeight = 40;
     // Get Cell
     MessageCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMessageCellReuseIdentifier
                                                                   forIndexPath:indexPath];
+    
 
     // Set Who Sent Message
     NSMutableDictionary * message = _messagesArray[[indexPath indexAtPosition:1]];
@@ -460,7 +512,7 @@ static int chatInputStartingHeight = 40;
 
 /*- (void) setMessagesArray:(NSMutableArray *)messagesArray {
     //_messagesArray = messagesArray;
-    NSString *key = [NSString stringWithFormat:@"message%d", [[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]];
+    NSString *key = [NSString stringWithFormat:@"message%@", [[[NSUserDefaults standardUserDefaults] objectForKey:@"talks"] objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]]];
     _messagesArray = [[NSUserDefaults standardUserDefaults] objectForKey:key];
     
     // Fix if we receive Null

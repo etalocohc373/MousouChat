@@ -92,6 +92,7 @@
         // Background
         _bgToolbar = [[UIToolbar alloc] initWithFrame:self.bounds];
         _bgToolbar.barStyle = UIBarStyleDefault;
+        _bgToolbar.barTintColor = [UIColor purpleColor];
         _bgToolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self insertSubview:_bgToolbar belowSubview:_textView];
         

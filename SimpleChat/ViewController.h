@@ -10,7 +10,7 @@
 
 #import "ChatController.h"
 
-@interface ViewController : UIViewController <ChatControllerDelegate, UITableViewDelegate, UITableViewDataSource>{
+@interface ViewController : UIViewController <ChatControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>{
     IBOutlet UITableView *tv;
     
     NSArray *users;
@@ -20,8 +20,18 @@
     NSDictionary *keyword;
     
     int hantei;
+    
+    BOOL searching;
+    
+    NSMutableArray *searchArray;
+    NSMutableArray *searchArrayImg;
 }
 
 @property (strong, nonatomic) ChatController * chatController;
+
+/*!
+ To set the background
+ */
+@property (strong, nonatomic) UIImageView * backgroundImg;
 
 @end

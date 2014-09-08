@@ -80,6 +80,11 @@ FOUNDATION_EXPORT NSString * const kMessageTimestamp;
  */
 @property (strong, nonatomic) NSString * currentUserId;
 
+/*!
+ To set the background
+ */
+@property (strong, nonatomic) UIImageView * backgroundImg;
+
 #pragma mark ADD NEW MESSAGE
 
 /*!

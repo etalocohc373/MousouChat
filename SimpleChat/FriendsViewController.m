@@ -31,13 +31,23 @@
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];*/
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    
+    
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    
+    self.tabBarController.tabBar.barTintColor = [UIColor purpleColor];
+    
+    self.navigationController.navigationBar.barTintColor = [UIColor purpleColor];
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+    searchArray = [NSMutableArray array];
+    searchArrayImg = [NSMutableArray array];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
@@ -91,7 +101,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [users count];
+    if(!searching) return [users count];
+    else return [searchArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -103,8 +114,13 @@
     
     // Configure the cell...
     
-    cell.textLabel.text = [users objectAtIndex:indexPath.row];
-    cell.imageView.image = [[UIImage alloc] initWithData:[images objectAtIndex:indexPath.row]];
+    if (!searching){
+        cell.textLabel.text = [users objectAtIndex:indexPath.row];
+        cell.imageView.image = [[UIImage alloc] initWithData:[images objectAtIndex:indexPath.row]];
+    }else{
+        cell.textLabel.text = [searchArray objectAtIndex:indexPath.row];
+        cell.imageView.image = [[UIImage alloc] initWithData:[searchArrayImg objectAtIndex:indexPath.row]];
+    }
     
     return cell;
 }
@@ -123,7 +139,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         deletepath = indexPath;
-        [self showAlert:@"警告" message:@"本当にフレンドを削除しますか？"];
+        [self showAlert:@"本当にフレンドを削除しますか？" message:@"一度削除すると元には戻りません"];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }
@@ -162,6 +178,35 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
+-(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
+    [searchBar showsCancelButton];
+}
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    for (int i = 0; i < users.count; i++) {
+        NSRange range = [[users objectAtIndex:i] rangeOfString:searchBar.text];
+        if (range.location != NSNotFound) {
+            [searchArray addObject:[users objectAtIndex:i]];
+            [searchArrayImg addObject:[images objectAtIndex:i]];
+        }
+    }
+    searching = YES;
+    [self.tableView reloadData];
+    
+    searchBar.showsCancelButton = NO;
+    [searchBar resignFirstResponder];
+}
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+    searchBar.text = @"";
+    
+    searching = NO;
+    [self.tableView reloadData];
+    
+    searchBar.showsCancelButton = NO;
+    [searchBar resignFirstResponder];
+}
+ 
 /*
 #pragma mark - Navigation
 
