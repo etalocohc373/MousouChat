@@ -66,6 +66,8 @@
         }
     }
     
+    [store setFloat:0.0 forKey:@"kidokuDelay"];
+    
     [store synchronize];
     [tv reloadData];
 }
@@ -99,6 +101,8 @@
     tv.delegate = self;
     tv.dataSource = self;
     
+    tv.rowHeight = 70.0;
+    
     self.navigationController.navigationBar.barTintColor = [UIColor purpleColor];
     
     searchArray = [NSMutableArray array];
@@ -117,6 +121,13 @@
     message[@"sentByUserId"] = @"currentUserId";
     
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"nothenshin"];
+    
+    //既読遅れ
+    float kidokuDelay = arc4random()% 5 + 5;
+    NSLog(@"delay: %.0f", kidokuDelay);
+    
+    [[NSUserDefaults standardUserDefaults] setFloat:kidokuDelay forKey:@"kidokuDelay"];
+    
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     // Must add message to controller for it to show
@@ -128,28 +139,22 @@
     keyword = [NSDictionary new];
     if([[NSUserDefaults standardUserDefaults] objectForKey:key]) keyword = [[NSUserDefaults standardUserDefaults] objectForKey:key];
     
-    NSLog(@"%@", keyword);
-    
+    //キーワード判定
     if([keyword count] != 0){
         NSArray *hoge = [NSArray arrayWithArray:[keyword allKeys]];
         for (int i = 0; i < [keyword count]; i++) {
             NSRange range = [str rangeOfString:[hoge objectAtIndex:i]];
             if (range.location != NSNotFound) {
                 float delay = arc4random()% 5 + 5;
-                float kidokuDelay = arc4random()% 5 + 5;
-                NSLog(@"delay: %.0f", kidokuDelay);
                 
                 [self performSelector:@selector(henshin) withObject:nil afterDelay:delay + kidokuDelay];
-                
-                [[NSUserDefaults standardUserDefaults] setFloat:kidokuDelay forKey:@"kidokuDelay"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
                 
                 hantei = i;
                 
                 NSArray *hoge = [NSArray arrayWithArray:[keyword allKeys]];
                 NSString *str = [NSString stringWithFormat:@"%@: %@", [talks objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]], [keyword objectForKey:[hoge objectAtIndex:hantei]]];
                 
-                [self localNotify:str withDelay:delay];
+                [self localNotify:str withDelay:delay + [[NSUserDefaults standardUserDefaults] floatForKey:@"kidokuDelay"]];
                 
                 break;
             }
@@ -159,7 +164,7 @@
 
 
 
--(void)henshin{
+-(void)henshin{//返信させる
     NSArray *hoge = [NSArray arrayWithArray:[keyword allKeys]];
     NSString *str = [keyword objectForKey:[hoge objectAtIndex:hantei]];
     
@@ -208,20 +213,54 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    if(cell == nil){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    if(!cell){
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
     
     // Configure the cell...
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
-    if(!searching){
-        cell.textLabel.text = [talks objectAtIndex:indexPath.row];
-        cell.imageView.image = [[UIImage alloc] initWithData:[images objectAtIndex:indexPath.row]];
-    }else{
-        cell.textLabel.text = [searchArray objectAtIndex:indexPath.row];
-        cell.imageView.image = [[UIImage alloc] initWithData:[searchArrayImg objectAtIndex:indexPath.row]];
+    UIImage *hoge;
+    
+    UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 5, 200, 30)];
+    mainLabel.font = [UIFont systemFontOfSize:18];
+    
+    UILabel *subLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 35, 200, 30)];
+    subLabel.textColor = [UIColor lightGrayColor];
+    subLabel.font = [UIFont systemFontOfSize:15];
+    
+    if(!searching){//検索中でない
+        mainLabel.text = [talks objectAtIndex:indexPath.row];//トーク相手
+        
+        NSString *key = [NSString stringWithFormat:@"message%@", [talks objectAtIndex:indexPath.row]];
+        NSArray *hogeArray = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:key]];
+        
+        NSLog(@"%d", hogeArray.count);
+        
+        if(hogeArray.count) subLabel.text = [hogeArray objectAtIndex:hogeArray.count - 1];//最新のトーク
+        else subLabel.text = @"トーク内容がまだありません";
+        
+        hoge = [[UIImage alloc] initWithData:[images objectAtIndex:indexPath.row]];//トプ画
+    }else{//検索中
+        mainLabel.text = [searchArray objectAtIndex:indexPath.row];
+        
+        NSString *key = [NSString stringWithFormat:@"message%@", [searchArray objectAtIndex:indexPath.row]];
+        NSArray *hogeArray = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:key]];
+        
+        NSLog(@"%d", hogeArray.count);
+        
+        if(hogeArray.count) subLabel.text = [hogeArray objectAtIndex:hogeArray.count - 1];
+        else subLabel.text = @"トーク内容がまだありません";
+        
+        hoge = [[UIImage alloc] initWithData:[searchArrayImg objectAtIndex:indexPath.row]];
     }
+    
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 50, 50)];
+    imgView.image = hoge;
+    
+    [cell addSubview:mainLabel];
+    [cell addSubview:subLabel];
+    [cell addSubview:imgView];
     
     return cell;
 }
@@ -272,13 +311,9 @@
 
 -(void)localNotify:(NSString *)message withDelay:(float)delay{
     UILocalNotification *notification = [[UILocalNotification alloc] init];
-    // 5分後に通知をする（設定は秒単位）
     notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:delay];
-    // タイムゾーンの設定
     notification.timeZone = [NSTimeZone defaultTimeZone];
-    // 通知時に表示させるメッセージ内容
     notification.alertBody = message;
-    // 通知に鳴る音の設定
     notification.soundName = UILocalNotificationDefaultSoundName;
     
     // 通知の登録

@@ -149,15 +149,7 @@ static int chatInputStartingHeight = 40;
     
     NSString *key = [NSString stringWithFormat:@"message%@", [[[NSUserDefaults standardUserDefaults] objectForKey:@"talks"] objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]]];
     
-    
-    
-    if([[NSUserDefaults standardUserDefaults] objectForKey:key]){
-        NSData *hogeData = [[NSUserDefaults standardUserDefaults] objectForKey:key];
-        
-        NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithData:hogeData];
-        
-        _messagesArray = [array mutableCopy];
-    }
+    _messagesArray = [[NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:key]] mutableCopy];
     
     // Fix if we receive Null
     if (![_messagesArray.class isSubclassOfClass:[NSArray class]]) {
@@ -172,6 +164,9 @@ static int chatInputStartingHeight = 40;
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_messagesArray];
     [userDefaults setObject:data  forKey:key];
+    
+    [userDefaults setFloat:0.0 forKey:@"kidokuDelay"];
+    
     [userDefaults synchronize];
 }
 

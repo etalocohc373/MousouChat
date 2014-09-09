@@ -80,6 +80,8 @@
         talks = [mar3 mutableCopy];
     }
     
+    [store setFloat:0.0 forKey:@"kidokuDelay"];
+    
     [store synchronize];
     [self.tableView reloadData];
 }
@@ -95,34 +97,64 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    if(!searching) return [users count];
-    else return [searchArray count];
+    switch (section) {
+        case 1:
+            if(!searching) return [users count];
+            else return [searchArray count];
+            break;
+            
+        default:
+            return 1;
+            break;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    if(cell == nil){
+    if(!cell){
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     
     // Configure the cell...
     
-    if (!searching){
-        cell.textLabel.text = [users objectAtIndex:indexPath.row];
-        cell.imageView.image = [[UIImage alloc] initWithData:[images objectAtIndex:indexPath.row]];
-    }else{
-        cell.textLabel.text = [searchArray objectAtIndex:indexPath.row];
-        cell.imageView.image = [[UIImage alloc] initWithData:[searchArrayImg objectAtIndex:indexPath.row]];
+    switch (indexPath.section) {
+        case 1:
+            if (!searching){
+                cell.textLabel.text = [users objectAtIndex:indexPath.row];
+                cell.imageView.image = [[UIImage alloc] initWithData:[images objectAtIndex:indexPath.row]];
+            }else{
+                cell.textLabel.text = [searchArray objectAtIndex:indexPath.row];
+                cell.imageView.image = [[UIImage alloc] initWithData:[searchArrayImg objectAtIndex:indexPath.row]];
+            }
+            break;
+            
+        default:
+            cell.textLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"myname"];
+            cell.imageView.image = [[UIImage alloc] initWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"myimage"]];
+            break;
     }
     
     return cell;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    switch (section) {
+        case 0:
+            return @"プロフィール";
+            break;
+            
+        default:
+            return @"フレンド";
+            break;
+    }
 }
 
 // Override to support conditional editing of the table view.
