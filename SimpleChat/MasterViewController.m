@@ -161,8 +161,8 @@
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
 {
-    int from = sourceIndexPath.row;
-    int to = destinationIndexPath.row;
+    int from = (int)sourceIndexPath.row;
+    int to = (int)destinationIndexPath.row;
     NSArray *hoge = [NSArray arrayWithArray:[keyword allKeys]];
     
     NSString *hoge2 = [keyword objectForKey:[hoge objectAtIndex:from]];

@@ -12,19 +12,24 @@
 
 @interface ViewController : UIViewController <ChatControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>{
     IBOutlet UITableView *tv;
-    
-    NSArray *users;
-    NSMutableArray *talks;
-    NSMutableArray *images;
-    NSArray *userimages;
-    NSDictionary *keyword;
+    UISearchBar *searchBar;
     
     int hantei;
+    int alertRow;
     
     BOOL searching;
+    BOOL alert;
+    
+    NSArray *users;
+    NSArray *userimages;
     
     NSMutableArray *searchArray;
     NSMutableArray *searchArrayImg;
+    NSMutableArray *notReadRows;
+    NSMutableArray *talks;
+    NSMutableArray *images;
+    
+    NSDictionary *keyword;
 }
 
 @property (strong, nonatomic) ChatController * chatController;

@@ -67,7 +67,7 @@
         images = [NSMutableArray array];
         images = [mar3 mutableCopy];
     }else{
-        NSData *pngData = [[NSData alloc] initWithData:UIImagePNGRepresentation([UIImage imageNamed:@"massu.png"])];
+        NSData *pngData = [[NSData alloc] initWithData:UIImagePNGRepresentation([UIImage imageNamed:@"massu.jpg"])];
         
         images = [NSMutableArray arrayWithObjects:pngData, nil];
         [store setObject:images forKey:@"pimages"];
@@ -80,7 +80,7 @@
         talks = [mar3 mutableCopy];
     }
     
-    [store setFloat:0.0 forKey:@"kidokuDelay"];
+    [store setFloat:0.1 forKey:@"kidokuDelay"];
     
     [store synchronize];
     [self.tableView reloadData];
@@ -208,6 +208,9 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
+    UIViewController *viewcon = [self.storyboard instantiateViewControllerWithIdentifier:@"profile"];
+    if(!indexPath.row && !indexPath.section) [self presentViewController:viewcon animated:YES completion:nil];
 }
 
 -(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{

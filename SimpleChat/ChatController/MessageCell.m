@@ -102,6 +102,15 @@ static int minimumHeight = 30;
             _timeLabel.numberOfLines = 1;
             [self.contentView addSubview:_timeLabel];
         }
+        
+        if(!_readLabel) {
+            _readLabel = [UILabel new];
+            // _readLabel.frame = CGRectMake(_textLabel.center.x - (_textLabel.bounds.size.width / 2 + 40), _textLabel.bounds.size.height / 2, 25, _textLabel.bounds.size.height / 2);
+            _readLabel.text = @"既読";
+            _readLabel.font = [UIFont systemFontOfSize:10.0f];
+            _readLabel.textColor = [UIColor darkTextColor];
+            _readLabel.numberOfLines = 1;
+        }
     }
     
     [self performSelector:@selector(makeReadLabel) withObject:nil afterDelay:[[NSUserDefaults standardUserDefaults]floatForKey:@"kidokuDelay"]];
@@ -112,13 +121,8 @@ static int minimumHeight = 30;
 #pragma mark - Make 既読Label
 - (void)makeReadLabel
 {
-    if(!_readLabel) {
-        _readLabel = [UILabel new];
-        _readLabel.frame = CGRectMake(_textLabel.center.x - (_textLabel.bounds.size.width / 2 + 35), 0, 30, _textLabel.bounds.size.height / 2);
-        _readLabel.text = @"既読";
-        _readLabel.font = [UIFont systemFontOfSize:10.0f];
-        _readLabel.textColor = [UIColor darkTextColor];
-        _readLabel.numberOfLines = 1;
+    if([_message[kMessageRuntimeSentBy] isEqualToString:@"0"]) {
+        _readLabel.frame = _timeLabel.frame;
         [self.contentView addSubview:_readLabel];
     }
 }
@@ -142,7 +146,7 @@ static int minimumHeight = 30;
         _imageView.hidden = YES;
     }
     else {
-        for (UIView * v in @[_bgLabel, _textLabel]) {
+        for (UIView * v in @[_bgLabel, _textLabel, _timeLabel]) {
             v.center = CGPointMake(v.center.x + _imageView.bounds.size.width, v.center.y);
         }
         _imageView.hidden = NO;
@@ -212,7 +216,7 @@ static int minimumHeight = 30;
         _imageView.image = nil;
         _imageView.hidden = YES;
     } else {
-        for (UIView * v in @[_bgLabel, _textLabel]) {
+        for (UIView * v in @[_bgLabel, _textLabel,  _timeLabel]) {
             v.center = CGPointMake(v.center.x + _imageView.bounds.size.width, v.center.y);
         }
         _imageView.hidden = NO;
@@ -227,6 +231,7 @@ static int minimumHeight = 30;
     else _timeLabel.frame = CGRectMake(_textLabel.center.x + (_textLabel.bounds.size.width / 2 + 15), _textLabel.bounds.size.height / 2, 30, _textLabel.bounds.size.height / 2);
     
     _bgLabel.layer.backgroundColor = [[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.9] CGColor];
+    
 }
 
 @end

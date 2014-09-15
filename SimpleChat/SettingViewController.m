@@ -37,7 +37,7 @@
     self.tableView.allowsSelection = NO;
     
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
-    kaisu = [store integerForKey:@"kaisu"];
+    kaisu = (int)[store integerForKey:@"kaisu"];
     
     [tf becomeFirstResponder];
     

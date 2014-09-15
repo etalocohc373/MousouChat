@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-
+#import <AudioToolbox/AudioServices.h>
 
 #define SCREEN_HEIGHT [UIScreen mainScreen].applicationFrame.size.height
 
@@ -35,7 +35,7 @@
     [self back];
     
     /*NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];*/
+     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];*/
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -61,15 +61,16 @@
         [store setObject:images forKey:@"talkimages"];
     }else{
         images = [NSMutableArray array];
-        if(mar3){
-            images = [mar3 mutableCopy];
-        }
+        if(mar3) images = [mar3 mutableCopy];
     }
     
-    [store setFloat:0.0 forKey:@"kidokuDelay"];
+    [store setFloat:0.1 forKey:@"kidokuDelay"];
     
     [store synchronize];
     [tv reloadData];
+    
+    notReadRows = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"notReadRows"]];
+    if(!notReadRows) notReadRows = [NSMutableArray array];
 }
 
 /*- (void) handleTap:(UITapGestureRecognizer *)tap {
@@ -107,6 +108,14 @@
     
     searchArray = [NSMutableArray array];
     searchArrayImg = [NSMutableArray array];
+    
+    searchBar = [[UISearchBar alloc] init];
+    searchBar.barTintColor = [UIColor purpleColor];
+    searchBar.placeholder = @"トークを検索";
+    searchBar.delegate = self;
+    [searchBar sizeToFit];
+    
+    tv.tableHeaderView = searchBar;
 }
 
 
@@ -129,6 +138,8 @@
     [[NSUserDefaults standardUserDefaults] setFloat:kidokuDelay forKey:@"kidokuDelay"];
     
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    message[kMessageRuntimeSentBy] = @"0";
     
     // Must add message to controller for it to show
     [_chatController addNewMessage:message];
@@ -163,7 +174,6 @@
 }
 
 
-
 -(void)henshin{//返信させる
     NSArray *hoge = [NSArray arrayWithArray:[keyword allKeys]];
     NSString *str = [keyword objectForKey:[hoge objectAtIndex:hantei]];
@@ -195,6 +205,16 @@
     newMessageOb[kMessageSize] = [NSValue valueWithCGSize:rect.size];
     
     [_chatController addNewMessage:newMessageOb];
+    
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"controllerOpen"]){
+        alert = YES;
+        alertRow = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"];
+        [tv reloadData];
+        
+        [notReadRows addObject:[NSNumber numberWithInt:alertRow]];
+        [[NSUserDefaults standardUserDefaults] setObject:notReadRows forKey:@"notReadRows"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -212,15 +232,31 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    if(!cell){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
-    }
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if(!cell) cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+    
+    for (UILabel *subview in [cell.contentView subviews]) [subview removeFromSuperview];
+    
+    for (UIImageView *img in [cell.contentView subviews]) [img removeFromSuperview];
     
     // Configure the cell...
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    UIImageView *alertImg = [[UIImageView alloc] initWithFrame:CGRectMake(280, 22.5, 25, 25)];
+    alertImg.image = [UIImage imageNamed:@"badge_1.png"];
+    
+    cell.accessoryType = UITableViewCellAccessoryNone;
+    
+    if(alert && indexPath.row == alertRow){
+        [cell.contentView addSubview:alertImg];
+        AudioServicesPlaySystemSound(1000);
+    }else if([notReadRows containsObject:[NSNumber numberWithInt:indexPath.row]]){
+        [cell.contentView addSubview:alertImg];
+    }else cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    alert = NO;
     
     UIImage *hoge;
+    NSString *key;
     
     UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 5, 200, 30)];
     mainLabel.font = [UIFont systemFontOfSize:18];
@@ -232,35 +268,32 @@
     if(!searching){//検索中でない
         mainLabel.text = [talks objectAtIndex:indexPath.row];//トーク相手
         
-        NSString *key = [NSString stringWithFormat:@"message%@", [talks objectAtIndex:indexPath.row]];
-        NSArray *hogeArray = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:key]];
-        
-        NSLog(@"%d", hogeArray.count);
-        
-        if(hogeArray.count) subLabel.text = [hogeArray objectAtIndex:hogeArray.count - 1];//最新のトーク
-        else subLabel.text = @"トーク内容がまだありません";
+        key = [NSString stringWithFormat:@"message%@", [talks objectAtIndex:indexPath.row]];
         
         hoge = [[UIImage alloc] initWithData:[images objectAtIndex:indexPath.row]];//トプ画
     }else{//検索中
         mainLabel.text = [searchArray objectAtIndex:indexPath.row];
         
-        NSString *key = [NSString stringWithFormat:@"message%@", [searchArray objectAtIndex:indexPath.row]];
-        NSArray *hogeArray = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:key]];
-        
-        NSLog(@"%d", hogeArray.count);
-        
-        if(hogeArray.count) subLabel.text = [hogeArray objectAtIndex:hogeArray.count - 1];
-        else subLabel.text = @"トーク内容がまだありません";
+        key = [NSString stringWithFormat:@"message%@", [searchArray objectAtIndex:indexPath.row]];
         
         hoge = [[UIImage alloc] initWithData:[searchArrayImg objectAtIndex:indexPath.row]];
     }
     
+    NSArray *hogeArray = [NSArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:key]]];
+    
+    NSDictionary *dic;
+    
+    if(hogeArray.count != 0) dic = [[NSDictionary alloc] initWithDictionary:[hogeArray objectAtIndex:hogeArray.count - 1]];
+    
+    subLabel.text = dic[@"content"];
+    if(!subLabel.text) subLabel.text = @"トーク内容がまだありません";
+    
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 50, 50)];
     imgView.image = hoge;
     
-    [cell addSubview:mainLabel];
-    [cell addSubview:subLabel];
-    [cell addSubview:imgView];
+    [cell.contentView addSubview:mainLabel];
+    [cell.contentView addSubview:subLabel];
+    [cell.contentView addSubview:imgView];
     
     return cell;
 }
@@ -294,7 +327,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
+    
     [store setInteger:indexPath.row forKey:@"selecteduser"];
+    
+    if([notReadRows containsObject:[NSNumber numberWithInt:indexPath.row]]){
+        [notReadRows removeObject:[NSNumber numberWithInt:indexPath.row]];
+        [store setObject:notReadRows forKey:@"notReadRows"];
+    }
+    
     [store synchronize];
     
     if (!_chatController) _chatController = [ChatController new];
@@ -304,9 +344,6 @@
     _chatController.hidesBottomBarWhenPushed = YES;
     
     [self.navigationController pushViewController:_chatController animated:YES];
-    //[self presentViewController:_chatController animated:YES completion:nil];
-    
-    NSLog(@"selectedrow: %d", indexPath.row);
 }
 
 -(void)localNotify:(NSString *)message withDelay:(float)delay{
@@ -320,13 +357,13 @@
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 }
 
--(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
-    [searchBar showsCancelButton];
+-(void)searchBarTextDidBeginEditing:(UISearchBar *)search{
+    [search showsCancelButton];
 }
 
--(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+-(void)searchBarSearchButtonClicked:(UISearchBar *)search{
     for (int i = 0; i < users.count; i++) {
-        NSRange range = [[talks objectAtIndex:i] rangeOfString:searchBar.text];
+        NSRange range = [[talks objectAtIndex:i] rangeOfString:search.text];
         if (range.location != NSNotFound) {
             [searchArray addObject:[talks objectAtIndex:i]];
             [searchArrayImg addObject:[images objectAtIndex:i]];
@@ -335,18 +372,18 @@
     searching = YES;
     [tv reloadData];
     
-    searchBar.showsCancelButton = NO;
-    [searchBar resignFirstResponder];
+    search.showsCancelButton = NO;
+    [search resignFirstResponder];
 }
 
--(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
-    searchBar.text = @"";
+-(void)searchBarCancelButtonClicked:(UISearchBar *)search{
+    search.text = @"";
     
     searching = NO;
     [tv reloadData];
     
-    searchBar.showsCancelButton = NO;
-    [searchBar resignFirstResponder];
+    search.showsCancelButton = NO;
+    [search resignFirstResponder];
 }
 
 @end

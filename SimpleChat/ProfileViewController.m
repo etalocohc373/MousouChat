@@ -68,8 +68,8 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(indexPath.row){
-        [[NSUserDefaults standardUserDefaults] setInteger:indexPath.row - 1 forKey:@"editprof"];
+    if(indexPath.section){
+        [[NSUserDefaults standardUserDefaults] setInteger:indexPath.section - 1 forKey:@"editprof"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         EditProfileViewController *gameViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"edit"];
@@ -77,6 +77,10 @@
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+-(IBAction)dismiss{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Image Picker

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ProfileViewController.h"
 
 @interface FriendsViewController : UITableViewController<UISearchBarDelegate>{
     NSMutableArray *users;

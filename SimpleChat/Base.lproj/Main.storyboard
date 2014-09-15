@@ -296,6 +296,7 @@
                         <searchBar key="tableHeaderView" contentMode="redraw" text="" placeholder="フレンドを検索" id="gda-vC-GUq">
                             <rect key="frame" x="0.0" y="64" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <color key="barTintColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
                                 <outlet property="delegate" destination="1g9-4h-YwN" id="JWc-Fd-ZgO"/>
@@ -375,14 +376,6 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="517"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <searchBar key="tableFooterView" contentMode="redraw" placeholder="トークを検索" id="SMv-sg-Ydg">
-                                    <rect key="frame" x="0.0" y="64" width="320" height="44"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                    <textInputTraits key="textInputTraits"/>
-                                    <connections>
-                                        <outlet property="delegate" destination="1en-54-erm" id="1kK-rm-dOM"/>
-                                    </connections>
-                                </searchBar>
                                 <connections>
                                     <outlet property="dataSource" destination="1en-54-erm" id="s6e-VA-Pyd"/>
                                     <outlet property="delegate" destination="1en-54-erm" id="MqG-dq-hf4"/>
@@ -496,7 +489,13 @@
                             <outlet property="delegate" destination="fRX-zI-Bgn" id="2jz-vH-fqF"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="プロフィール" id="weI-DW-uei"/>
+                    <navigationItem key="navigationItem" title="プロフィール" id="weI-DW-uei">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="ZHs-wR-Xvo">
+                            <connections>
+                                <action selector="dismiss" destination="fRX-zI-Bgn" id="hSv-fy-clJ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="about" destination="HSs-aT-0bI" id="7wk-di-tCq"/>
                         <outlet property="imgView" destination="8Wt-yu-0IM" id="yI6-Rl-jad"/>
@@ -510,7 +509,7 @@
         <!--Edit Profile View Controller-->
         <scene sceneID="cvD-L4-y6C">
             <objects>
-                <viewController storyboardIdentifier="edit" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bTm-XJ-UM9" customClass="EditProfileViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="edit" hidesBottomBarWhenPushed="YES" id="bTm-XJ-UM9" customClass="EditProfileViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="QHk-TI-26V"/>
                         <viewControllerLayoutGuide type="bottom" id="kp1-Kf-OiN"/>
@@ -525,6 +524,9 @@
                                 <state key="normal" title="保存" image="savebt.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="done" destination="bTm-XJ-UM9" eventType="touchUpInside" id="xNu-il-OfX"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g0r-nt-IIM">
                                 <rect key="frame" x="36" y="143" width="248" height="30"/>
@@ -590,7 +592,7 @@
         <!--Navigation Controller-->
         <scene sceneID="iXD-33-XtE">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="e3n-Tv-pSo" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="profile" automaticallyAdjustsScrollViewInsets="NO" id="e3n-Tv-pSo" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="more" id="AgX-ik-21k"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="MWN-0e-4IJ">

@@ -128,11 +128,12 @@ static int chatInputStartingHeight = 40;
 
 - (void) viewWillAppear:(BOOL)animated
 {
-    
     // Add views here, or they will create problems when launching in landscape
     
     [self.view addSubview:_myCollectionView];
-    [self scrollToBottom];
+    
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"controllerOpen"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     NSArray *array = [NSArray array];
     array = [[NSUserDefaults standardUserDefaults] objectForKey:@"users"];
@@ -157,16 +158,23 @@ static int chatInputStartingHeight = 40;
     }
     
     [_myCollectionView reloadData];
+    
+    [self scrollToBottom];
+    
+    /*
+    NSArray *hogeArray = [NSArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"messageまっすー"]]];
+    
+    NSDictionary *dic = [[NSDictionary alloc] initWithDictionary:[hogeArray objectAtIndex:hogeArray.count - 1]];
+    
+    NSLog(@"loadedSentBy: %@", dic[kMessageRuntimeSentBy]);
+     */
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
-    NSString *key = [NSString stringWithFormat:@"message%@", [[[NSUserDefaults standardUserDefaults] objectForKey:@"talks"] objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]]];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_messagesArray];
-    [userDefaults setObject:data  forKey:key];
     
-    [userDefaults setFloat:0.0 forKey:@"kidokuDelay"];
-    
+    [userDefaults setFloat:0.1 forKey:@"kidokuDelay"];
+    [userDefaults setBool:NO forKey:@"controllerOpen"];
     [userDefaults synchronize];
 }
 
@@ -243,8 +251,6 @@ static int chatInputStartingHeight = 40;
         NSLog(@"ChatController: AutoClosing");
         [self.navigationController popViewControllerAnimated:YES];
     }
-    
-    
 }
 
 - (void) topMiddlePressed {
@@ -268,15 +274,18 @@ static int chatInputStartingHeight = 40;
     
     // preload message into array;
     [_messagesArray addObject:message];
-    //あんべ
-    /*if([_messagesArray count]>2){
-        [_messagesArray removeObjectAtIndex:3];}*/
     
-    /*NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSLog(@"sentMessage: %@", message);
+    NSString *key = [NSString stringWithFormat:@"message%@", [[[NSUserDefaults standardUserDefaults] objectForKey:@"talks"] objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]]];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_messagesArray];
     
-    NSString *key = [NSString stringWithFormat:@"message%d", [ud integerForKey:@"selecteduser"]];
-    NSLog(@"%@",_messagesArray);
-    [ud setObject:_messagesArray forKey:key];*/
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:key];
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    //NSArray *hogeArray = [NSArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"messageまっすー"]]];
+    
+    //NSDictionary *dic = [[NSDictionary alloc] initWithDictionary:[hogeArray objectAtIndex:hogeArray.count - 1]];
     
     // add extra cell, and load it into view;
     [_myCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:_messagesArray.count -1 inSection:0]]];
@@ -470,27 +479,27 @@ static int chatInputStartingHeight = 40;
         
         // Random just for now, set at runtime
         int sentByNumb = 0;
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"henshin"]){
-            sentByNumb = 0;
-            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"henshin"];
-        }
         if([[NSUserDefaults standardUserDefaults] boolForKey:@"nothenshin"]){
             sentByNumb = 1;
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"nothenshin"];
+        }
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"henshin"]){
+            sentByNumb = 0;
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"henshin"];
         }
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         message[kMessageRuntimeSentBy] = [NSNumber numberWithInt:(sentByNumb == 0) ? kSentByOpponent : kSentByUser];
         
-        /* EXAMPLE IMPLEMENTATION
+         //EXAMPLE IMPLEMENTATION
          // See if the sentBy associated with the message matches our currentUserId
-         if ([_currentUserId isEqualToString:message[@"sentByUserId"]]) {
+         /*if ([_currentUserId isEqualToString:message[@"sentByUserId"]]) {
             message[kMessageRuntimeSentBy] = [NSNumber numberWithInt:kSentByUser];
          }
          else {
             message[kMessageRuntimeSentBy] = [NSNumber numberWithInt:kSentByOpponent];
-         }
-         */
+         }*/
+        
     }
     
     // Set the cell
