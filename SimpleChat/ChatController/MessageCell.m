@@ -122,7 +122,7 @@ static int minimumHeight = 30;
 - (void)makeReadLabel
 {
     if([_message[kMessageRuntimeSentBy] isEqualToString:@"0"]) {
-        _readLabel.frame = _timeLabel.frame;
+        _readLabel.frame = CGRectMake(_timeLabel.frame.origin.x, _timeLabel.frame.origin.y - _timeLabel.frame.size.height, 30, _timeLabel.frame.size.height);
         [self.contentView addSubview:_readLabel];
     }
 }
@@ -185,14 +185,9 @@ static int minimumHeight = 30;
     _textLabel.text = _message[kMessageContent];
     _sentBy = [_message[kMessageRuntimeSentBy] intValue];
     
-    //現在時刻の取得
-    NSDate *now = [NSDate date];
-    
-    // NsDate→NSString変換用のフォーマッタを作成
-    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
-    [outputFormatter setDateFormat:@"HH:mm"];
-    
-    _timeLabel.text = [NSString stringWithFormat:@"%@", [outputFormatter stringFromDate:now]];
+    NSDateFormatter *df = [[NSDateFormatter alloc]init];
+    df.dateFormat = @"HH:mm";
+    _timeLabel.text = [df stringFromDate:_message[@"daySent"]];
     
     
     // the height that we want our text bubble to be

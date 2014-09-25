@@ -124,6 +124,8 @@ static int chatInputStartingHeight = 40;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    store = [NSUserDefaults standardUserDefaults];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -132,12 +134,12 @@ static int chatInputStartingHeight = 40;
     
     [self.view addSubview:_myCollectionView];
     
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"controllerOpen"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [store setBool:YES forKey:@"controllerOpen"];
+    [store synchronize];
     
     NSArray *array = [NSArray array];
-    array = [[NSUserDefaults standardUserDefaults] objectForKey:@"users"];
-    self.title = [array objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]];
+    array = [store objectForKey:@"users"];
+    self.title = [array objectAtIndex:[store integerForKey:@"selecteduser"]];
     
     // Scroll CollectionView Before We Start
     [self.view addSubview:_chatInput];
@@ -148,9 +150,12 @@ static int chatInputStartingHeight = 40;
     
     //[_TopBar setTitle];
     
-    NSString *key = [NSString stringWithFormat:@"message%@", [[[NSUserDefaults standardUserDefaults] objectForKey:@"talks"] objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]]];
+    //メッセージ読み込み
+    NSString *key = [NSString stringWithFormat:@"message%@", [[store objectForKey:@"talks"] objectAtIndex:[store integerForKey:@"selecteduser"]]];
     
-    _messagesArray = [[NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:key]] mutableCopy];
+    if([store objectForKey:key]) _messagesArray = [[NSKeyedUnarchiver unarchiveObjectWithData:[store objectForKey:key]] mutableCopy];
+    else _messagesArray = [NSMutableArray new];
+    //ここまで
     
     // Fix if we receive Null
     if (![_messagesArray.class isSubclassOfClass:[NSArray class]]) {
@@ -162,7 +167,7 @@ static int chatInputStartingHeight = 40;
     [self scrollToBottom];
     
     /*
-    NSArray *hogeArray = [NSArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"messageまっすー"]]];
+    NSArray *hogeArray = [NSArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:[store objectForKey:@"messageまっすー"]]];
     
     NSDictionary *dic = [[NSDictionary alloc] initWithDictionary:[hogeArray objectAtIndex:hogeArray.count - 1]];
     
@@ -171,11 +176,9 @@ static int chatInputStartingHeight = 40;
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    
-    [userDefaults setFloat:0.1 forKey:@"kidokuDelay"];
-    [userDefaults setBool:NO forKey:@"controllerOpen"];
-    [userDefaults synchronize];
+    [store setFloat:0 forKey:@"kidokuDelay"];
+    [store setBool:NO forKey:@"controllerOpen"];
+    [store synchronize];
 }
 
 - (void)didReceiveMemoryWarning
@@ -276,14 +279,14 @@ static int chatInputStartingHeight = 40;
     [_messagesArray addObject:message];
     
     NSLog(@"sentMessage: %@", message);
-    NSString *key = [NSString stringWithFormat:@"message%@", [[[NSUserDefaults standardUserDefaults] objectForKey:@"talks"] objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]]];
+    NSString *key = [NSString stringWithFormat:@"message%@", [[store objectForKey:@"talks"] objectAtIndex:[store integerForKey:@"selecteduser"]]];
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_messagesArray];
     
-    [[NSUserDefaults standardUserDefaults] setObject:data forKey:key];
+    [store setObject:data forKey:key];
     
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [store synchronize];
     
-    //NSArray *hogeArray = [NSArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"messageまっすー"]]];
+    //NSArray *hogeArray = [NSArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:[store objectForKey:@"messageまっすー"]]];
     
     //NSDictionary *dic = [[NSDictionary alloc] initWithDictionary:[hogeArray objectAtIndex:hogeArray.count - 1]];
     
@@ -479,15 +482,15 @@ static int chatInputStartingHeight = 40;
         
         // Random just for now, set at runtime
         int sentByNumb = 0;
-        if([[NSUserDefaults standardUserDefaults] boolForKey:@"nothenshin"]){
+        if([store boolForKey:@"nothenshin"]){
             sentByNumb = 1;
-            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"nothenshin"];
+            [store setBool:NO forKey:@"nothenshin"];
         }
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"henshin"]){
+        if ([store boolForKey:@"henshin"]){
             sentByNumb = 0;
-            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"henshin"];
+            [store setBool:NO forKey:@"henshin"];
         }
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [store synchronize];
         
         message[kMessageRuntimeSentBy] = [NSNumber numberWithInt:(sentByNumb == 0) ? kSentByOpponent : kSentByUser];
         
@@ -516,8 +519,8 @@ static int chatInputStartingHeight = 40;
 
 /*- (void) setMessagesArray:(NSMutableArray *)messagesArray {
     //_messagesArray = messagesArray;
-    NSString *key = [NSString stringWithFormat:@"message%@", [[[NSUserDefaults standardUserDefaults] objectForKey:@"talks"] objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]]];
-    _messagesArray = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    NSString *key = [NSString stringWithFormat:@"message%@", [[store objectForKey:@"talks"] objectAtIndex:[store integerForKey:@"selecteduser"]]];
+    _messagesArray = [store objectForKey:key];
     
     // Fix if we receive Null
     if (![_messagesArray.class isSubclassOfClass:[NSArray class]]) {

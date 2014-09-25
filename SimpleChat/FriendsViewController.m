@@ -27,15 +27,14 @@
 {
     [super viewDidLoad];
     
-    /*NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];*/
+    //[self reset];
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    //self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
     self.tabBarController.tabBar.barTintColor = [UIColor purpleColor];
     
@@ -82,7 +81,11 @@
     
     [store setFloat:0.1 forKey:@"kidokuDelay"];
     
+    if(users.count > 1) editBtn.enabled = YES;
+    else editBtn.enabled = NO;
+    
     [store synchronize];
+    
     [self.tableView reloadData];
 }
 
@@ -136,6 +139,8 @@
             break;
             
         default:
+            [self makeProfile];
+            
             cell.textLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"myname"];
             cell.imageView.image = [[UIImage alloc] initWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"myimage"]];
             break;
@@ -152,7 +157,7 @@
             break;
             
         default:
-            return @"フレンド";
+            return @"友だち";
             break;
     }
 }
@@ -241,6 +246,19 @@
     searchBar.showsCancelButton = NO;
     [searchBar resignFirstResponder];
 }
+
+-(void)makeProfile{
+    NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
+    
+    if(![store objectForKey:@"myimage"]){
+        NSData *pngData = [[NSData alloc] initWithData:UIImagePNGRepresentation([UIImage imageNamed:@"pimage.png"])];
+        [store setObject:pngData forKey:@"myimage"];
+    }
+    if(![store objectForKey:@"myname"]) [store setObject:@"Hoge" forKey:@"myname"];
+    if(![store objectForKey:@"aboutme"]) [store setObject:@"Hello World!" forKey:@"aboutme"];
+    
+    [store synchronize];
+}
  
 /*
 #pragma mark - Navigation
@@ -252,5 +270,10 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+-(void)reset{
+    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+}
 
 @end

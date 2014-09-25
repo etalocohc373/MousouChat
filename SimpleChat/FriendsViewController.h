@@ -10,16 +10,17 @@
 #import "ProfileViewController.h"
 
 @interface FriendsViewController : UITableViewController<UISearchBarDelegate>{
+    IBOutlet UIBarButtonItem *editBtn;
+    
     NSMutableArray *users;
     NSMutableArray *images;
     NSMutableArray *talks;
+    NSMutableArray *searchArray;
+    NSMutableArray *searchArrayImg;
     
     NSIndexPath *deletepath;
     
     BOOL searching;
-    
-    NSMutableArray *searchArray;
-    NSMutableArray *searchArrayImg;
 }
 
 @end

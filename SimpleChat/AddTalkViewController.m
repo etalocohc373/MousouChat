@@ -27,6 +27,8 @@
 {
     [super viewDidLoad];
     
+    self.navigationController.navigationBar.barTintColor = [UIColor purpleColor];
+    
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
     NSArray *mar3 = [store objectForKey:@"users"];
     

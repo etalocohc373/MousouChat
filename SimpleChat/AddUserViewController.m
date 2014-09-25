@@ -49,6 +49,9 @@
     
     self.tableView.allowsSelection = NO;
     
+    self.navigationController.navigationBar.barTintColor = [UIColor purpleColor];
+    self.title = @"友だち追加";
+    
     imgView.userInteractionEnabled = YES;
     imgView.image = [UIImage imageNamed:@"pimage.png"];
 }
@@ -82,7 +85,6 @@
     }else{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"この名前は既に使われています" message:@"別の名前に変更してください" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        tf.text = @"";
     }
 }
 
@@ -167,7 +169,6 @@
     }
     
     [CoreImageHelper centerCroppingImageWithImage:originalImage atSize:CGSizeMake(hoge, hoge) completion:^(UIImage *resultImg){
-        NSLog(@"width: %.0f height: %.0f", resultImg.size.width, resultImg.size.height);
         [CoreImageHelper resizeAspectFitImageWithImage:resultImg atSize:44.f completion:^(UIImage *resultImg2){
             imgView.image = resultImg2;
             [imgView sizeToFit];

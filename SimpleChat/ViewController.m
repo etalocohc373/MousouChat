@@ -36,12 +36,14 @@
     
     /*NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
      [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];*/
+    
+    //[store setObject:[NSData data] forKey:@"messageまっすー"];
+    //[store synchronize];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
-    NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
     NSArray *mar3 = [store objectForKey:@"talks"];
     
     talks = [NSMutableArray array];
@@ -95,7 +97,7 @@
     /*UIEdgeInsets insets = self.tableView.contentInset;
      insets.top += 64;
      self.tableView.contentInset = insets;*/
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    store = [NSUserDefaults standardUserDefaults];
     
     [tv registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     
@@ -118,6 +120,11 @@
     tv.tableHeaderView = searchBar;
 }
 
+-(IBAction)edit{
+    if(tv.editing) [tv setEditing:NO animated:YES];
+    else [tv setEditing:YES animated:YES];
+}
+
 
 #pragma mark CHAT CONTROLLER DELEGATE
 
@@ -129,15 +136,20 @@
     // Evaluate or add to the message here for example, if we wanted to assign the current userId:
     message[@"sentByUserId"] = @"currentUserId";
     
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"nothenshin"];
+    [store setBool:YES forKey:@"nothenshin"];
+    
+    //現在日時の取得
+    NSDate *now = [NSDate date];
+    message[@"daySent"] = now;
+    //ここまで
     
     //既読遅れ
     float kidokuDelay = arc4random()% 5 + 5;
     NSLog(@"delay: %.0f", kidokuDelay);
     
-    [[NSUserDefaults standardUserDefaults] setFloat:kidokuDelay forKey:@"kidokuDelay"];
-    
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [store setFloat:kidokuDelay forKey:@"kidokuDelay"];
+    [store synchronize];
+    //ここまで
     
     message[kMessageRuntimeSentBy] = @"0";
     
@@ -146,9 +158,9 @@
     
     NSString *str = message[@"content"];
     
-    NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]]];
+    NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
     keyword = [NSDictionary new];
-    if([[NSUserDefaults standardUserDefaults] objectForKey:key]) keyword = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    if([store objectForKey:key]) keyword = [store objectForKey:key];
     
     //キーワード判定
     if([keyword count] != 0){
@@ -163,23 +175,21 @@
                 hantei = i;
                 
                 NSArray *hoge = [NSArray arrayWithArray:[keyword allKeys]];
-                NSString *str = [NSString stringWithFormat:@"%@: %@", [talks objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]], [keyword objectForKey:[hoge objectAtIndex:hantei]]];
+                NSString *str = [NSString stringWithFormat:@"%@: %@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]], [keyword objectForKey:[hoge objectAtIndex:hantei]]];
                 
-                [self localNotify:str withDelay:delay + [[NSUserDefaults standardUserDefaults] floatForKey:@"kidokuDelay"]];
+                [self localNotify:str withDelay:delay + [store floatForKey:@"kidokuDelay"]];
                 
                 break;
             }
         }
-    }
+    }//ここまで
 }
-
 
 -(void)henshin{//返信させる
     NSArray *hoge = [NSArray arrayWithArray:[keyword allKeys]];
     NSString *str = [keyword objectForKey:[hoge objectAtIndex:hantei]];
     
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"henshin"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [store setBool:YES forKey:@"henshin"];
     
     NSMutableDictionary * newMessageOb = [NSMutableDictionary new];
     newMessageOb[kMessageContent] = str;
@@ -188,6 +198,12 @@
     newMessageOb[@"sentByUserId"] = @"currentUserId";
     
     newMessageOb[kMessageRuntimeSentBy] = @"1";
+    
+    //現在日時の取得
+    NSDate *now = [NSDate date];
+    
+    newMessageOb[@"daySent"] = now;
+    //ここまで
     
     NSMutableDictionary * attributes = [NSMutableDictionary new];
     attributes[NSFontAttributeName] = [UIFont systemFontOfSize:15.0f];
@@ -206,15 +222,15 @@
     
     [_chatController addNewMessage:newMessageOb];
     
-    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"controllerOpen"]){
+    if(![store boolForKey:@"controllerOpen"]){
         alert = YES;
-        alertRow = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"];
+        alertRow = (int)[store integerForKey:@"selecteduser"];
         [tv reloadData];
         
         [notReadRows addObject:[NSNumber numberWithInt:alertRow]];
-        [[NSUserDefaults standardUserDefaults] setObject:notReadRows forKey:@"notReadRows"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [store setObject:notReadRows forKey:@"notReadRows"];
     }
+    [store synchronize];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -249,9 +265,7 @@
     if(alert && indexPath.row == alertRow){
         [cell.contentView addSubview:alertImg];
         AudioServicesPlaySystemSound(1000);
-    }else if([notReadRows containsObject:[NSNumber numberWithInt:indexPath.row]]){
-        [cell.contentView addSubview:alertImg];
-    }else cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }else if([notReadRows containsObject:[NSNumber numberWithInt:(int)indexPath.row]]) [cell.contentView addSubview:alertImg];
     
     alert = NO;
     
@@ -260,10 +274,6 @@
     
     UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 5, 200, 30)];
     mainLabel.font = [UIFont systemFontOfSize:18];
-    
-    UILabel *subLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 35, 200, 30)];
-    subLabel.textColor = [UIColor lightGrayColor];
-    subLabel.font = [UIFont systemFontOfSize:15];
     
     if(!searching){//検索中でない
         mainLabel.text = [talks objectAtIndex:indexPath.row];//トーク相手
@@ -279,30 +289,59 @@
         hoge = [[UIImage alloc] initWithData:[searchArrayImg objectAtIndex:indexPath.row]];
     }
     
-    NSArray *hogeArray = [NSArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:key]]];
+    NSArray *hogeArray = [NSArray array];
+    if([store objectForKey:key]) hogeArray = [NSArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:[store objectForKey:key]]];
     
+    ///最新トーク取得
     NSDictionary *dic;
     
     if(hogeArray.count != 0) dic = [[NSDictionary alloc] initWithDictionary:[hogeArray objectAtIndex:hogeArray.count - 1]];
     
+    UILabel *subLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 35, 200, 30)];
+    subLabel.textColor = [UIColor lightGrayColor];
+    subLabel.font = [UIFont systemFontOfSize:15];
     subLabel.text = dic[@"content"];
+    
     if(!subLabel.text) subLabel.text = @"トーク内容がまだありません";
     
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 50, 50)];
+    UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(280, 5, 50, 20)];
+    timeLabel.textColor = [UIColor lightGrayColor];
+    timeLabel.font = [UIFont systemFontOfSize:12];
+    
+    //日付比較
+    NSDateFormatter *df = [[NSDateFormatter alloc]init];
+    df.dateFormat = @"MM/dd";
+    
+    NSDateFormatter *df2 = [[NSDateFormatter alloc]init];
+    df2.dateFormat = @"HH:mm";
+    
+    if ([[df stringFromDate:dic[@"daySent"]] isEqualToString:[df stringFromDate:[NSDate date]]]) timeLabel.text = [df2 stringFromDate:dic[@"daySent"]];
+    else timeLabel.text = [df stringFromDate:dic[@"daySent"]];
+    //ここまで
+    ///ここまで
+    
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 50, 50)];//トプ画表示
     imgView.image = hoge;
     
     [cell.contentView addSubview:mainLabel];
     [cell.contentView addSubview:subLabel];
+    [cell.contentView addSubview:timeLabel];
     [cell.contentView addSubview:imgView];
     
     return cell;
 }
 
 
+#pragma mark - Table View Data Source
+
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
+    return YES;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
 }
 
@@ -312,12 +351,12 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         [talks removeObjectAtIndex:indexPath.row];
-        [[NSUserDefaults standardUserDefaults] setObject:talks forKey:@"talks"];
+        [store setObject:talks forKey:@"talks"];
         
         NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:indexPath.row]];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSDictionary new] forKey:key];
+        [store setObject:[NSDictionary new] forKey:key];
         
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [store synchronize];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -326,12 +365,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
-    
     [store setInteger:indexPath.row forKey:@"selecteduser"];
     
-    if([notReadRows containsObject:[NSNumber numberWithInt:indexPath.row]]){
-        [notReadRows removeObject:[NSNumber numberWithInt:indexPath.row]];
+    if([notReadRows containsObject:[NSNumber numberWithInt:(int)indexPath.row]]){
+        [notReadRows removeObject:[NSNumber numberWithInt:(int)indexPath.row]];
         [store setObject:notReadRows forKey:@"notReadRows"];
     }
     

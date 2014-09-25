@@ -30,6 +30,8 @@
     NSMutableArray *images;
     
     NSDictionary *keyword;
+    
+    NSUserDefaults *store;
 }
 
 @property (strong, nonatomic) ChatController * chatController;
