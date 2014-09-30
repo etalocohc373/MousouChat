@@ -58,6 +58,7 @@
             break;
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

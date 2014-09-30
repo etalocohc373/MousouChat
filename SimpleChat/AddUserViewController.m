@@ -64,20 +64,33 @@
     
     if(mar3) users = [mar3 mutableCopy];
     
-    if([users indexOfObject:tf.text] == NSNotFound){
+    if([users indexOfObject:tf.text] == NSNotFound){//ユーザー名重複判定
+        //ユーザー名保存
         [users addObject:tf.text];
+        //ここまで
         
-        [store setObject:users forKey:@"users"];
-        
+        //プロ画保存
         mar3 = [NSArray arrayWithArray:[store objectForKey:@"pimages"]];
         NSMutableArray *images = [NSMutableArray array];
-        images = [mar3 mutableCopy];
+        if(mar3) images = [mar3 mutableCopy];
         
         if(imgView.image == [UIImage imageNamed:@"pimage.png"]) [self trimImage:[UIImage imageNamed:@"pimage.png"]];
         
         NSData *pngData = [[NSData alloc] initWithData:UIImagePNGRepresentation(imgView.image)];
         [images addObject:pngData];
+        //ここまで
+        
+        //自己紹介保存
+        mar3 = [NSArray arrayWithArray:[store objectForKey:@"intros"]];
+        NSMutableArray *intros = [NSMutableArray array];
+        if(mar3) intros = [mar3 mutableCopy];
+        
+        [intros addObject:tv.text];
+        //ここまで
+        
+        [store setObject:users forKey:@"users"];
         [store setObject:images forKey:@"pimages"];
+        [store setObject:intros forKey:@"intros"];
         
         [store synchronize];
         

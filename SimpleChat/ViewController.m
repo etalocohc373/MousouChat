@@ -225,12 +225,20 @@
     if(![store boolForKey:@"controllerOpen"]){
         alert = YES;
         alertRow = (int)[store integerForKey:@"selecteduser"];
-        [tv reloadData];
         
-        [notReadRows addObject:[NSNumber numberWithInt:alertRow]];
+        [tv moveRowAtIndexPath:[NSIndexPath indexPathForRow:alertRow inSection:0] toIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        
+        NSString *hoge = [talks objectAtIndex:0];
+        [talks replaceObjectAtIndex:0 withObject:[talks objectAtIndex:alertRow]];
+        [talks removeObjectAtIndex:alertRow];
+        [talks insertObject:hoge atIndex:1];
+        
+        [notReadRows addObject:[talks objectAtIndex:0]];
         [store setObject:notReadRows forKey:@"notReadRows"];
+        [store synchronize];
+        
+        [tv reloadData];
     }
-    [store synchronize];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -251,23 +259,27 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if(!cell) cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     
+    //重複ラベルの消去
     for (UILabel *subview in [cell.contentView subviews]) [subview removeFromSuperview];
     
     for (UIImageView *img in [cell.contentView subviews]) [img removeFromSuperview];
+    //ここまで
     
     // Configure the cell...
     
+    //アイコンバッジ作成
     UIImageView *alertImg = [[UIImageView alloc] initWithFrame:CGRectMake(280, 22.5, 25, 25)];
     alertImg.image = [UIImage imageNamed:@"badge_1.png"];
+    //ここまで
     
     cell.accessoryType = UITableViewCellAccessoryNone;
     
     if(alert && indexPath.row == alertRow){
         [cell.contentView addSubview:alertImg];
         AudioServicesPlaySystemSound(1000);
-    }else if([notReadRows containsObject:[NSNumber numberWithInt:(int)indexPath.row]]) [cell.contentView addSubview:alertImg];
-    
-    alert = NO;
+        alert = NO;
+    }else if([notReadRows containsObject:[talks objectAtIndex:indexPath.row]] && searching) [cell.contentView addSubview:alertImg];
+    else if([notReadRows containsObject:[searchArray objectAtIndex:indexPath.row]] && !searching) [cell.contentView addSubview:alertImg];
     
     UIImage *hoge;
     NSString *key;
@@ -367,8 +379,8 @@
 {
     [store setInteger:indexPath.row forKey:@"selecteduser"];
     
-    if([notReadRows containsObject:[NSNumber numberWithInt:(int)indexPath.row]]){
-        [notReadRows removeObject:[NSNumber numberWithInt:(int)indexPath.row]];
+    if([notReadRows containsObject:[talks objectAtIndex:(int)indexPath.row]]){
+        [notReadRows removeObject:[talks objectAtIndex:(int)indexPath.row]];
         [store setObject:notReadRows forKey:@"notReadRows"];
     }
     

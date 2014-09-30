@@ -34,6 +34,8 @@
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     
+    
+    
     //self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
     self.tabBarController.tabBar.barTintColor = [UIColor purpleColor];
@@ -43,7 +45,10 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     searchArray = [NSMutableArray array];
+    searchArrayIntros = [NSMutableArray array];
     searchArrayImg = [NSMutableArray array];
+    
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -70,6 +75,16 @@
         
         images = [NSMutableArray arrayWithObjects:pngData, nil];
         [store setObject:images forKey:@"pimages"];
+    }
+    
+    mar3 = [NSArray arrayWithArray:[store objectForKey:@"intros"]];
+    
+    if([mar3 count]){
+        intros = [NSMutableArray array];
+        intros = [mar3 mutableCopy];
+    }else{
+        intros = [NSMutableArray arrayWithObjects:@"こんにちは！", nil];
+        [store setObject:intros forKey:@"intros"];
     }
     
     mar3 = [NSArray arrayWithArray:[store objectForKey:@"talks"]];
@@ -121,32 +136,62 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    if(!cell){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-    }
+    if(!cell) cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+    
+    //重複ラベルの消去
+    for (UILabel *subview in [cell.contentView subviews]) [subview removeFromSuperview];
+    for (UIImageView *img in [cell.contentView subviews]) [img removeFromSuperview];
+    //ここまで
     
     // Configure the cell...
+    
+    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 5, 250, 33)];
+    
+    UILabel *detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(210, 3, 100, 37)];
+    detailLabel.numberOfLines = 2;
+    detailLabel.textAlignment = NSTextAlignmentRight;
+    detailLabel.font = [UIFont systemFontOfSize:12];
+    detailLabel.textColor = [UIColor lightGrayColor];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, 43, 43)];
     
     switch (indexPath.section) {
         case 1:
             if (!searching){
-                cell.textLabel.text = [users objectAtIndex:indexPath.row];
-                cell.imageView.image = [[UIImage alloc] initWithData:[images objectAtIndex:indexPath.row]];
+                nameLabel.text = [users objectAtIndex:indexPath.row];
+                detailLabel.text = [intros objectAtIndex:indexPath.row];
+                imageView.image = [[UIImage alloc] initWithData:[images objectAtIndex:indexPath.row]];
             }else{
-                cell.textLabel.text = [searchArray objectAtIndex:indexPath.row];
-                cell.imageView.image = [[UIImage alloc] initWithData:[searchArrayImg objectAtIndex:indexPath.row]];
+                nameLabel.text = [searchArray objectAtIndex:indexPath.row];
+                detailLabel.text = [searchArrayIntros objectAtIndex:indexPath.row];
+                imageView.image = [[UIImage alloc] initWithData:[searchArrayImg objectAtIndex:indexPath.row]];
             }
             break;
             
         default:
             [self makeProfile];
             
-            cell.textLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"myname"];
-            cell.imageView.image = [[UIImage alloc] initWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"myimage"]];
+            nameLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"myname"];
+            detailLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"aboutme"];
+            imageView.image = [[UIImage alloc] initWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"myimage"]];
             break;
     }
     
+    NSLog(@"%@", nameLabel);
+    
+    [cell.contentView addSubview:nameLabel];
+    [cell.contentView addSubview:detailLabel];
+    [cell.contentView addSubview:imageView];
+    
     return cell;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Detemine if it's in editing mode
+    if (self.editing) {
+        return UITableViewCellEditingStyleDelete;
+    }
+    return UITableViewCellEditingStyleNone;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -227,6 +272,7 @@
         NSRange range = [[users objectAtIndex:i] rangeOfString:searchBar.text];
         if (range.location != NSNotFound) {
             [searchArray addObject:[users objectAtIndex:i]];
+            [searchArrayIntros addObject:[intros objectAtIndex:i]];
             [searchArrayImg addObject:[images objectAtIndex:i]];
         }
     }
