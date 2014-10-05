@@ -136,8 +136,11 @@
                     [talks removeObject:[talk2 objectAtIndex:[talk2 indexOfObject:[user2 objectAtIndex:hoge]]]];
                     [[NSUserDefaults standardUserDefaults] setObject:talks forKey:@"talks"];
                     
-                    NSString *key = [NSString stringWithFormat:@"keyword%@", [user2 objectAtIndex:hoge]];
-                    [[NSUserDefaults standardUserDefaults] setObject:[NSDictionary new] forKey:key];
+                    NSString *key = [NSString stringWithFormat:@"keywords%@", [user2 objectAtIndex:hoge]];
+                    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:key];
+                    
+                    key = [NSString stringWithFormat:@"replies%@", [user2 objectAtIndex:hoge]];
+                    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:key];
                 }//ここまで
                 
                 //ユーザ削除

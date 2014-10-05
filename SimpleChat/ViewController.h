@@ -29,7 +29,8 @@
     NSMutableArray *talks;
     NSMutableArray *images;
     
-    NSDictionary *keyword;
+    NSArray *keyword;
+    NSArray *reply;
     
     NSUserDefaults *store;
 }

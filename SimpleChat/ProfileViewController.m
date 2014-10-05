@@ -24,7 +24,6 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     [self back];
-    [self save];
 }
 
 - (void)didReceiveMemoryWarning
@@ -36,19 +35,34 @@
 -(void)back{
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
     
-    imgView.image = [[UIImage alloc] initWithData:[store objectForKey:@"myimage"]];
-    name.text = [store objectForKey:@"myname"];
-    
     about.font = [UIFont fontWithName:@"APJapanesefont" size:25];
-    about.text = [store objectForKey:@"aboutme"];
+    
+    if([store boolForKey:@"editMain"]){
+        imgView.image = [[UIImage alloc] initWithData:[store objectForKey:@"myimage"]];
+        name.text = [store objectForKey:@"myname"];
+        about.text = [store objectForKey:@"aboutme"];
+    }else{
+        int editNum = (int)[store integerForKey:@"editUserNum"];
+        
+        imgView.image = [[UIImage alloc] initWithData:[[store objectForKey:@"pimages"] objectAtIndex:editNum]];
+        name.text = [[store objectForKey:@"users"] objectAtIndex:editNum];
+        about.text = [[store objectForKey:@"intros"] objectAtIndex:editNum];
+    }
     
     self.navigationController.navigationBar.barTintColor = [UIColor purpleColor];
+    
+    [self save];
 }
 
 -(void)save{
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
     
-    [store setObject:[[NSData alloc] initWithData:UIImagePNGRepresentation(imgView.image)] forKey:@"myimage"];
+    if([store boolForKey:@"editMain"]) [store setObject:[[NSData alloc] initWithData:UIImagePNGRepresentation(imgView.image)] forKey:@"myimage"];
+    else{
+        NSMutableArray *images = [NSMutableArray arrayWithArray:[store objectForKey:@"pimages"]];
+        [images replaceObjectAtIndex:[store integerForKey:@"editUserNum"] withObject:[[NSData alloc] initWithData:UIImagePNGRepresentation(imgView.image)]];
+        [store setObject:images forKey:@"pimages"];
+    }
     
     [store synchronize];
 }

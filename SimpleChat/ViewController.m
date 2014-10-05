@@ -71,8 +71,9 @@
     [store synchronize];
     [tv reloadData];
     
-    notReadRows = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"notReadRows"]];
-    if(!notReadRows) notReadRows = [NSMutableArray array];
+    notReadRows = [NSMutableArray array];
+    if([[NSUserDefaults standardUserDefaults] objectForKey:@"notReadRows"])
+        notReadRows = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"notReadRows"]];
 }
 
 /*- (void) handleTap:(UITapGestureRecognizer *)tap {
@@ -159,14 +160,17 @@
     NSString *str = message[@"content"];
     
     NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
-    keyword = [NSDictionary new];
+    keyword = [NSArray new];
     if([store objectForKey:key]) keyword = [store objectForKey:key];
+    
+    key = [NSString stringWithFormat:@"replies%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
+    reply = [NSArray new];
+    if([store objectForKey:key]) reply = [store objectForKey:key];
     
     //キーワード判定
     if([keyword count] != 0){
-        NSArray *hoge = [NSArray arrayWithArray:[keyword allKeys]];
         for (int i = 0; i < [keyword count]; i++) {
-            NSRange range = [str rangeOfString:[hoge objectAtIndex:i]];
+            NSRange range = [str rangeOfString:[keyword objectAtIndex:i]];
             if (range.location != NSNotFound) {
                 float delay = arc4random()% 5 + 5;
                 
@@ -174,8 +178,7 @@
                 
                 hantei = i;
                 
-                NSArray *hoge = [NSArray arrayWithArray:[keyword allKeys]];
-                NSString *str = [NSString stringWithFormat:@"%@: %@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]], [keyword objectForKey:[hoge objectAtIndex:hantei]]];
+                NSString *str = [NSString stringWithFormat:@"%@: %@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]], [reply objectAtIndex:hantei]];
                 
                 [self localNotify:str withDelay:delay + [store floatForKey:@"kidokuDelay"]];
                 
@@ -186,8 +189,7 @@
 }
 
 -(void)henshin{//返信させる
-    NSArray *hoge = [NSArray arrayWithArray:[keyword allKeys]];
-    NSString *str = [keyword objectForKey:[hoge objectAtIndex:hantei]];
+    NSString *str = [reply objectAtIndex:hantei];
     
     [store setBool:YES forKey:@"henshin"];
     
@@ -222,23 +224,25 @@
     
     [_chatController addNewMessage:newMessageOb];
     
-    if(![store boolForKey:@"controllerOpen"]){
+    if(![[store objectForKey:@"controllerOpen"] isEqualToString:[talks objectAtIndex:(int)[store integerForKey:@"selecteduser"]]]){
         alert = YES;
         alertRow = (int)[store integerForKey:@"selecteduser"];
-        
-        [tv moveRowAtIndexPath:[NSIndexPath indexPathForRow:alertRow inSection:0] toIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-        
-        NSString *hoge = [talks objectAtIndex:0];
-        [talks replaceObjectAtIndex:0 withObject:[talks objectAtIndex:alertRow]];
-        [talks removeObjectAtIndex:alertRow];
-        [talks insertObject:hoge atIndex:1];
-        
-        [notReadRows addObject:[talks objectAtIndex:0]];
-        [store setObject:notReadRows forKey:@"notReadRows"];
-        [store synchronize];
-        
-        [tv reloadData];
     }
+    //[tv moveRowAtIndexPath:[NSIndexPath indexPathForRow:alertRow inSection:0] toIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    
+    NSString *hoge = [talks objectAtIndex:0];
+    [talks replaceObjectAtIndex:0 withObject:[talks objectAtIndex:alertRow]];
+    [talks removeObjectAtIndex:alertRow];
+    [talks insertObject:hoge atIndex:1];
+    [store setObject:talks forKey:@"talks"];
+    
+    [notReadRows addObject:[talks objectAtIndex:0]];
+    [store setObject:notReadRows forKey:@"notReadRows"];
+    
+    [store synchronize];
+    
+    [tv reloadData];
+    //}
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -274,31 +278,32 @@
     
     cell.accessoryType = UITableViewCellAccessoryNone;
     
-    if(alert && indexPath.row == alertRow){
+    if(alert && !indexPath.row){
         [cell.contentView addSubview:alertImg];
         AudioServicesPlaySystemSound(1000);
         alert = NO;
-    }else if([notReadRows containsObject:[talks objectAtIndex:indexPath.row]] && searching) [cell.contentView addSubview:alertImg];
-    else if([notReadRows containsObject:[searchArray objectAtIndex:indexPath.row]] && !searching) [cell.contentView addSubview:alertImg];
+    }else if(!searching && [notReadRows containsObject:[talks objectAtIndex:indexPath.row]]) [cell.contentView addSubview:alertImg];
+    else if(searching && [notReadRows containsObject:[searchArray objectAtIndex:indexPath.row]]) [cell.contentView addSubview:alertImg];
+    else [alertImg removeFromSuperview];
     
     UIImage *hoge;
     NSString *key;
     
-    UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 5, 200, 30)];
-    mainLabel.font = [UIFont systemFontOfSize:18];
+    UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 5, 200, 30)];
+    mainLabel.font = [UIFont fontWithName:@"Hiragino Kaku Gothic ProN W6" size:18];
     
     if(!searching){//検索中でない
         mainLabel.text = [talks objectAtIndex:indexPath.row];//トーク相手
         
         key = [NSString stringWithFormat:@"message%@", [talks objectAtIndex:indexPath.row]];
         
-        hoge = [[UIImage alloc] initWithData:[images objectAtIndex:indexPath.row]];//トプ画
+        hoge = [[UIImage alloc] initWithData:[images objectAtIndex:[users indexOfObject:[talks objectAtIndex:indexPath.row]]]];//トプ画
     }else{//検索中
         mainLabel.text = [searchArray objectAtIndex:indexPath.row];
         
         key = [NSString stringWithFormat:@"message%@", [searchArray objectAtIndex:indexPath.row]];
         
-        hoge = [[UIImage alloc] initWithData:[searchArrayImg objectAtIndex:indexPath.row]];
+        hoge = [[UIImage alloc] initWithData:[searchArrayImg objectAtIndex:[users indexOfObject:[talks objectAtIndex:indexPath.row]]]];
     }
     
     NSArray *hogeArray = [NSArray array];
@@ -309,7 +314,7 @@
     
     if(hogeArray.count != 0) dic = [[NSDictionary alloc] initWithDictionary:[hogeArray objectAtIndex:hogeArray.count - 1]];
     
-    UILabel *subLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 35, 200, 30)];
+    UILabel *subLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 35, 200, 30)];
     subLabel.textColor = [UIColor lightGrayColor];
     subLabel.font = [UIFont systemFontOfSize:15];
     subLabel.text = dic[@"content"];
@@ -332,7 +337,7 @@
     //ここまで
     ///ここまで
     
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 50, 50)];//トプ画表示
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 40, 40)];//トプ画表示
     imgView.image = hoge;
     
     [cell.contentView addSubview:mainLabel];
@@ -366,7 +371,10 @@
         [store setObject:talks forKey:@"talks"];
         
         NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:indexPath.row]];
-        [store setObject:[NSDictionary new] forKey:key];
+        [store setObject:nil forKey:key];
+        
+        key = [NSString stringWithFormat:@"replies%@", [talks objectAtIndex:indexPath.row]];
+        [store setObject:nil forKey:key];
         
         [store synchronize];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];

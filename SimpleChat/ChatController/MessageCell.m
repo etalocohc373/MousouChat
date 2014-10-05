@@ -113,6 +113,8 @@ static int minimumHeight = 30;
         }
     }
     
+    [NSObject cancelPreviousPerformRequestsWithTarget:nil selector:@selector(makeReadLabel) object:nil];
+    
     [self performSelector:@selector(makeReadLabel) withObject:nil afterDelay:[[NSUserDefaults standardUserDefaults]floatForKey:@"kidokuDelay"]];
     
     return self;

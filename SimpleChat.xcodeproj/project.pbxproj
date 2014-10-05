@@ -37,6 +37,7 @@
 		EC6800DC1917B3EF00DEE8CF /* TouchableTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6800DB1917B3EF00DEE8CF /* TouchableTableView.m */; };
 		EC6800DF1918796800DEE8CF /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6800DE1918796800DEE8CF /* ProfileViewController.m */; };
 		EC6800E6191882E300DEE8CF /* savebt.png in Resources */ = {isa = PBXBuildFile; fileRef = EC6800E5191882E300DEE8CF /* savebt.png */; };
+		EC9AC03919E0D4F10098707E /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC9AC03819E0D4F10098707E /* Launch Screen.xib */; };
 		ECAC824719C7B70800A32514 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 809B507C18D7B55B0032A48D /* Main.storyboard */; };
 		ECAC824919CAEA1600A32514 /* addchat.png in Resources */ = {isa = PBXBuildFile; fileRef = ECAC824819CAEA1600A32514 /* addchat.png */; };
 		ECAC824C19CAEB1800A32514 /* EditFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECAC824B19CAEB1800A32514 /* EditFriendViewController.m */; };
@@ -112,6 +113,8 @@
 		EC6800DD1918796800DEE8CF /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		EC6800DE1918796800DEE8CF /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		EC6800E5191882E300DEE8CF /* savebt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = savebt.png; sourceTree = "<group>"; };
+		EC9AC03619E035380098707E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		EC9AC03819E0D4F10098707E /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		ECAC824819CAEA1600A32514 /* addchat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addchat.png; sourceTree = "<group>"; };
 		ECAC824A19CAEB1800A32514 /* EditFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditFriendViewController.h; sourceTree = "<group>"; };
 		ECAC824B19CAEB1800A32514 /* EditFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditFriendViewController.m; sourceTree = "<group>"; };
@@ -186,6 +189,7 @@
 		809B506918D7B55B0032A48D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EC9AC03619E035380098707E /* QuartzCore.framework */,
 				EC02801F19C6C505003C9CAD /* AudioToolbox.framework */,
 				ECF3657B191777A8002EFD3A /* CoreImage.framework */,
 				809B506A18D7B55B0032A48D /* Foundation.framework */,
@@ -207,22 +211,23 @@
 				809B507C18D7B55B0032A48D /* Main.storyboard */,
 				EC5AC8E0197A9FA900869567 /* FriendsViewController.h */,
 				EC5AC8E1197A9FA900869567 /* FriendsViewController.m */,
-				ECAC824A19CAEB1800A32514 /* EditFriendViewController.h */,
-				ECAC824B19CAEB1800A32514 /* EditFriendViewController.m */,
 				ECF3657819171928002EFD3A /* AddUserViewController.h */,
 				ECF3657919171928002EFD3A /* AddUserViewController.m */,
-				ECF365751917152E002EFD3A /* ViewController.h */,
-				ECF365761917152E002EFD3A /* ViewController.m */,
-				ECC2ADB4197AA5AB0015CCF5 /* AddTalkViewController.h */,
-				ECC2ADB5197AA5AB0015CCF5 /* AddTalkViewController.m */,
+				ECAC824A19CAEB1800A32514 /* EditFriendViewController.h */,
+				ECAC824B19CAEB1800A32514 /* EditFriendViewController.m */,
 				EC6800DD1918796800DEE8CF /* ProfileViewController.h */,
 				EC6800DE1918796800DEE8CF /* ProfileViewController.m */,
 				ECC2ADB7197B7F490015CCF5 /* EditProfileViewController.h */,
 				ECC2ADB8197B7F490015CCF5 /* EditProfileViewController.m */,
+				ECF365751917152E002EFD3A /* ViewController.h */,
+				ECF365761917152E002EFD3A /* ViewController.m */,
+				ECC2ADB4197AA5AB0015CCF5 /* AddTalkViewController.h */,
+				ECC2ADB5197AA5AB0015CCF5 /* AddTalkViewController.m */,
 				ECF3653D191616CF002EFD3A /* MasterViewController.h */,
 				ECF3653E191616CF002EFD3A /* MasterViewController.m */,
 				EC18ECA31915D507004B4215 /* SettingViewController.h */,
 				EC18ECA41915D507004B4215 /* SettingViewController.m */,
+				EC9AC03819E0D4F10098707E /* Launch Screen.xib */,
 				809B508218D7B55B0032A48D /* Images.xcassets */,
 				809B507118D7B55B0032A48D /* Supporting Files */,
 			);
@@ -383,6 +388,7 @@
 				ECC2BB4A19C6CD1C00BA7DC7 /* massu.jpg in Resources */,
 				ECAC824919CAEA1600A32514 /* addchat.png in Resources */,
 				ECF3658419178148002EFD3A /* friends.png in Resources */,
+				EC9AC03919E0D4F10098707E /* Launch Screen.xib in Resources */,
 				ECEF183A19A220B600511EA5 /* mizutama.png in Resources */,
 				ECF36586191781F9002EFD3A /* plus.png in Resources */,
 				EC6800E6191882E300DEE8CF /* savebt.png in Resources */,

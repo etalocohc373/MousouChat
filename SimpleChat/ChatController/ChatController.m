@@ -134,12 +134,12 @@ static int chatInputStartingHeight = 40;
     
     [self.view addSubview:_myCollectionView];
     
-    [store setBool:YES forKey:@"controllerOpen"];
-    [store synchronize];
-    
     NSArray *array = [NSArray array];
-    array = [store objectForKey:@"users"];
+    array = [store objectForKey:@"talks"];
     self.title = [array objectAtIndex:[store integerForKey:@"selecteduser"]];
+    
+    [store setObject:self.title forKey:@"controllerOpen"];
+    [store synchronize];
     
     // Scroll CollectionView Before We Start
     [self.view addSubview:_chatInput];
@@ -177,7 +177,7 @@ static int chatInputStartingHeight = 40;
 
 -(void)viewWillDisappear:(BOOL)animated{
     [store setFloat:0 forKey:@"kidokuDelay"];
-    [store setBool:NO forKey:@"controllerOpen"];
+    [store setObject:nil forKey:@"controllerOpen"];
     [store synchronize];
 }
 

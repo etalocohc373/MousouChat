@@ -15,7 +15,8 @@
     IBOutlet UITextField *tf2;
     IBOutlet UIBarButtonItem *done;
     
-    NSMutableDictionary *keyword;
+    NSMutableArray *keyword;
+    NSMutableArray *reply;
     NSArray *talks;
     
     int kaisu;

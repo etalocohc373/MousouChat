@@ -45,16 +45,18 @@
     
     talks = [NSArray arrayWithArray:[store objectForKey:@"talks"]];
     
-    keyword = [NSMutableDictionary new];
+    keyword = [NSMutableArray array];
+    reply = [NSMutableArray array];
     
-    NSDictionary *keywordmodoki = [NSDictionary new];
-    
+    NSArray *keywordmodoki = [NSArray array];
     NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
     keywordmodoki = [store objectForKey:key];
+    if(keywordmodoki) keyword = [keywordmodoki mutableCopy];
     
-    if(keywordmodoki){
-        keyword = [keywordmodoki mutableCopy];
-    }
+    keywordmodoki = [NSArray array];
+    key = [NSString stringWithFormat:@"replies%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
+    keywordmodoki = [store objectForKey:key];
+    if(keywordmodoki) reply = [keywordmodoki mutableCopy];
     
     /*[keyword removeAllObjects];
     [word removeAllObjects];
@@ -93,17 +95,18 @@
     //kaisu = 0;
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
     
-    [keyword setObject:tf2.text forKey:tf.text];
-    
+    [keyword addObject:tf.text];
     NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
     [store setObject:keyword forKey:key];
     
-    NSLog(@"%@", keyword);
+    [reply addObject:tf2.text];
+    key = [NSString stringWithFormat:@"replies%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
+    [store setObject:reply forKey:key];
     
     [store synchronize];
 
     //[self.delegate settingViewControllerDidFinish:self item:self.tf.text];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self back];
 }
 
 -(IBAction)back{

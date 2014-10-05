@@ -22,7 +22,6 @@
 @implementation MasterViewController
 
 
-
 - (void)awakeFromNib
 {
     [super awakeFromNib];
@@ -67,15 +66,20 @@
     
     talks = [NSArray arrayWithArray:[store objectForKey:@"talks"]];
     
-    keyword = [NSMutableDictionary new];
+    keyword = [NSMutableArray array];
     
-    NSDictionary *keywordmodoki = [NSDictionary new];
-    
+    NSArray *keywordmodoki = [NSArray array];
     NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
     keywordmodoki = [store objectForKey:key];
-    
     if(keywordmodoki){
         keyword = [keywordmodoki mutableCopy];
+    }
+    
+    reply = [NSMutableArray array];
+    key = [NSString stringWithFormat:@"replies%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
+    keywordmodoki = [store objectForKey:key];
+    if(keywordmodoki){
+        reply = [keywordmodoki mutableCopy];
     }
     
     [tv reloadData];
@@ -105,10 +109,8 @@
     
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
     //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    NSArray *hoge;
-    hoge = [NSArray arrayWithArray:[keyword allKeys]];
     
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[keyword objectForKey:[hoge objectAtIndex:indexPath.row]]];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", [reply objectAtIndex:indexPath.row]];
     
     UIImageView *imageView;
     UIImage *image;
@@ -117,7 +119,7 @@
     cell.backgroundView = imageView;
     
     //NSDate *object = _objects[indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@",[hoge objectAtIndex:indexPath.row]];//[object description];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", [keyword objectAtIndex:indexPath.row]];//[object description];
     
     cell.detailTextLabel.textColor = [UIColor blackColor];
     
@@ -135,9 +137,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [_objects removeObjectAtIndex:indexPath.row];
         
-        NSArray *hoge = [NSArray arrayWithArray:[keyword allKeys]];
-        
-        [keyword removeObjectForKey:[hoge objectAtIndex:indexPath.row]];
+        [keyword removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
@@ -146,6 +146,9 @@
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
     NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
     [store setObject:keyword forKey:key];
+    
+    key = [NSString stringWithFormat:@"replies%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
+    [store setObject:reply forKey:key];
     
     [store synchronize];
 }
@@ -162,14 +165,20 @@
 {
     int from = (int)sourceIndexPath.row;
     int to = (int)destinationIndexPath.row;
-    NSArray *hoge = [NSArray arrayWithArray:[keyword allKeys]];
     
-    NSString *hoge2 = [keyword objectForKey:[hoge objectAtIndex:from]];
-    [keyword removeObjectForKey:[hoge objectAtIndex:from]];
-    [keyword setObject:[hoge objectAtIndex:to] forKey:hoge2];
+    NSString *hogekey = [keyword objectAtIndex:from];
+    [keyword removeObjectAtIndex:from];
+    [keyword insertObject:hogekey atIndex:to];
+    
+    hogekey = [reply objectAtIndex:from];
+    [reply removeObjectAtIndex:from];
+    [reply insertObject:hogekey atIndex:to];
     
     NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]]];
     [[NSUserDefaults standardUserDefaults] setObject:keyword forKey:key];
+    
+    key = [NSString stringWithFormat:@"replies%@", [talks objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]]];
+    [[NSUserDefaults standardUserDefaults] setObject:reply forKey:key];
     
     [[NSUserDefaults standardUserDefaults] synchronize];
 }

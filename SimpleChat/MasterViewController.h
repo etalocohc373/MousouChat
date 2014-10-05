@@ -15,7 +15,8 @@
     
     UIBarButtonItem *back;
     
-    NSMutableDictionary *keyword;
+    NSMutableArray *keyword;
+    NSMutableArray *reply;
     NSArray *talks;
     
     int rows;

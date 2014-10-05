@@ -29,12 +29,7 @@
     
     //[self reset];
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    
-    
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
-    
-    
     
     //self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
@@ -47,6 +42,8 @@
     searchArray = [NSMutableArray array];
     searchArrayIntros = [NSMutableArray array];
     searchArrayImg = [NSMutableArray array];
+    
+    self.tableView.sectionHeaderHeight = 19;
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
 }
@@ -146,11 +143,11 @@
     // Configure the cell...
     
     UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 5, 250, 33)];
+    nameLabel.font = [UIFont fontWithName:@"Hiragino Kaku Gothic ProN W6" size:17];
     
     UILabel *detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(210, 3, 100, 37)];
     detailLabel.numberOfLines = 2;
-    detailLabel.textAlignment = NSTextAlignmentRight;
-    detailLabel.font = [UIFont systemFontOfSize:12];
+    detailLabel.font = [UIFont fontWithName:@"Hiragino Kaku Gothic ProN W6" size:12];
     detailLabel.textColor = [UIColor lightGrayColor];
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, 43, 43)];
@@ -169,7 +166,7 @@
             break;
             
         default:
-            [self makeProfile];
+            [self createProfile];
             
             nameLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"myname"];
             detailLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"aboutme"];
@@ -177,7 +174,7 @@
             break;
     }
     
-    NSLog(@"%@", nameLabel);
+    if([detailLabel.text lengthOfBytesUsingEncoding:NSShiftJISStringEncoding] < 16) detailLabel.textAlignment = NSTextAlignmentRight;
     
     [cell.contentView addSubview:nameLabel];
     [cell.contentView addSubview:detailLabel];
@@ -194,17 +191,29 @@
     return UITableViewCellEditingStyleNone;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 19)];
+    headerView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0];
+    tableView.sectionHeaderHeight = headerView.frame.size.height;
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, headerView.frame.size.width - 10, 19)];
+    
+    NSString *title = [NSString stringWithFormat:@"友だち (%lu)", (unsigned long)users.count];
     switch (section) {
         case 0:
-            return @"プロフィール";
+            label.text = @"プロフィール";
             break;
             
         default:
-            return @"友だち";
+            label.text = title;
             break;
     }
+    
+    label.font = [UIFont fontWithName:@"Hiragino Kaku Gothic ProN W6" size:12];
+    label.textColor = [UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:1.0];
+    
+    [headerView addSubview:label];
+    return headerView;
 }
 
 // Override to support conditional editing of the table view.
@@ -240,8 +249,11 @@
                 [talks removeObjectAtIndex:[talks indexOfObject:[users objectAtIndex:deletepath.row]]];
                 [[NSUserDefaults standardUserDefaults] setObject:talks forKey:@"talks"];
                 
-                NSString *key = [NSString stringWithFormat:@"keyword%@", [users objectAtIndex:deletepath.row]];
-                [[NSUserDefaults standardUserDefaults] setObject:[NSDictionary new] forKey:key];
+                NSString *key = [NSString stringWithFormat:@"keywords%@", [users objectAtIndex:deletepath.row]];
+                [[NSUserDefaults standardUserDefaults] setObject:nil forKey:key];
+                
+                key = [NSString stringWithFormat:@"replies%@", [users objectAtIndex:deletepath.row]];
+                [[NSUserDefaults standardUserDefaults] setObject:nil forKey:key];
             }
             
             [users removeObjectAtIndex:deletepath.row];
@@ -259,8 +271,16 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
     
+    if(!indexPath.section) [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"editMain"];
+    else{
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"editMain"];
+        [[NSUserDefaults standardUserDefaults] setInteger:indexPath.row forKey:@"editUserNum"];
+    }
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     UIViewController *viewcon = [self.storyboard instantiateViewControllerWithIdentifier:@"profile"];
-    if(!indexPath.row && !indexPath.section) [self presentViewController:viewcon animated:YES completion:nil];
+    [self presentViewController:viewcon animated:YES completion:nil];
 }
 
 -(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
@@ -293,7 +313,7 @@
     [searchBar resignFirstResponder];
 }
 
--(void)makeProfile{
+-(void)createProfile{
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
     
     if(![store objectForKey:@"myimage"]){
