@@ -146,6 +146,7 @@ static int chatInputStartingHeight = 40;
     
     _messagesArray = [NSMutableArray array];
     
+#pragma mark- HELPME
     [_myCollectionView reloadData];
     
     //[_TopBar setTitle];
