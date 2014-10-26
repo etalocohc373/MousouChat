@@ -38,6 +38,7 @@
 		EC6800DF1918796800DEE8CF /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6800DE1918796800DEE8CF /* ProfileViewController.m */; };
 		EC6800E6191882E300DEE8CF /* savebt.png in Resources */ = {isa = PBXBuildFile; fileRef = EC6800E5191882E300DEE8CF /* savebt.png */; };
 		EC9AC03919E0D4F10098707E /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC9AC03819E0D4F10098707E /* Launch Screen.xib */; };
+		EC9AC03A19E179810098707E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC9AC03619E035380098707E /* QuartzCore.framework */; };
 		ECAC824719C7B70800A32514 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 809B507C18D7B55B0032A48D /* Main.storyboard */; };
 		ECAC824919CAEA1600A32514 /* addchat.png in Resources */ = {isa = PBXBuildFile; fileRef = ECAC824819CAEA1600A32514 /* addchat.png */; };
 		ECAC824C19CAEB1800A32514 /* EditFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECAC824B19CAEB1800A32514 /* EditFriendViewController.m */; };
@@ -146,6 +147,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC9AC03A19E179810098707E /* QuartzCore.framework in Frameworks */,
 				EC02802019C6C505003C9CAD /* AudioToolbox.framework in Frameworks */,
 				ECF3657C191777A8002EFD3A /* CoreImage.framework in Frameworks */,
 				809B506D18D7B55B0032A48D /* CoreGraphics.framework in Frameworks */,
@@ -354,6 +356,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Logan Wright";
 				TargetAttributes = {
+					809B506618D7B55B0032A48D = {
+						DevelopmentTeam = V8KD73LX87;
+					};
 					809B508718D7B55B0032A48D = {
 						TestTargetID = 809B506618D7B55B0032A48D;
 					};

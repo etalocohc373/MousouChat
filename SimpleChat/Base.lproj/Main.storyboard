@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="nR1-iW-93P">
     <dependencies>
-        <deployment defaultVersion="1808" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
@@ -174,11 +173,12 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="トーク追加" id="ViZ-MV-HPd">
-                        <barButtonItem key="rightBarButtonItem" title="キャンセル" id="aYB-K4-pAf">
+                        <barButtonItem key="leftBarButtonItem" title="キャンセル" id="aYB-K4-pAf">
                             <connections>
                                 <action selector="cancel" destination="srI-ah-r4r" id="wIe-Sy-WTP"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" id="V3a-d9-fqz"/>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Nk-qg-ps6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -374,7 +374,7 @@
                         <searchBar key="tableHeaderView" contentMode="redraw" text="" placeholder="友だちを検索" id="gda-vC-GUq">
                             <rect key="frame" x="0.0" y="64" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <color key="barTintColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="barTintColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
                                 <outlet property="delegate" destination="1g9-4h-YwN" id="JWc-Fd-ZgO"/>
@@ -416,7 +416,7 @@
                                 <segue destination="FA8-s0-jiV" kind="modal" id="BGy-jk-jd9"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="plus.png" id="OZN-kD-CmY">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="OZN-kD-CmY">
                             <connections>
                                 <segue destination="1dA-Ul-KrY" kind="modal" id="OX3-7f-afP"/>
                             </connections>
@@ -430,11 +430,11 @@
             </objects>
             <point key="canvasLocation" x="1574" y="-1363"/>
         </scene>
-        <!--Friends-->
+        <!--友だち-->
         <scene sceneID="0ue-WI-nZK">
             <objects>
                 <navigationController definesPresentationContext="YES" id="a2d-Q5-8mg" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Friends" image="friends.png" id="fmh-fJ-K9k"/>
+                    <tabBarItem key="tabBarItem" title="友だち" image="friends.png" id="fmh-fJ-K9k"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="1Vl-q8-SSb">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -484,7 +484,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Talks" image="words.png" id="Jki-R3-47j"/>
+                    <tabBarItem key="tabBarItem" title="トーク" image="words.png" id="Jki-R3-47j"/>
                     <navigationItem key="navigationItem" title="トーク" id="kiB-bB-LfL">
                         <barButtonItem key="leftBarButtonItem" title="編集" id="3Bk-RY-nuz">
                             <connections>
@@ -606,7 +606,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nfd-QC-Syd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1574" y="691"/>
+            <point key="canvasLocation" x="1961" y="-2679"/>
         </scene>
         <!--Edit Profile View Controller-->
         <scene sceneID="cvD-L4-y6C">
@@ -648,7 +648,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="15O-9L-yNT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1954" y="691"/>
+            <point key="canvasLocation" x="2341" y="-2679"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="KZL-vb-5zc">
@@ -668,6 +668,41 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="85u-dP-7q8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="773" y="10"/>
+        </scene>
+        <!--Collection View Controller-->
+        <scene sceneID="f2q-q2-VPa">
+            <objects>
+                <collectionViewController id="wro-Cp-gai" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="tvM-s4-mIb">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="z5q-Zg-8hu">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="Hwv-NA-yf8">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="wro-Cp-gai" id="rcc-qs-lzR"/>
+                            <outlet property="delegate" destination="wro-Cp-gai" id="o00-Cm-EkL"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KQ2-g4-W5l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1180" y="663"/>
         </scene>
         <!--Item-->
         <scene sceneID="RQ4-Pd-nK1">
@@ -705,15 +740,14 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NOL-1l-795" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1180" y="691"/>
+            <point key="canvasLocation" x="1567" y="-2679"/>
         </scene>
     </scenes>
     <resources>
-        <image name="addchat.png" width="25" height="25"/>
+        <image name="addchat.png" width="23" height="23"/>
         <image name="cancel.png" width="25" height="25"/>
         <image name="done.png" width="25" height="25"/>
         <image name="friends.png" width="35" height="25"/>
-        <image name="plus.png" width="21" height="20"/>
         <image name="savebt.png" width="439" height="108"/>
         <image name="words.png" width="31" height="30"/>
     </resources>

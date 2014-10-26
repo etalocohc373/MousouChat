@@ -33,9 +33,9 @@
     
     //self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
-    self.tabBarController.tabBar.barTintColor = [UIColor purpleColor];
+    self.tabBarController.tabBar.barTintColor = [UIColor colorWithRed:0.227 green:0.114 blue:0.369 alpha:1.0];
     
-    self.navigationController.navigationBar.barTintColor = [UIColor purpleColor];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.227 green:0.114 blue:0.369 alpha:1.0];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
@@ -43,9 +43,14 @@
     searchArrayIntros = [NSMutableArray array];
     searchArrayImg = [NSMutableArray array];
     
-    self.tableView.sectionHeaderHeight = 19;
+    self.tableView.sectionHeaderHeight = 23;
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    
+    [UINavigationBar appearance].tintColor = [UIColor whiteColor];
+    [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
+    
+    self.navigationController.tabBarController.selectedIndex = 1;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -99,6 +104,8 @@
     [store synchronize];
     
     [self.tableView reloadData];
+    
+    [self createNavTitle:[NSString stringWithFormat:@"友だち (%lu人)", users.count]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -142,15 +149,15 @@
     
     // Configure the cell...
     
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 5, 250, 33)];
+    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 6.5, 250, 33)];
     nameLabel.font = [UIFont fontWithName:@"Hiragino Kaku Gothic ProN W6" size:17];
     
-    UILabel *detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(210, 3, 100, 37)];
+    UILabel *detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(210, 6.5, 100, 37)];
     detailLabel.numberOfLines = 2;
     detailLabel.font = [UIFont fontWithName:@"Hiragino Kaku Gothic ProN W6" size:12];
     detailLabel.textColor = [UIColor lightGrayColor];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, 43, 43)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
     
     switch (indexPath.section) {
         case 1:
@@ -193,10 +200,10 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 19)];
-    headerView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 23)];
+    headerView.backgroundColor = [UIColor colorWithRed:0.98 green:0.98 blue:0.98 alpha:1.0];
     tableView.sectionHeaderHeight = headerView.frame.size.height;
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, headerView.frame.size.width - 10, 19)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, headerView.frame.size.width - 10, 23)];
     
     NSString *title = [NSString stringWithFormat:@"友だち (%lu)", (unsigned long)users.count];
     switch (section) {
@@ -209,11 +216,15 @@
             break;
     }
     
-    label.font = [UIFont fontWithName:@"Hiragino Kaku Gothic ProN W6" size:12];
+    label.font = [UIFont fontWithName:@"Hiragino Kaku Gothic ProN W6" size:11.5];
     label.textColor = [UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:1.0];
     
     [headerView addSubview:label];
     return headerView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 50.0;
 }
 
 // Override to support conditional editing of the table view.
@@ -311,6 +322,17 @@
     
     searchBar.showsCancelButton = NO;
     [searchBar resignFirstResponder];
+}
+
+-(void)createNavTitle:(NSString *)title{
+    UILabel* tLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];
+    tLabel.text = title;
+    tLabel.textColor = [UIColor whiteColor];
+    tLabel.backgroundColor = [UIColor clearColor];
+    tLabel.textAlignment = NSTextAlignmentCenter;
+    tLabel.adjustsFontSizeToFitWidth = YES;
+    tLabel.font = [UIFont fontWithName:@"MS Gothic" size:16];
+    self.navigationItem.titleView = tLabel;
 }
 
 -(void)createProfile{

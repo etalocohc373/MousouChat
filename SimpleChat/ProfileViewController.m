@@ -18,8 +18,7 @@
 {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    [self createNavTitle:@"プロフィール"];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -35,7 +34,7 @@
 -(void)back{
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
     
-    about.font = [UIFont fontWithName:@"APJapanesefont" size:25];
+    about.font = [UIFont fontWithName:@"Hiragino Kaku Gothic ProN W6" size:22];
     
     if([store boolForKey:@"editMain"]){
         imgView.image = [[UIImage alloc] initWithData:[store objectForKey:@"myimage"]];
@@ -49,7 +48,7 @@
         about.text = [[store objectForKey:@"intros"] objectAtIndex:editNum];
     }
     
-    self.navigationController.navigationBar.barTintColor = [UIColor purpleColor];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.227 green:0.114 blue:0.369 alpha:1.0];
     
     [self save];
 }
@@ -154,6 +153,17 @@
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)createNavTitle:(NSString *)title{
+    UILabel* tLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 40)];
+    tLabel.text = title;
+    tLabel.textColor = [UIColor whiteColor];
+    tLabel.backgroundColor = [UIColor clearColor];
+    tLabel.textAlignment = NSTextAlignmentCenter;
+    tLabel.adjustsFontSizeToFitWidth = YES;
+    tLabel.font = [UIFont fontWithName:@"MS Gothic" size:19];
+    self.navigationItem.titleView = tLabel;
 }
 
 @end

@@ -78,7 +78,7 @@ static int chatInputStartingHeight = 40;
         // ChatInput
         _chatInput = [[ChatInput alloc]init];
         _chatInput.stopAutoClose = NO;
-        _chatInput.placeholderLabel.text = @"  Send A Message";
+        //_chatInput.placeholderLabel.text = @"  Send A Message";
         _chatInput.delegate = self;
         _chatInput.backgroundColor = [UIColor colorWithWhite:1 alpha:0.825f];
         
@@ -126,6 +126,10 @@ static int chatInputStartingHeight = 40;
     [super viewDidLoad];
     
     store = [NSUserDefaults standardUserDefaults];
+    
+    UISwipeGestureRecognizer *swipeRightGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(back)];
+    swipeRightGesture.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.view addGestureRecognizer:swipeRightGesture];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -146,7 +150,6 @@ static int chatInputStartingHeight = 40;
     
     _messagesArray = [NSMutableArray array];
     
-#pragma mark- HELPME
     [_myCollectionView reloadData];
     
     //[_TopBar setTitle];
@@ -543,6 +546,10 @@ static int chatInputStartingHeight = 40;
 }
 
 
+
+-(void)back{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (UIStoryboard *)getStoryBoard2
 {

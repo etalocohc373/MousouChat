@@ -36,7 +36,7 @@
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     self.tableView.allowsSelection = NO;
     
-    self.navigationController.navigationBar.barTintColor = [UIColor purpleColor];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.227 green:0.114 blue:0.369 alpha:1.0];
     
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
     kaisu = (int)[store integerForKey:@"kaisu"];

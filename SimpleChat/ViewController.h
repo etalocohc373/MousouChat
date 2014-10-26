@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <QuartzCore/QuartzCore.h>
 #import "ChatController.h"
 
 @interface ViewController : UIViewController <ChatControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>{
@@ -25,6 +25,7 @@
     
     NSMutableArray *searchArray;
     NSMutableArray *searchArrayImg;
+    
     NSMutableArray *notReadRows;
     NSMutableArray *talks;
     NSMutableArray *images;

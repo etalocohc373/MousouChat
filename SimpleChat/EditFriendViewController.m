@@ -27,7 +27,7 @@
 {
     [super viewDidLoad];
     
-    self.navigationController.navigationBar.barTintColor = [UIColor purpleColor];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.227 green:0.114 blue:0.369 alpha:1.0];
     
     self.tableView.allowsMultipleSelection = YES;
     

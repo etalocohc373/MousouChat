@@ -33,12 +33,6 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     [self back];
-    
-    /*NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];*/
-    
-    //[store setObject:[NSData data] forKey:@"messageまっすー"];
-    //[store synchronize];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -107,18 +101,23 @@
     
     tv.rowHeight = 70.0;
     
-    self.navigationController.navigationBar.barTintColor = [UIColor purpleColor];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.227 green:0.114 blue:0.369 alpha:1.0];
     
     searchArray = [NSMutableArray array];
     searchArrayImg = [NSMutableArray array];
     
     searchBar = [[UISearchBar alloc] init];
-    searchBar.barTintColor = [UIColor purpleColor];
+    searchBar.barTintColor = [UIColor colorWithRed:0.98 green:0.98 blue:0.98 alpha:1.0];
     searchBar.placeholder = @"トークを検索";
     searchBar.delegate = self;
     [searchBar sizeToFit];
     
     tv.tableHeaderView = searchBar;
+    
+    [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
+    [UINavigationBar appearance].tintColor = [UIColor whiteColor];
+    
+    [self createNavTitle:@"トーク"];
 }
 
 -(IBAction)edit{
@@ -192,6 +191,7 @@
     NSString *str = [reply objectAtIndex:hantei];
     
     [store setBool:YES forKey:@"henshin"];
+    [store synchronize];
     
     NSMutableDictionary * newMessageOb = [NSMutableDictionary new];
     newMessageOb[kMessageContent] = str;
@@ -224,6 +224,7 @@
     
     [_chatController addNewMessage:newMessageOb];
     
+    if(talks.count > 1 && [store integerForKey:@"selecteduser"]){
     if(![[store objectForKey:@"controllerOpen"] isEqualToString:[talks objectAtIndex:(int)[store integerForKey:@"selecteduser"]]]){
         alert = YES;
         alertRow = (int)[store integerForKey:@"selecteduser"];
@@ -242,6 +243,7 @@
     [store synchronize];
     
     [tv reloadData];
+    }
     //}
 }
 
@@ -274,7 +276,6 @@
     //アイコンバッジ作成
     UIImageView *alertImg = [[UIImageView alloc] initWithFrame:CGRectMake(280, 22.5, 25, 25)];
     alertImg.image = [UIImage imageNamed:@"badge_1.png"];
-    //ここまで
     
     cell.accessoryType = UITableViewCellAccessoryNone;
     
@@ -285,6 +286,7 @@
     }else if(!searching && [notReadRows containsObject:[talks objectAtIndex:indexPath.row]]) [cell.contentView addSubview:alertImg];
     else if(searching && [notReadRows containsObject:[searchArray objectAtIndex:indexPath.row]]) [cell.contentView addSubview:alertImg];
     else [alertImg removeFromSuperview];
+    //ここまで
     
     UIImage *hoge;
     NSString *key;
@@ -310,20 +312,20 @@
     if([store objectForKey:key]) hogeArray = [NSArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:[store objectForKey:key]]];
     
     ///最新トーク取得
-    NSDictionary *dic;
+    NSDictionary *dic = [NSDictionary new];
     
     if(hogeArray.count != 0) dic = [[NSDictionary alloc] initWithDictionary:[hogeArray objectAtIndex:hogeArray.count - 1]];
     
-    UILabel *subLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 35, 200, 30)];
+    UILabel *subLabel = [[UILabel alloc] initWithFrame:CGRectMake(65, 35, 200, 30)];
     subLabel.textColor = [UIColor lightGrayColor];
-    subLabel.font = [UIFont systemFontOfSize:15];
+    subLabel.font = [UIFont fontWithName:@"Hiragino Kaku Gothic ProN W6" size:15];
     subLabel.text = dic[@"content"];
     
     if(!subLabel.text) subLabel.text = @"トーク内容がまだありません";
     
     UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(280, 5, 50, 20)];
     timeLabel.textColor = [UIColor lightGrayColor];
-    timeLabel.font = [UIFont systemFontOfSize:12];
+    timeLabel.font = [UIFont fontWithName:@"Hiragino Kaku Gothic ProN W6" size:11];
     
     //日付比較
     NSDateFormatter *df = [[NSDateFormatter alloc]init];
@@ -338,6 +340,8 @@
     ///ここまで
     
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 40, 40)];//トプ画表示
+    /*imgView.layer.cornerRadius = 8;
+    imgView.clipsToBounds = true;*/
     imgView.image = hoge;
     
     [cell.contentView addSubview:mainLabel];
@@ -441,6 +445,17 @@
     
     search.showsCancelButton = NO;
     [search resignFirstResponder];
+}
+
+-(void)createNavTitle:(NSString *)title{
+    UILabel* tLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];
+    tLabel.text = title;
+    tLabel.textColor = [UIColor whiteColor];
+    tLabel.backgroundColor = [UIColor clearColor];
+    tLabel.textAlignment = NSTextAlignmentCenter;
+    tLabel.adjustsFontSizeToFitWidth = YES;
+    tLabel.font = [UIFont fontWithName:@"MS ゴシック" size:17];
+    self.navigationItem.titleView = tLabel;
 }
 
 @end

@@ -83,8 +83,8 @@
         
         _sendBtn.frame = CGRectMake(self.bounds.size.width - 60, 0, 50, 40);
         _sendBtn.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
-        [_sendBtn setTitle:@"Send" forState:UIControlStateNormal];
-        _sendBtn.titleLabel.font = [UIFont boldSystemFontOfSize:16.0];
+        [_sendBtn setTitle:@"送信" forState:UIControlStateNormal];
+        _sendBtn.titleLabel.font = [UIFont fontWithName:@"Hiragino Kaku Gothic ProN W6" size:16.0];
         [_sendBtn addTarget:self action:@selector(sendBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
         _sendBtn.userInteractionEnabled = YES;
         [self addSubview:_sendBtn];
@@ -92,7 +92,7 @@
         // Background
         _bgToolbar = [[UIToolbar alloc] initWithFrame:self.bounds];
         _bgToolbar.barStyle = UIBarStyleDefault;
-        _bgToolbar.barTintColor = [UIColor purpleColor];
+        _bgToolbar.barTintColor = [UIColor colorWithRed:0.227 green:0.114 blue:0.369 alpha:1.0];
         _bgToolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self insertSubview:_bgToolbar belowSubview:_textView];
         

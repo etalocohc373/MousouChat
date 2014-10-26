@@ -90,6 +90,7 @@ static int minimumHeight = 30;
             _textLabel.layer.rasterizationScale = 2.0f;
             _textLabel.layer.shouldRasterize = YES;
             _textLabel.font = [UIFont systemFontOfSize:15.0f];
+            //_textLabel.font = [UIFont fontWithName:@"Hiragino Kaku Gothic ProN W6" size:15.0];
             _textLabel.textColor = [UIColor darkTextColor];
             _textLabel.numberOfLines = 0;
             [self.contentView addSubview:_textLabel];
@@ -135,10 +136,11 @@ static int minimumHeight = 30;
     if (!_imageView) {
         _imageView = [UIImageView new];
         _imageView.frame = CGRectMake(offsetX / 2, 0, minimumHeight, minimumHeight);
-        _imageView.layer.cornerRadius = minimumHeight / 2;
+        _imageView.layer.cornerRadius = minimumHeight / 5;
         _imageView.layer.masksToBounds = YES;
         _imageView.layer.rasterizationScale = 2;
         _imageView.layer.shouldRasterize = YES;
+        
         [self.contentView addSubview:_imageView];
     }
     
@@ -180,6 +182,9 @@ static int minimumHeight = 30;
     [self drawCell];
 }
 
+
+#pragma mark - DrawCell
+//FIXME:座標のズレ
 - (void) drawCell {
     
     // Get Our Stuff
@@ -228,6 +233,8 @@ static int minimumHeight = 30;
     else _timeLabel.frame = CGRectMake(_textLabel.center.x + (_textLabel.bounds.size.width / 2 + 15), _textLabel.bounds.size.height / 2, 30, _textLabel.bounds.size.height / 2);
     
     _bgLabel.layer.backgroundColor = [[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.9] CGColor];
+    
+    NSLog(@"%.0f, %.0f, %.0f, %.0f", _bgLabel.frame.size.width, _bgLabel.frame.size.height, _bgLabel.frame.origin.x, _bgLabel.frame.origin.y);
     
 }
 
