@@ -126,6 +126,9 @@ static int minimumHeight = 30;
 {
     if([_message[kMessageRuntimeSentBy] isEqualToString:@"0"]) {
         _readLabel.frame = CGRectMake(_timeLabel.frame.origin.x, _timeLabel.frame.origin.y - _timeLabel.frame.size.height, 30, _timeLabel.frame.size.height);
+        
+        NSLog(@"%.0f, %.0f, %.0f, %.0f", _readLabel.frame.size.width, _readLabel.frame.size.height, _readLabel.frame.origin.x, _readLabel.frame.origin.y);
+        
         [self.contentView addSubview:_readLabel];
     }
 }
@@ -233,8 +236,6 @@ static int minimumHeight = 30;
     else _timeLabel.frame = CGRectMake(_textLabel.center.x + (_textLabel.bounds.size.width / 2 + 15), _textLabel.bounds.size.height / 2, 30, _textLabel.bounds.size.height / 2);
     
     _bgLabel.layer.backgroundColor = [[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.9] CGColor];
-    
-    NSLog(@"%.0f, %.0f, %.0f, %.0f", _bgLabel.frame.size.width, _bgLabel.frame.size.height, _bgLabel.frame.origin.x, _bgLabel.frame.origin.y);
     
 }
 

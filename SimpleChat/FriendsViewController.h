@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ProfileViewController.h"
+#import "RNBlurModalView.h"
 
 @interface FriendsViewController : UITableViewController<UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>{
     IBOutlet UIBarButtonItem *editBtn;
@@ -22,6 +23,7 @@
     NSMutableArray *searchArrayImg;
     
     NSIndexPath *deletepath;
+    NSIndexPath *editPath;
     
     BOOL searching;
 }

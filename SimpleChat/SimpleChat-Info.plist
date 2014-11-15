@@ -26,6 +26,7 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>KozGoPro-Medium.otf</string>
 		<string>APJapanesefont.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>

@@ -292,7 +292,8 @@
     NSString *key;
     
     UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 5, 200, 30)];
-    mainLabel.font = [UIFont fontWithName:@"Hiragino Kaku Gothic ProN W6" size:18];
+    mainLabel.font = [UIFont fontWithName:@"KozGoPro-Medium" size:17];
+    NSLog(@"%@", mainLabel.font);
     
     if(!searching){//検索中でない
         mainLabel.text = [talks objectAtIndex:indexPath.row];//トーク相手

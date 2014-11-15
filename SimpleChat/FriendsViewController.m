@@ -50,7 +50,12 @@
     [UINavigationBar appearance].tintColor = [UIColor whiteColor];
     [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
     
-    self.navigationController.tabBarController.selectedIndex = 1;
+    
+    talks = [NSMutableArray array];
+    if([[NSUserDefaults standardUserDefaults] objectForKey:@"talks"]){
+        talks = [[NSUserDefaults standardUserDefaults] objectForKey:@"talks"];
+        self.navigationController.tabBarController.selectedIndex = 1;
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -105,7 +110,7 @@
     
     [self.tableView reloadData];
     
-    [self createNavTitle:[NSString stringWithFormat:@"友だち (%lu人)", users.count]];
+    [self createNavTitle:[NSString stringWithFormat:@"友だち (%lu人)", (unsigned long)users.count]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -220,6 +225,7 @@
     label.textColor = [UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:1.0];
     
     [headerView addSubview:label];
+    
     return headerView;
 }
 
@@ -281,11 +287,72 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+    editPath = indexPath;
+#warning Change this to see a custom view
     
-    if(!indexPath.section) [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"editMain"];
+    RNBlurModalView *modal;
+    
+    UIView *view = [self setUpAlertView:indexPath];
+    
+    modal = [[RNBlurModalView alloc] initWithView:view];
+    modal.dismissButtonRight = YES;
+    [modal show];
+}
+
+-(UIView *)setUpAlertView:(NSIndexPath *)indexPath{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 140)];
+    view.backgroundColor = [UIColor colorWithRed:0.859 green:0.792 blue:0.937 alpha:1.0];
+    view.layer.cornerRadius = 5.f;
+    view.layer.borderColor = [UIColor colorWithRed:0.592 green:0.435 blue:0.776 alpha:1.0].CGColor;
+    view.layer.borderWidth = 2.f;
+    
+    UIImageView *profileImgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 12, 80, 80)];
+    profileImgView.image = [UIImage imageWithData:[images objectAtIndex:indexPath.row]];
+    profileImgView.layer.cornerRadius = 10.0;
+    profileImgView.layer.borderWidth = 1.0;
+    profileImgView.layer.borderColor = [[UIColor darkGrayColor] CGColor];
+    [view addSubview:profileImgView];
+    
+    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 10, 180, 30)];
+    nameLabel.text = [users objectAtIndex:indexPath.row];
+    nameLabel.font = [UIFont fontWithName:@"KozGoPro-Medium" size:18];
+    [nameLabel sizeToFit];
+    [view addSubview:nameLabel];
+    
+    UILabel *aboutLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, nameLabel.frame.origin.y + nameLabel.frame.size.height + 10, 160, 60)];
+    aboutLabel.numberOfLines = 0;
+    aboutLabel.text = [intros objectAtIndex:indexPath.row];
+    aboutLabel.font = [UIFont fontWithName:@"KozGoPro-Medium" size:16];
+    aboutLabel.textColor = [UIColor grayColor];
+    [aboutLabel sizeToFit];
+    [view addSubview:aboutLabel];
+    
+    UIButton *talk = [[UIButton alloc] initWithFrame:CGRectMake(0, 100, view.frame.size.width / 2, 40)];
+    [talk setTitle:@"トーク" forState:UIControlStateNormal];
+    [talk setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    talk.titleLabel.font = [UIFont fontWithName:@"KozGoPro-Medium" size:18];
+    [talk addTarget:self action:@selector(editProfile) forControlEvents:UIControlEventTouchUpInside];
+    talk.layer.borderWidth = 1.f;
+    talk.layer.borderColor = [[UIColor colorWithRed:0.592 green:0.435 blue:0.776 alpha:1.0] CGColor];
+    [view addSubview:talk];
+    
+    UIButton *edit = [[UIButton alloc] initWithFrame:CGRectMake(140, 100, view.frame.size.width / 2, 40)];
+    [edit setTitle:@"編集" forState:UIControlStateNormal];
+    [edit setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    edit.titleLabel.font = [UIFont fontWithName:@"KozGoPro-Medium" size:18];
+    [edit addTarget:self action:@selector(editProfile) forControlEvents:UIControlEventTouchUpInside];
+    edit.layer.borderWidth = 1.f;
+    edit.layer.borderColor = [[UIColor colorWithRed:0.592 green:0.435 blue:0.776 alpha:1.0] CGColor];
+    [view addSubview:edit];
+    
+    return view;
+}
+
+-(void)editProfile{
+    if(!editPath.section) [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"editMain"];
     else{
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"editMain"];
-        [[NSUserDefaults standardUserDefaults] setInteger:indexPath.row forKey:@"editUserNum"];
+        [[NSUserDefaults standardUserDefaults] setInteger:editPath.row forKey:@"editUserNum"];
     }
     
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -331,7 +398,8 @@
     tLabel.backgroundColor = [UIColor clearColor];
     tLabel.textAlignment = NSTextAlignmentCenter;
     tLabel.adjustsFontSizeToFitWidth = YES;
-    tLabel.font = [UIFont fontWithName:@"MS Gothic" size:16];
+    tLabel.font = [UIFont fontWithName:@"KozGoPro-Medium" size:18];
+    
     self.navigationItem.titleView = tLabel;
 }
 
@@ -347,21 +415,78 @@
     
     [store synchronize];
 }
- 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 -(void)reset{
     NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+}
+
+
+#pragma mark - Alert Custom
+
+- (void)willPresentAlertView:(UIAlertView *)alertView
+{
+    if(alertView.tag == 1){
+        // アラートの表示サイズを設定
+        CGRect alertFrame = CGRectMake(0, 0, 600, 162);
+        alertView.frame = alertFrame;
+        
+        // アラートの表示位置を設定(アラート表示サイズを変更すると位置がずれるため)
+        CGPoint alertPoint = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0);
+        alertView.center = alertPoint;
+        
+        
+        // 変数初期化
+        NSInteger uiLabelNum = 0;      // ラベル表示回数カウント用
+        NSInteger uiButtonNum = 0;     // ボタン表示回数カウント用
+        
+        // アラート上のオブジェクトの位置を修正(アラート表示サイズを変更すると位置がずれるため)
+        for (UIView *view in alertView.subviews) {
+            
+            // ラベル
+            if ([view isKindOfClass:NSClassFromString(@"UILabel")]){
+                // ラベルのサイズを設定
+                view.frame = CGRectMake(0, 0, 370, 43);
+                
+                /* 表示位置設定 */
+                
+                // タイトル
+                if (!uiLabelNum) view.center = CGPointMake(alertView.frame.size.width / 2.0, 23);
+                // メッセージ
+                else view.center = CGPointMake(alertView.frame.size.width / 2.0, 61);
+                
+                uiLabelNum++;  // インクリメント
+            }
+            
+            // ボタン
+            if ([view isKindOfClass:NSClassFromString(@"UIThreePartButton")] ||     // iOS4用
+                [view isKindOfClass:NSClassFromString(@"UIAlertButton")])           // iOS5用
+            {
+                // ボタンのサイズを設定
+                view.frame = CGRectMake(0, 0, 127, 43);
+                
+                /* 表示位置設定 */
+                
+                // 「いいえ」ボタン
+                if (!uiButtonNum) view.center = CGPointMake(alertView.frame.size.width / 2.0 - 67, 122);
+                // 「はい」ボタン
+                else view.center = CGPointMake(alertView.frame.size.width / 2.0 + 67, 122);
+                
+                uiButtonNum++;  // インクリメント
+            }
+        }
+    }
 }
 
 @end

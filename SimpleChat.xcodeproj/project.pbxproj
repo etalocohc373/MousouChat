@@ -26,7 +26,6 @@
 		809B50CD18D80E040032A48D /* TopBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 809B50C818D80E040032A48D /* TopBar.m */; };
 		809B50CF18D814AC0032A48D /* tempUser.png in Resources */ = {isa = PBXBuildFile; fileRef = 809B50CE18D814AC0032A48D /* tempUser.png */; };
 		809B51A618DABBA90032A48D /* License in Resources */ = {isa = PBXBuildFile; fileRef = 809B51A518DABBA90032A48D /* License */; };
-		EC02801E19C5C55C003C9CAD /* girl.png in Resources */ = {isa = PBXBuildFile; fileRef = EC02801D19C5C55B003C9CAD /* girl.png */; };
 		EC02802019C6C505003C9CAD /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC02801F19C6C505003C9CAD /* AudioToolbox.framework */; };
 		EC18ECA51915D507004B4215 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC18ECA41915D507004B4215 /* SettingViewController.m */; };
 		EC18ECA91915DE48004B4215 /* Previous2.png in Resources */ = {isa = PBXBuildFile; fileRef = EC18ECA81915DE48004B4215 /* Previous2.png */; };
@@ -49,6 +48,9 @@
 		ECC2ADBB197B91EA0015CCF5 /* APJapanesefont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ECC2ADBA197B8BC10015CCF5 /* APJapanesefont.ttf */; };
 		ECC2BB4A19C6CD1C00BA7DC7 /* massu.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECC2BB4919C6CD1C00BA7DC7 /* massu.jpg */; };
 		ECC2BB4C19C6F40100BA7DC7 /* badge_1.png in Resources */ = {isa = PBXBuildFile; fileRef = ECC2BB4B19C6F40100BA7DC7 /* badge_1.png */; };
+		ECD9E0FA1A14E821007EF34F /* KozGoPro-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = ECD9E0F91A14E821007EF34F /* KozGoPro-Medium.otf */; };
+		ECD9E18E1A174582007EF34F /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECD9E18D1A174582007EF34F /* Accelerate.framework */; };
+		ECD9E1911A1745C9007EF34F /* RNBlurModalView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD9E1901A1745C9007EF34F /* RNBlurModalView.m */; };
 		ECEF183A19A220B600511EA5 /* mizutama.png in Resources */ = {isa = PBXBuildFile; fileRef = ECEF183919A220B600511EA5 /* mizutama.png */; };
 		ECF3653F191616CF002EFD3A /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF3653E191616CF002EFD3A /* MasterViewController.m */; };
 		ECF365771917152E002EFD3A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF365761917152E002EFD3A /* ViewController.m */; };
@@ -99,13 +101,12 @@
 		809B50C818D80E040032A48D /* TopBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopBar.m; sourceTree = "<group>"; };
 		809B50CE18D814AC0032A48D /* tempUser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tempUser.png; sourceTree = "<group>"; };
 		809B51A518DABBA90032A48D /* License */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License; sourceTree = "<group>"; };
-		EC02801D19C5C55B003C9CAD /* girl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = girl.png; sourceTree = "<group>"; };
 		EC02801F19C6C505003C9CAD /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		EC18ECA31915D507004B4215 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		EC18ECA41915D507004B4215 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		EC18ECA81915DE48004B4215 /* Previous2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Previous2.png; path = ChatController/Previous2.png; sourceTree = "<group>"; };
 		EC5AC8E0197A9FA900869567 /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
-		EC5AC8E1197A9FA900869567 /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
+		EC5AC8E1197A9FA900869567 /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; usesTabs = 0; };
 		EC6800CF1917AB2A00DEE8CF /* pimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pimage.png; sourceTree = "<group>"; };
 		EC6800D11917ABD500DEE8CF /* words.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = words.png; sourceTree = "<group>"; };
 		EC6800D31917ADB000DEE8CF /* addword.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addword.png; sourceTree = "<group>"; };
@@ -128,6 +129,10 @@
 		ECC2ADBA197B8BC10015CCF5 /* APJapanesefont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = APJapanesefont.ttf; sourceTree = "<group>"; };
 		ECC2BB4919C6CD1C00BA7DC7 /* massu.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = massu.jpg; sourceTree = "<group>"; };
 		ECC2BB4B19C6F40100BA7DC7 /* badge_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = badge_1.png; sourceTree = "<group>"; };
+		ECD9E0F91A14E821007EF34F /* KozGoPro-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "KozGoPro-Medium.otf"; sourceTree = "<group>"; };
+		ECD9E18D1A174582007EF34F /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		ECD9E18F1A1745C9007EF34F /* RNBlurModalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNBlurModalView.h; sourceTree = "<group>"; };
+		ECD9E1901A1745C9007EF34F /* RNBlurModalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNBlurModalView.m; sourceTree = "<group>"; };
 		ECEF183919A220B600511EA5 /* mizutama.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mizutama.png; sourceTree = "<group>"; };
 		ECF3653D191616CF002EFD3A /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		ECF3653E191616CF002EFD3A /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
@@ -147,6 +152,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECD9E18E1A174582007EF34F /* Accelerate.framework in Frameworks */,
 				EC9AC03A19E179810098707E /* QuartzCore.framework in Frameworks */,
 				EC02802019C6C505003C9CAD /* AudioToolbox.framework in Frameworks */,
 				ECF3657C191777A8002EFD3A /* CoreImage.framework in Frameworks */,
@@ -191,6 +197,7 @@
 		809B506918D7B55B0032A48D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ECD9E18D1A174582007EF34F /* Accelerate.framework */,
 				EC9AC03619E035380098707E /* QuartzCore.framework */,
 				EC02801F19C6C505003C9CAD /* AudioToolbox.framework */,
 				ECF3657B191777A8002EFD3A /* CoreImage.framework */,
@@ -206,8 +213,10 @@
 			isa = PBXGroup;
 			children = (
 				ECC2ADBA197B8BC10015CCF5 /* APJapanesefont.ttf */,
+				ECD9E0F91A14E821007EF34F /* KozGoPro-Medium.otf */,
 				809B50BE18D80E040032A48D /* ChatController */,
 				EC6800D51917ADB400DEE8CF /* images */,
+				ECD9E16E1A174500007EF34F /* RNBlurModalExample */,
 				809B507918D7B55B0032A48D /* AppDelegate.h */,
 				809B507A18D7B55B0032A48D /* AppDelegate.m */,
 				809B507C18D7B55B0032A48D /* Main.storyboard */,
@@ -293,7 +302,6 @@
 				ECAC824D19CAEBF200A32514 /* done.png */,
 				ECAC824819CAEA1600A32514 /* addchat.png */,
 				ECC2BB4B19C6F40100BA7DC7 /* badge_1.png */,
-				EC02801D19C5C55B003C9CAD /* girl.png */,
 				ECEF183919A220B600511EA5 /* mizutama.png */,
 				EC6800E5191882E300DEE8CF /* savebt.png */,
 				ECC2BB4919C6CD1C00BA7DC7 /* massu.jpg */,
@@ -307,6 +315,15 @@
 				EC6800CF1917AB2A00DEE8CF /* pimage.png */,
 			);
 			name = images;
+			sourceTree = "<group>";
+		};
+		ECD9E16E1A174500007EF34F /* RNBlurModalExample */ = {
+			isa = PBXGroup;
+			children = (
+				ECD9E18F1A1745C9007EF34F /* RNBlurModalView.h */,
+				ECD9E1901A1745C9007EF34F /* RNBlurModalView.m */,
+			);
+			path = RNBlurModalExample;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -389,6 +406,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ECAC824719C7B70800A32514 /* Main.storyboard in Resources */,
+				ECD9E0FA1A14E821007EF34F /* KozGoPro-Medium.otf in Resources */,
 				EC18ECA91915DE48004B4215 /* Previous2.png in Resources */,
 				ECC2BB4A19C6CD1C00BA7DC7 /* massu.jpg in Resources */,
 				ECAC824919CAEA1600A32514 /* addchat.png in Resources */,
@@ -405,7 +423,6 @@
 				ECC2ADBB197B91EA0015CCF5 /* APJapanesefont.ttf in Resources */,
 				809B508318D7B55B0032A48D /* Images.xcassets in Resources */,
 				809B507518D7B55B0032A48D /* InfoPlist.strings in Resources */,
-				EC02801E19C5C55C003C9CAD /* girl.png in Resources */,
 				ECAC824E19CAEBF200A32514 /* done.png in Resources */,
 				ECC2BB4C19C6F40100BA7DC7 /* badge_1.png in Resources */,
 				809B50CF18D814AC0032A48D /* tempUser.png in Resources */,
@@ -435,6 +452,7 @@
 				809B507B18D7B55B0032A48D /* AppDelegate.m in Sources */,
 				809B507718D7B55B0032A48D /* main.m in Sources */,
 				ECC2ADB6197AA5AB0015CCF5 /* AddTalkViewController.m in Sources */,
+				ECD9E1911A1745C9007EF34F /* RNBlurModalView.m in Sources */,
 				809B50CB18D80E040032A48D /* MessageCell.m in Sources */,
 				ECAC824C19CAEB1800A32514 /* EditFriendViewController.m in Sources */,
 				ECF3658219177D6B002EFD3A /* CoreImageHelper.m in Sources */,
