@@ -8,6 +8,9 @@
 
 #import "FriendsViewController.h"
 
+#import "FriendsCell.h"
+#import "CustomAlertView.h"
+
 @interface FriendsViewController ()
 
 @end
@@ -56,6 +59,9 @@
         talks = [[NSUserDefaults standardUserDefaults] objectForKey:@"talks"];
         self.navigationController.tabBarController.selectedIndex = 1;
     }
+    
+    UINib *nib = [UINib nibWithNibName:@"FriendsCell" bundle:nil];
+    [self.tableView registerNib:nib forCellReuseIdentifier:@"Cell"];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -144,53 +150,37 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    if(!cell) cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+    FriendsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
-    //重複ラベルの消去
+    /*//重複ラベルの消去
     for (UILabel *subview in [cell.contentView subviews]) [subview removeFromSuperview];
     for (UIImageView *img in [cell.contentView subviews]) [img removeFromSuperview];
-    //ここまで
+    //ここまで*/
     
     // Configure the cell...
-    
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 6.5, 250, 33)];
-    nameLabel.font = [UIFont fontWithName:@"Hiragino Kaku Gothic ProN W6" size:17];
-    
-    UILabel *detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(210, 6.5, 100, 37)];
-    detailLabel.numberOfLines = 2;
-    detailLabel.font = [UIFont fontWithName:@"Hiragino Kaku Gothic ProN W6" size:12];
-    detailLabel.textColor = [UIColor lightGrayColor];
-    
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-    
     switch (indexPath.section) {
         case 1:
             if (!searching){
-                nameLabel.text = [users objectAtIndex:indexPath.row];
-                detailLabel.text = [intros objectAtIndex:indexPath.row];
-                imageView.image = [[UIImage alloc] initWithData:[images objectAtIndex:indexPath.row]];
+                cell.nameLabel.text = [users objectAtIndex:indexPath.row];
+                cell.introLabel.text = [intros objectAtIndex:indexPath.row];
+                cell.profileImageView.image = [[UIImage alloc] initWithData:[images objectAtIndex:indexPath.row]];
             }else{
-                nameLabel.text = [searchArray objectAtIndex:indexPath.row];
-                detailLabel.text = [searchArrayIntros objectAtIndex:indexPath.row];
-                imageView.image = [[UIImage alloc] initWithData:[searchArrayImg objectAtIndex:indexPath.row]];
+                cell.nameLabel.text = [searchArray objectAtIndex:indexPath.row];
+                cell.introLabel.text = [searchArrayIntros objectAtIndex:indexPath.row];
+                cell.profileImageView.image = [[UIImage alloc] initWithData:[searchArrayImg objectAtIndex:indexPath.row]];
             }
             break;
             
         default:
             [self createProfile];
             
-            nameLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"myname"];
-            detailLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"aboutme"];
-            imageView.image = [[UIImage alloc] initWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"myimage"]];
+            cell.nameLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"myname"];
+            cell.introLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"aboutme"];
+            cell.profileImageView.image = [[UIImage alloc] initWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"myimage"]];
             break;
     }
     
-    if([detailLabel.text lengthOfBytesUsingEncoding:NSShiftJISStringEncoding] < 16) detailLabel.textAlignment = NSTextAlignmentRight;
-    
-    [cell.contentView addSubview:nameLabel];
-    [cell.contentView addSubview:detailLabel];
-    [cell.contentView addSubview:imageView];
+    if([cell.introLabel.text lengthOfBytesUsingEncoding:NSShiftJISStringEncoding] < 16) cell.introLabel.textAlignment = NSTextAlignmentRight;
     
     return cell;
 }
@@ -288,64 +278,92 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
     editPath = indexPath;
-#warning Change this to see a custom view
     
+#warning Change this to see a custom view
     RNBlurModalView *modal;
     
-    UIView *view = [self setUpAlertView:indexPath];
+    UIView *view = [self setUpAlertViewForIndexPath:indexPath];
     
     modal = [[RNBlurModalView alloc] initWithView:view];
     modal.dismissButtonRight = YES;
+    
     [modal show];
 }
 
--(UIView *)setUpAlertView:(NSIndexPath *)indexPath{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 140)];
-    view.backgroundColor = [UIColor colorWithRed:0.859 green:0.792 blue:0.937 alpha:1.0];
+-(UIView *)setUpAlertViewForIndexPath:(NSIndexPath *)indexPath{
+    UIImage *profileImage;
+    NSString *name;
+    NSString *intro;
+    
+    if(indexPath.section){
+        profileImage = [UIImage imageWithData:[images objectAtIndex:indexPath.row]];
+        name = [users objectAtIndex:indexPath.row];
+        intro = [intros objectAtIndex:indexPath.row];
+    }else{
+        profileImage = [UIImage imageWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"myimage"]];
+        name = [[NSUserDefaults standardUserDefaults] objectForKey:@"myname"];
+        intro = [[NSUserDefaults standardUserDefaults] objectForKey:@"aboutme"];
+    }
+    
+    UINib *nib = [UINib nibWithNibName:@"CustomAlertView" bundle:nil];
+    CustomAlertView *view = [[nib instantiateWithOwner:nil options:nil] objectAtIndex:0];
     view.layer.cornerRadius = 5.f;
     view.layer.borderColor = [UIColor colorWithRed:0.592 green:0.435 blue:0.776 alpha:1.0].CGColor;
-    view.layer.borderWidth = 2.f;
+    //view.layer.borderWidth = 2.f;
     
-    UIImageView *profileImgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 12, 80, 80)];
-    profileImgView.image = [UIImage imageWithData:[images objectAtIndex:indexPath.row]];
-    profileImgView.layer.cornerRadius = 10.0;
-    profileImgView.layer.borderWidth = 1.0;
-    profileImgView.layer.borderColor = [[UIColor darkGrayColor] CGColor];
-    [view addSubview:profileImgView];
+    view.profileImgView.layer.cornerRadius = 15.0;
+    view.profileImgView.layer.borderWidth = 1.0;
+    view.profileImgView.layer.borderColor = [[UIColor darkGrayColor] CGColor];
+    view.profileImgView.layer.masksToBounds = YES;
+    [view.profileImgView setImage:profileImage];
     
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 10, 180, 30)];
-    nameLabel.text = [users objectAtIndex:indexPath.row];
-    nameLabel.font = [UIFont fontWithName:@"KozGoPro-Medium" size:18];
-    [nameLabel sizeToFit];
-    [view addSubview:nameLabel];
+    view.nameLabel.text = name;
+    [view.nameLabel sizeToFit];
     
-    UILabel *aboutLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, nameLabel.frame.origin.y + nameLabel.frame.size.height + 10, 160, 60)];
-    aboutLabel.numberOfLines = 0;
-    aboutLabel.text = [intros objectAtIndex:indexPath.row];
-    aboutLabel.font = [UIFont fontWithName:@"KozGoPro-Medium" size:16];
-    aboutLabel.textColor = [UIColor grayColor];
-    [aboutLabel sizeToFit];
-    [view addSubview:aboutLabel];
+    view.introLabel.numberOfLines = 2;
+    view.introLabel.text = intro;
+    [view.introLabel sizeToFit];
     
-    UIButton *talk = [[UIButton alloc] initWithFrame:CGRectMake(0, 100, view.frame.size.width / 2, 40)];
-    [talk setTitle:@"トーク" forState:UIControlStateNormal];
-    [talk setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-    talk.titleLabel.font = [UIFont fontWithName:@"KozGoPro-Medium" size:18];
-    [talk addTarget:self action:@selector(editProfile) forControlEvents:UIControlEventTouchUpInside];
-    talk.layer.borderWidth = 1.f;
-    talk.layer.borderColor = [[UIColor colorWithRed:0.592 green:0.435 blue:0.776 alpha:1.0] CGColor];
-    [view addSubview:talk];
+    CALayer *rightBorder = [CALayer layer];
+    rightBorder.borderColor = [[UIColor colorWithRed:0.592 green:0.435 blue:0.776 alpha:1.0] CGColor];
+    rightBorder.borderWidth = 1.f;
+    rightBorder.frame = CGRectMake(-2, 1, CGRectGetWidth(view.talkBtn.frame)+2, CGRectGetHeight(view.talkBtn.frame)+1);
+    [view.talkBtn.layer addSublayer:rightBorder];
+    [view.talkBtn addTarget:self action:@selector(jumpToTalk) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *edit = [[UIButton alloc] initWithFrame:CGRectMake(140, 100, view.frame.size.width / 2, 40)];
-    [edit setTitle:@"編集" forState:UIControlStateNormal];
-    [edit setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-    edit.titleLabel.font = [UIFont fontWithName:@"KozGoPro-Medium" size:18];
-    [edit addTarget:self action:@selector(editProfile) forControlEvents:UIControlEventTouchUpInside];
-    edit.layer.borderWidth = 1.f;
-    edit.layer.borderColor = [[UIColor colorWithRed:0.592 green:0.435 blue:0.776 alpha:1.0] CGColor];
-    [view addSubview:edit];
+    CALayer *leftBorder = [CALayer layer];
+    leftBorder.borderColor = [[UIColor colorWithRed:0.592 green:0.435 blue:0.776 alpha:1.0] CGColor];
+    leftBorder.borderWidth = 1.f;
+    leftBorder.frame = CGRectMake(-1, 1, CGRectGetWidth(view.editBtn.frame)+2, CGRectGetHeight(view.editBtn.frame)+1);
+    [view.editBtn.layer addSublayer:leftBorder];
+    [view.editBtn addTarget:self action:@selector(editProfile) forControlEvents:UIControlEventTouchUpInside];
     
     return view;
+}
+
+-(void)jumpToTalk{
+    if([talks containsObject:[users objectAtIndex:editPath.row]]){
+        NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
+        
+        [store setInteger:editPath.row forKey:@"selecteduser"];
+        
+        NSMutableArray *notReadRows = [NSMutableArray arrayWithArray:[store objectForKey:@"notReadRows"]];
+        
+        if([notReadRows containsObject:[talks objectAtIndex:(int)editPath.row]]){
+            [notReadRows removeObject:[talks objectAtIndex:(int)editPath.row]];
+            [store setObject:notReadRows forKey:@"notReadRows"];
+        }
+        
+        [store synchronize];
+        
+        if (!_chatController) _chatController = [ChatController new];
+        _chatController.delegate = (id<ChatControllerDelegate>)self;
+        _chatController.opponentImg = [[UIImage alloc] initWithData:[images objectAtIndex:editPath.row]];
+        
+        _chatController.hidesBottomBarWhenPushed = YES;
+        
+        [self.navigationController pushViewController:_chatController animated:YES];
+    }
 }
 
 -(void)editProfile{
@@ -430,63 +448,6 @@
 -(void)reset{
     NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-}
-
-
-#pragma mark - Alert Custom
-
-- (void)willPresentAlertView:(UIAlertView *)alertView
-{
-    if(alertView.tag == 1){
-        // アラートの表示サイズを設定
-        CGRect alertFrame = CGRectMake(0, 0, 600, 162);
-        alertView.frame = alertFrame;
-        
-        // アラートの表示位置を設定(アラート表示サイズを変更すると位置がずれるため)
-        CGPoint alertPoint = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0);
-        alertView.center = alertPoint;
-        
-        
-        // 変数初期化
-        NSInteger uiLabelNum = 0;      // ラベル表示回数カウント用
-        NSInteger uiButtonNum = 0;     // ボタン表示回数カウント用
-        
-        // アラート上のオブジェクトの位置を修正(アラート表示サイズを変更すると位置がずれるため)
-        for (UIView *view in alertView.subviews) {
-            
-            // ラベル
-            if ([view isKindOfClass:NSClassFromString(@"UILabel")]){
-                // ラベルのサイズを設定
-                view.frame = CGRectMake(0, 0, 370, 43);
-                
-                /* 表示位置設定 */
-                
-                // タイトル
-                if (!uiLabelNum) view.center = CGPointMake(alertView.frame.size.width / 2.0, 23);
-                // メッセージ
-                else view.center = CGPointMake(alertView.frame.size.width / 2.0, 61);
-                
-                uiLabelNum++;  // インクリメント
-            }
-            
-            // ボタン
-            if ([view isKindOfClass:NSClassFromString(@"UIThreePartButton")] ||     // iOS4用
-                [view isKindOfClass:NSClassFromString(@"UIAlertButton")])           // iOS5用
-            {
-                // ボタンのサイズを設定
-                view.frame = CGRectMake(0, 0, 127, 43);
-                
-                /* 表示位置設定 */
-                
-                // 「いいえ」ボタン
-                if (!uiButtonNum) view.center = CGPointMake(alertView.frame.size.width / 2.0 - 67, 122);
-                // 「はい」ボタン
-                else view.center = CGPointMake(alertView.frame.size.width / 2.0 + 67, 122);
-                
-                uiButtonNum++;  // インクリメント
-            }
-        }
-    }
 }
 
 @end

@@ -10,6 +10,8 @@
 
 #import <AudioToolbox/AudioServices.h>
 
+#import "TalkTableViewCell.h"
+
 #define SCREEN_HEIGHT [UIScreen mainScreen].applicationFrame.size.height
 
 @interface ViewController ()
@@ -98,8 +100,7 @@
     
     tv.delegate = self;
     tv.dataSource = self;
-    
-    tv.rowHeight = 70.0;
+    tv.rowHeight = 70.f;
     
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.227 green:0.114 blue:0.369 alpha:1.0];
     
@@ -118,6 +119,11 @@
     [UINavigationBar appearance].tintColor = [UIColor whiteColor];
     
     [self createNavTitle:@"トーク"];
+    
+    UINib *nib = [UINib nibWithNibName:@"TalkTableViewCell" bundle:nil];
+    [tv registerNib:nib forCellReuseIdentifier:@"Cell"];
+    
+    [self.searchDisplayController.searchResultsTableView registerNib:nib forCellReuseIdentifier:@"Cell"];
 }
 
 -(IBAction)edit{
@@ -262,17 +268,25 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    if(!cell) cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+    static NSString *CellIdentifier = @"Cell";
+    TalkTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    //重複ラベルの消去
+    if(!cell){
+        NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"TalkTableViewCell" owner:self options:nil];
+        for(id oneObject in xib){
+            if([oneObject isKindOfClass:[TalkTableViewCell class]]){
+                cell = (TalkTableViewCell *) oneObject;
+            }
+        }
+    }
+    
+    /*//重複ラベルの消去
     for (UILabel *subview in [cell.contentView subviews]) [subview removeFromSuperview];
     
     for (UIImageView *img in [cell.contentView subviews]) [img removeFromSuperview];
-    //ここまで
+    //ここまで*/
     
     // Configure the cell...
-    
     //アイコンバッジ作成
     UIImageView *alertImg = [[UIImageView alloc] initWithFrame:CGRectMake(280, 22.5, 25, 25)];
     alertImg.image = [UIImage imageNamed:@"badge_1.png"];
@@ -291,18 +305,15 @@
     UIImage *hoge;
     NSString *key;
     
-    UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 5, 200, 30)];
-    mainLabel.font = [UIFont fontWithName:@"KozGoPro-Medium" size:17];
-    NSLog(@"%@", mainLabel.font);
-    
+
     if(!searching){//検索中でない
-        mainLabel.text = [talks objectAtIndex:indexPath.row];//トーク相手
+        cell.nameLabel.text = [talks objectAtIndex:indexPath.row];//トーク相手
         
         key = [NSString stringWithFormat:@"message%@", [talks objectAtIndex:indexPath.row]];
         
         hoge = [[UIImage alloc] initWithData:[images objectAtIndex:[users indexOfObject:[talks objectAtIndex:indexPath.row]]]];//トプ画
     }else{//検索中
-        mainLabel.text = [searchArray objectAtIndex:indexPath.row];
+        cell.nameLabel.text = [searchArray objectAtIndex:indexPath.row];
         
         key = [NSString stringWithFormat:@"message%@", [searchArray objectAtIndex:indexPath.row]];
         
@@ -317,16 +328,9 @@
     
     if(hogeArray.count != 0) dic = [[NSDictionary alloc] initWithDictionary:[hogeArray objectAtIndex:hogeArray.count - 1]];
     
-    UILabel *subLabel = [[UILabel alloc] initWithFrame:CGRectMake(65, 35, 200, 30)];
-    subLabel.textColor = [UIColor lightGrayColor];
-    subLabel.font = [UIFont fontWithName:@"Hiragino Kaku Gothic ProN W6" size:15];
-    subLabel.text = dic[@"content"];
+    cell.introLabel.text = dic[@"content"];
     
-    if(!subLabel.text) subLabel.text = @"トーク内容がまだありません";
-    
-    UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(280, 5, 50, 20)];
-    timeLabel.textColor = [UIColor lightGrayColor];
-    timeLabel.font = [UIFont fontWithName:@"Hiragino Kaku Gothic ProN W6" size:11];
+    if(!cell.introLabel.text) cell.introLabel.text = @"トーク内容がまだありません";
     
     //日付比較
     NSDateFormatter *df = [[NSDateFormatter alloc]init];
@@ -335,20 +339,12 @@
     NSDateFormatter *df2 = [[NSDateFormatter alloc]init];
     df2.dateFormat = @"HH:mm";
     
-    if ([[df stringFromDate:dic[@"daySent"]] isEqualToString:[df stringFromDate:[NSDate date]]]) timeLabel.text = [df2 stringFromDate:dic[@"daySent"]];
-    else timeLabel.text = [df stringFromDate:dic[@"daySent"]];
+    if ([[df stringFromDate:dic[@"daySent"]] isEqualToString:[df stringFromDate:[NSDate date]]]) cell.timeLabel.text = [df2 stringFromDate:dic[@"daySent"]];
+    else cell.timeLabel.text = [df stringFromDate:dic[@"daySent"]];
     //ここまで
     ///ここまで
     
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 40, 40)];//トプ画表示
-    /*imgView.layer.cornerRadius = 8;
-    imgView.clipsToBounds = true;*/
-    imgView.image = hoge;
-    
-    [cell.contentView addSubview:mainLabel];
-    [cell.contentView addSubview:subLabel];
-    [cell.contentView addSubview:timeLabel];
-    [cell.contentView addSubview:imgView];
+    cell.profileImgView.image = hoge;
     
     return cell;
 }

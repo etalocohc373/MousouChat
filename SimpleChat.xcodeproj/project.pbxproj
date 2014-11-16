@@ -51,6 +51,12 @@
 		ECD9E0FA1A14E821007EF34F /* KozGoPro-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = ECD9E0F91A14E821007EF34F /* KozGoPro-Medium.otf */; };
 		ECD9E18E1A174582007EF34F /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECD9E18D1A174582007EF34F /* Accelerate.framework */; };
 		ECD9E1911A1745C9007EF34F /* RNBlurModalView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD9E1901A1745C9007EF34F /* RNBlurModalView.m */; };
+		ECD9E1961A1771E4007EF34F /* TalkTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECD9E1951A1771E4007EF34F /* TalkTableViewCell.xib */; };
+		ECD9E1991A17740B007EF34F /* TalkTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD9E1981A17740B007EF34F /* TalkTableViewCell.m */; };
+		ECD9E1A11A186037007EF34F /* FriendsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD9E19F1A186037007EF34F /* FriendsCell.m */; };
+		ECD9E1A21A186037007EF34F /* FriendsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECD9E1A01A186037007EF34F /* FriendsCell.xib */; };
+		ECD9E1A81A187FC1007EF34F /* CustomAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD9E1A71A187FC1007EF34F /* CustomAlertView.m */; };
+		ECD9E1AA1A187FE3007EF34F /* CustomAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECD9E1A91A187FE3007EF34F /* CustomAlertView.xib */; };
 		ECEF183A19A220B600511EA5 /* mizutama.png in Resources */ = {isa = PBXBuildFile; fileRef = ECEF183919A220B600511EA5 /* mizutama.png */; };
 		ECF3653F191616CF002EFD3A /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF3653E191616CF002EFD3A /* MasterViewController.m */; };
 		ECF365771917152E002EFD3A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF365761917152E002EFD3A /* ViewController.m */; };
@@ -133,6 +139,15 @@
 		ECD9E18D1A174582007EF34F /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		ECD9E18F1A1745C9007EF34F /* RNBlurModalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNBlurModalView.h; sourceTree = "<group>"; };
 		ECD9E1901A1745C9007EF34F /* RNBlurModalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNBlurModalView.m; sourceTree = "<group>"; };
+		ECD9E1951A1771E4007EF34F /* TalkTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TalkTableViewCell.xib; sourceTree = "<group>"; };
+		ECD9E1971A17740B007EF34F /* TalkTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TalkTableViewCell.h; sourceTree = "<group>"; };
+		ECD9E1981A17740B007EF34F /* TalkTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TalkTableViewCell.m; sourceTree = "<group>"; };
+		ECD9E19E1A186037007EF34F /* FriendsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsCell.h; sourceTree = "<group>"; };
+		ECD9E19F1A186037007EF34F /* FriendsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsCell.m; sourceTree = "<group>"; };
+		ECD9E1A01A186037007EF34F /* FriendsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendsCell.xib; sourceTree = "<group>"; };
+		ECD9E1A61A187FC1007EF34F /* CustomAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomAlertView.h; path = RNBlurModalExample/CustomAlertView.h; sourceTree = "<group>"; };
+		ECD9E1A71A187FC1007EF34F /* CustomAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomAlertView.m; path = RNBlurModalExample/CustomAlertView.m; sourceTree = "<group>"; };
+		ECD9E1A91A187FE3007EF34F /* CustomAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CustomAlertView.xib; path = RNBlurModalExample/CustomAlertView.xib; sourceTree = "<group>"; };
 		ECEF183919A220B600511EA5 /* mizutama.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mizutama.png; sourceTree = "<group>"; };
 		ECF3653D191616CF002EFD3A /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		ECF3653E191616CF002EFD3A /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
@@ -220,8 +235,7 @@
 				809B507918D7B55B0032A48D /* AppDelegate.h */,
 				809B507A18D7B55B0032A48D /* AppDelegate.m */,
 				809B507C18D7B55B0032A48D /* Main.storyboard */,
-				EC5AC8E0197A9FA900869567 /* FriendsViewController.h */,
-				EC5AC8E1197A9FA900869567 /* FriendsViewController.m */,
+				ECD9E19D1A186008007EF34F /* FriendsTableViewController */,
 				ECF3657819171928002EFD3A /* AddUserViewController.h */,
 				ECF3657919171928002EFD3A /* AddUserViewController.m */,
 				ECAC824A19CAEB1800A32514 /* EditFriendViewController.h */,
@@ -230,8 +244,7 @@
 				EC6800DE1918796800DEE8CF /* ProfileViewController.m */,
 				ECC2ADB7197B7F490015CCF5 /* EditProfileViewController.h */,
 				ECC2ADB8197B7F490015CCF5 /* EditProfileViewController.m */,
-				ECF365751917152E002EFD3A /* ViewController.h */,
-				ECF365761917152E002EFD3A /* ViewController.m */,
+				ECD9E1921A177169007EF34F /* TalkTableViewController */,
 				ECC2ADB4197AA5AB0015CCF5 /* AddTalkViewController.h */,
 				ECC2ADB5197AA5AB0015CCF5 /* AddTalkViewController.m */,
 				ECF3653D191616CF002EFD3A /* MasterViewController.h */,
@@ -326,6 +339,33 @@
 			path = RNBlurModalExample;
 			sourceTree = "<group>";
 		};
+		ECD9E1921A177169007EF34F /* TalkTableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				ECF365751917152E002EFD3A /* ViewController.h */,
+				ECF365761917152E002EFD3A /* ViewController.m */,
+				ECD9E1971A17740B007EF34F /* TalkTableViewCell.h */,
+				ECD9E1981A17740B007EF34F /* TalkTableViewCell.m */,
+				ECD9E1951A1771E4007EF34F /* TalkTableViewCell.xib */,
+			);
+			name = TalkTableViewController;
+			sourceTree = "<group>";
+		};
+		ECD9E19D1A186008007EF34F /* FriendsTableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				EC5AC8E0197A9FA900869567 /* FriendsViewController.h */,
+				EC5AC8E1197A9FA900869567 /* FriendsViewController.m */,
+				ECD9E19E1A186037007EF34F /* FriendsCell.h */,
+				ECD9E19F1A186037007EF34F /* FriendsCell.m */,
+				ECD9E1A01A186037007EF34F /* FriendsCell.xib */,
+				ECD9E1A61A187FC1007EF34F /* CustomAlertView.h */,
+				ECD9E1A71A187FC1007EF34F /* CustomAlertView.m */,
+				ECD9E1A91A187FE3007EF34F /* CustomAlertView.xib */,
+			);
+			name = FriendsTableViewController;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -416,6 +456,7 @@
 				ECF36586191781F9002EFD3A /* plus.png in Resources */,
 				EC6800E6191882E300DEE8CF /* savebt.png in Resources */,
 				EC6800D41917ADB000DEE8CF /* addword.png in Resources */,
+				ECD9E1A21A186037007EF34F /* FriendsCell.xib in Resources */,
 				ECAC825019CAEC6700A32514 /* cancel.png in Resources */,
 				809B51A618DABBA90032A48D /* License in Resources */,
 				EC6800D01917AB2B00DEE8CF /* pimage.png in Resources */,
@@ -424,7 +465,9 @@
 				809B508318D7B55B0032A48D /* Images.xcassets in Resources */,
 				809B507518D7B55B0032A48D /* InfoPlist.strings in Resources */,
 				ECAC824E19CAEBF200A32514 /* done.png in Resources */,
+				ECD9E1AA1A187FE3007EF34F /* CustomAlertView.xib in Resources */,
 				ECC2BB4C19C6F40100BA7DC7 /* badge_1.png in Resources */,
+				ECD9E1961A1771E4007EF34F /* TalkTableViewCell.xib in Resources */,
 				809B50CF18D814AC0032A48D /* tempUser.png in Resources */,
 				EC6800D21917ABD500DEE8CF /* words.png in Resources */,
 			);
@@ -455,6 +498,9 @@
 				ECD9E1911A1745C9007EF34F /* RNBlurModalView.m in Sources */,
 				809B50CB18D80E040032A48D /* MessageCell.m in Sources */,
 				ECAC824C19CAEB1800A32514 /* EditFriendViewController.m in Sources */,
+				ECD9E1991A17740B007EF34F /* TalkTableViewCell.m in Sources */,
+				ECD9E1A11A186037007EF34F /* FriendsCell.m in Sources */,
+				ECD9E1A81A187FC1007EF34F /* CustomAlertView.m in Sources */,
 				ECF3658219177D6B002EFD3A /* CoreImageHelper.m in Sources */,
 				EC18ECA51915D507004B4215 /* SettingViewController.m in Sources */,
 				809B50CD18D80E040032A48D /* TopBar.m in Sources */,

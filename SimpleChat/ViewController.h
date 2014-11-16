@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "ChatController.h"
 
+
 @interface ViewController : UIViewController <ChatControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>{
     IBOutlet UITableView *tv;
     UISearchBar *searchBar;

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ProfileViewController.h"
 #import "RNBlurModalView.h"
+#import "ChatController.h"
 
 @interface FriendsViewController : UITableViewController<UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>{
     IBOutlet UIBarButtonItem *editBtn;
@@ -27,5 +28,7 @@
     
     BOOL searching;
 }
+
+@property (strong, nonatomic) ChatController * chatController;
 
 @end
