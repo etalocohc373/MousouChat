@@ -311,8 +311,8 @@
     view.layer.borderColor = [UIColor colorWithRed:0.592 green:0.435 blue:0.776 alpha:1.0].CGColor;
     //view.layer.borderWidth = 2.f;
     
-    view.profileImgView.layer.cornerRadius = 15.0;
-    view.profileImgView.layer.borderWidth = 1.0;
+    view.profileImgView.layer.cornerRadius = 5.0;
+    //view.profileImgView.layer.borderWidth = 1.0;
     view.profileImgView.layer.borderColor = [[UIColor darkGrayColor] CGColor];
     view.profileImgView.layer.masksToBounds = YES;
     [view.profileImgView setImage:profileImage];
@@ -343,6 +343,7 @@
 
 -(void)jumpToTalk{
     if([talks containsObject:[users objectAtIndex:editPath.row]]){
+        
         NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
         
         [store setInteger:editPath.row forKey:@"selecteduser"];

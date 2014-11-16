@@ -57,6 +57,7 @@
 		ECD9E1A21A186037007EF34F /* FriendsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECD9E1A01A186037007EF34F /* FriendsCell.xib */; };
 		ECD9E1A81A187FC1007EF34F /* CustomAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD9E1A71A187FC1007EF34F /* CustomAlertView.m */; };
 		ECD9E1AA1A187FE3007EF34F /* CustomAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECD9E1A91A187FE3007EF34F /* CustomAlertView.xib */; };
+		ECD9E1AD1A18A983007EF34F /* WSCoachMarksView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD9E1AC1A18A983007EF34F /* WSCoachMarksView.m */; };
 		ECEF183A19A220B600511EA5 /* mizutama.png in Resources */ = {isa = PBXBuildFile; fileRef = ECEF183919A220B600511EA5 /* mizutama.png */; };
 		ECF3653F191616CF002EFD3A /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF3653E191616CF002EFD3A /* MasterViewController.m */; };
 		ECF365771917152E002EFD3A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF365761917152E002EFD3A /* ViewController.m */; };
@@ -148,6 +149,8 @@
 		ECD9E1A61A187FC1007EF34F /* CustomAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomAlertView.h; path = RNBlurModalExample/CustomAlertView.h; sourceTree = "<group>"; };
 		ECD9E1A71A187FC1007EF34F /* CustomAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomAlertView.m; path = RNBlurModalExample/CustomAlertView.m; sourceTree = "<group>"; };
 		ECD9E1A91A187FE3007EF34F /* CustomAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CustomAlertView.xib; path = RNBlurModalExample/CustomAlertView.xib; sourceTree = "<group>"; };
+		ECD9E1AB1A18A983007EF34F /* WSCoachMarksView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSCoachMarksView.h; sourceTree = "<group>"; };
+		ECD9E1AC1A18A983007EF34F /* WSCoachMarksView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSCoachMarksView.m; sourceTree = "<group>"; };
 		ECEF183919A220B600511EA5 /* mizutama.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mizutama.png; sourceTree = "<group>"; };
 		ECF3653D191616CF002EFD3A /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		ECF3653E191616CF002EFD3A /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
@@ -333,6 +336,8 @@
 		ECD9E16E1A174500007EF34F /* RNBlurModalExample */ = {
 			isa = PBXGroup;
 			children = (
+				ECD9E1AB1A18A983007EF34F /* WSCoachMarksView.h */,
+				ECD9E1AC1A18A983007EF34F /* WSCoachMarksView.m */,
 				ECD9E18F1A1745C9007EF34F /* RNBlurModalView.h */,
 				ECD9E1901A1745C9007EF34F /* RNBlurModalView.m */,
 			);
@@ -502,6 +507,7 @@
 				ECD9E1A11A186037007EF34F /* FriendsCell.m in Sources */,
 				ECD9E1A81A187FC1007EF34F /* CustomAlertView.m in Sources */,
 				ECF3658219177D6B002EFD3A /* CoreImageHelper.m in Sources */,
+				ECD9E1AD1A18A983007EF34F /* WSCoachMarksView.m in Sources */,
 				EC18ECA51915D507004B4215 /* SettingViewController.m in Sources */,
 				809B50CD18D80E040032A48D /* TopBar.m in Sources */,
 				EC6800DF1918796800DEE8CF /* ProfileViewController.m in Sources */,

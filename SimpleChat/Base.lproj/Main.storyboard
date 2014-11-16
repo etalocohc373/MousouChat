@@ -587,7 +587,7 @@
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="271" translatesAutoresizingMaskIntoConstraints="NO" id="HSs-aT-0bI">
                                                     <rect key="frame" x="20" y="0.0" width="271" height="74"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <fontDescription key="fontDescription" name="HiraKakuProN-W3" family="Hiragino Kaku Gothic ProN" pointSize="15"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>

@@ -162,8 +162,6 @@ typedef void (^RNBlurCompletion)(void);
     return self;
 }
 
-
-
 - (id)initWithViewController:(UIViewController*)viewController view:(UIView*)view {
     if (self = [self initWithFrame:CGRectMake(0, 0, viewController.view.width, viewController.view.height)]) {
         [self addSubview:view];
@@ -627,6 +625,7 @@ typedef void (^RNBlurCompletion)(void);
 @implementation UIImage (Blur)
 
 -(UIImage *)boxblurImageWithBlur:(CGFloat)blur {
+    /*
     if (blur < 0.f || blur > 1.f) blur = 0.5f;
     
     int boxSize = (int)(blur * 40);
@@ -699,7 +698,25 @@ typedef void (^RNBlurCompletion)(void);
     
     CGImageRelease(imageRef);
     
+    
+    
     return returnImage;
+     */
+    return [self imageWithColor:[UIColor colorWithHue:0.0 saturation:0.0 brightness:0.0 alpha:0.55]];
+}
+
+- (UIImage *)imageWithColor:(UIColor *)color {
+    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
 }
 
 @end

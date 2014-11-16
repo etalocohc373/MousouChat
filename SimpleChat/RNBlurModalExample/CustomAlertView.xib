@@ -7,7 +7,6 @@
     <customFonts key="customFonts">
         <mutableArray key="KozGoPro-Medium.otf">
             <string>KozGoPro-Medium</string>
-            <string>KozGoPro-Medium</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -21,6 +20,14 @@
                     <rect key="frame" x="10" y="12" width="80" height="80"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6Ls-ER-vhe">
+                    <rect key="frame" x="100" y="13" width="172" height="50"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <inset key="insetFor6xAndEarlier" minX="-1" minY="0.0" maxX="1" maxY="0.0"/>
+                    <fontDescription key="fontDescription" name="KozGoPro-Medium" family="Kozuka Gothic Pro" pointSize="16"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4QO-Uo-aGg">
                     <rect key="frame" x="0.0" y="100" width="140" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -38,17 +45,10 @@
                     </state>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fuZ-3o-Exn">
-                    <rect key="frame" x="100" y="44" width="160" height="60"/>
+                    <rect key="frame" x="100" y="40" width="132" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" name="KozGoPro-Medium" family="Kozuka Gothic Pro" pointSize="14"/>
+                    <fontDescription key="fontDescription" name="HiraKakuProN-W3" family="Hiragino Kaku Gothic ProN" pointSize="12"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6Ls-ER-vhe">
-                    <rect key="frame" x="100" y="8" width="180" height="50"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" name="KozGoPro-Medium" family="Kozuka Gothic Pro" pointSize="18"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>

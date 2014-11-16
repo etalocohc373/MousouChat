@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RNBlurModalView.h"
 
 @interface CustomAlertView : UIView
 
