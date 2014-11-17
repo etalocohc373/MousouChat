@@ -312,7 +312,7 @@
     //view.layer.borderWidth = 2.f;
     
     view.profileImgView.layer.cornerRadius = 5.0;
-    //view.profileImgView.layer.borderWidth = 1.0;
+    view.profileImgView.layer.borderWidth = 1.0;
     view.profileImgView.layer.borderColor = [[UIColor darkGrayColor] CGColor];
     view.profileImgView.layer.masksToBounds = YES;
     [view.profileImgView setImage:profileImage];
@@ -325,18 +325,21 @@
     [view.introLabel sizeToFit];
     
     CALayer *rightBorder = [CALayer layer];
-    rightBorder.borderColor = [[UIColor colorWithRed:0.592 green:0.435 blue:0.776 alpha:1.0] CGColor];
+    //rightBorder.borderColor = [[UIColor colorWithRed:0.592 green:0.435 blue:0.776 alpha:1.0] CGColor];
+    rightBorder.borderColor = [[UIColor lightGrayColor] CGColor];
     rightBorder.borderWidth = 1.f;
     rightBorder.frame = CGRectMake(-2, 1, CGRectGetWidth(view.talkBtn.frame)+2, CGRectGetHeight(view.talkBtn.frame)+1);
     [view.talkBtn.layer addSublayer:rightBorder];
     [view.talkBtn addTarget:self action:@selector(jumpToTalk) forControlEvents:UIControlEventTouchUpInside];
+    view.talkBtn.backgroundColor = [UIColor whiteColor];
     
     CALayer *leftBorder = [CALayer layer];
-    leftBorder.borderColor = [[UIColor colorWithRed:0.592 green:0.435 blue:0.776 alpha:1.0] CGColor];
+    leftBorder.borderColor = [[UIColor lightGrayColor] CGColor];;
     leftBorder.borderWidth = 1.f;
     leftBorder.frame = CGRectMake(-1, 1, CGRectGetWidth(view.editBtn.frame)+2, CGRectGetHeight(view.editBtn.frame)+1);
     [view.editBtn.layer addSublayer:leftBorder];
     [view.editBtn addTarget:self action:@selector(editProfile) forControlEvents:UIControlEventTouchUpInside];
+    view.editBtn.backgroundColor = [UIColor whiteColor];
     
     return view;
 }

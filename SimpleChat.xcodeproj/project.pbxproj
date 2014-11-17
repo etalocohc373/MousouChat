@@ -58,6 +58,10 @@
 		ECD9E1A81A187FC1007EF34F /* CustomAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD9E1A71A187FC1007EF34F /* CustomAlertView.m */; };
 		ECD9E1AA1A187FE3007EF34F /* CustomAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECD9E1A91A187FE3007EF34F /* CustomAlertView.xib */; };
 		ECD9E1AD1A18A983007EF34F /* WSCoachMarksView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD9E1AC1A18A983007EF34F /* WSCoachMarksView.m */; };
+		ECD9E1AF1A1A2157007EF34F /* fukidashi.png in Resources */ = {isa = PBXBuildFile; fileRef = ECD9E1AE1A1A2157007EF34F /* fukidashi.png */; };
+		ECD9E1B91A1A21B9007EF34F /* KeywordsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD9E1B71A1A21B9007EF34F /* KeywordsCell.m */; };
+		ECD9E1BA1A1A21B9007EF34F /* KeywordsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECD9E1B81A1A21B9007EF34F /* KeywordsCell.xib */; };
+		ECD9E1BC1A1A3F21007EF34F /* fukidashi2.png in Resources */ = {isa = PBXBuildFile; fileRef = ECD9E1BB1A1A3F21007EF34F /* fukidashi2.png */; };
 		ECEF183A19A220B600511EA5 /* mizutama.png in Resources */ = {isa = PBXBuildFile; fileRef = ECEF183919A220B600511EA5 /* mizutama.png */; };
 		ECF3653F191616CF002EFD3A /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF3653E191616CF002EFD3A /* MasterViewController.m */; };
 		ECF365771917152E002EFD3A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF365761917152E002EFD3A /* ViewController.m */; };
@@ -151,6 +155,11 @@
 		ECD9E1A91A187FE3007EF34F /* CustomAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CustomAlertView.xib; path = RNBlurModalExample/CustomAlertView.xib; sourceTree = "<group>"; };
 		ECD9E1AB1A18A983007EF34F /* WSCoachMarksView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSCoachMarksView.h; sourceTree = "<group>"; };
 		ECD9E1AC1A18A983007EF34F /* WSCoachMarksView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSCoachMarksView.m; sourceTree = "<group>"; };
+		ECD9E1AE1A1A2157007EF34F /* fukidashi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fukidashi.png; sourceTree = "<group>"; };
+		ECD9E1B61A1A21B9007EF34F /* KeywordsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeywordsCell.h; sourceTree = "<group>"; };
+		ECD9E1B71A1A21B9007EF34F /* KeywordsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeywordsCell.m; sourceTree = "<group>"; };
+		ECD9E1B81A1A21B9007EF34F /* KeywordsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KeywordsCell.xib; sourceTree = "<group>"; };
+		ECD9E1BB1A1A3F21007EF34F /* fukidashi2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fukidashi2.png; sourceTree = "<group>"; };
 		ECEF183919A220B600511EA5 /* mizutama.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mizutama.png; sourceTree = "<group>"; };
 		ECF3653D191616CF002EFD3A /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		ECF3653E191616CF002EFD3A /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
@@ -250,8 +259,7 @@
 				ECD9E1921A177169007EF34F /* TalkTableViewController */,
 				ECC2ADB4197AA5AB0015CCF5 /* AddTalkViewController.h */,
 				ECC2ADB5197AA5AB0015CCF5 /* AddTalkViewController.m */,
-				ECF3653D191616CF002EFD3A /* MasterViewController.h */,
-				ECF3653E191616CF002EFD3A /* MasterViewController.m */,
+				ECD9E1B01A1A216C007EF34F /* KeywordsViewController */,
 				EC18ECA31915D507004B4215 /* SettingViewController.h */,
 				EC18ECA41915D507004B4215 /* SettingViewController.m */,
 				EC9AC03819E0D4F10098707E /* Launch Screen.xib */,
@@ -314,6 +322,8 @@
 		EC6800D51917ADB400DEE8CF /* images */ = {
 			isa = PBXGroup;
 			children = (
+				ECD9E1BB1A1A3F21007EF34F /* fukidashi2.png */,
+				ECD9E1AE1A1A2157007EF34F /* fukidashi.png */,
 				ECAC824F19CAEC6700A32514 /* cancel.png */,
 				ECAC824D19CAEBF200A32514 /* done.png */,
 				ECAC824819CAEA1600A32514 /* addchat.png */,
@@ -369,6 +379,18 @@
 				ECD9E1A91A187FE3007EF34F /* CustomAlertView.xib */,
 			);
 			name = FriendsTableViewController;
+			sourceTree = "<group>";
+		};
+		ECD9E1B01A1A216C007EF34F /* KeywordsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				ECF3653D191616CF002EFD3A /* MasterViewController.h */,
+				ECF3653E191616CF002EFD3A /* MasterViewController.m */,
+				ECD9E1B61A1A21B9007EF34F /* KeywordsCell.h */,
+				ECD9E1B71A1A21B9007EF34F /* KeywordsCell.m */,
+				ECD9E1B81A1A21B9007EF34F /* KeywordsCell.xib */,
+			);
+			name = KeywordsViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -457,9 +479,11 @@
 				ECAC824919CAEA1600A32514 /* addchat.png in Resources */,
 				ECF3658419178148002EFD3A /* friends.png in Resources */,
 				EC9AC03919E0D4F10098707E /* Launch Screen.xib in Resources */,
+				ECD9E1BC1A1A3F21007EF34F /* fukidashi2.png in Resources */,
 				ECEF183A19A220B600511EA5 /* mizutama.png in Resources */,
 				ECF36586191781F9002EFD3A /* plus.png in Resources */,
 				EC6800E6191882E300DEE8CF /* savebt.png in Resources */,
+				ECD9E1AF1A1A2157007EF34F /* fukidashi.png in Resources */,
 				EC6800D41917ADB000DEE8CF /* addword.png in Resources */,
 				ECD9E1A21A186037007EF34F /* FriendsCell.xib in Resources */,
 				ECAC825019CAEC6700A32514 /* cancel.png in Resources */,
@@ -468,6 +492,7 @@
 				809B50CC18D80E040032A48D /* Previous.png in Resources */,
 				ECC2ADBB197B91EA0015CCF5 /* APJapanesefont.ttf in Resources */,
 				809B508318D7B55B0032A48D /* Images.xcassets in Resources */,
+				ECD9E1BA1A1A21B9007EF34F /* KeywordsCell.xib in Resources */,
 				809B507518D7B55B0032A48D /* InfoPlist.strings in Resources */,
 				ECAC824E19CAEBF200A32514 /* done.png in Resources */,
 				ECD9E1AA1A187FE3007EF34F /* CustomAlertView.xib in Resources */,
@@ -514,6 +539,7 @@
 				ECC2ADB9197B7F490015CCF5 /* EditProfileViewController.m in Sources */,
 				809B50C918D80E040032A48D /* ChatController.m in Sources */,
 				ECF3653F191616CF002EFD3A /* MasterViewController.m in Sources */,
+				ECD9E1B91A1A21B9007EF34F /* KeywordsCell.m in Sources */,
 				809B50CA18D80E040032A48D /* ChatInput.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

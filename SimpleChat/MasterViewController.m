@@ -7,8 +7,8 @@
 //
 
 #import "MasterViewController.h"
-
 #import "SettingViewController.h"
+#import "KeywordsCell.h"
 
 @interface MasterViewController ()<SettingViewControllerDelegate> {
     NSMutableArray *_objects;
@@ -53,6 +53,10 @@
     
     tv.delegate = self;
     tv.dataSource = self;
+    tv.rowHeight = 58.0;
+    
+    UINib *nib = [UINib nibWithNibName:@"KeywordsCell" bundle:nil];
+    [tv registerNib:nib forCellReuseIdentifier:@"Cell"];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -108,21 +112,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
-    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    //UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
+    KeywordsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", [reply objectAtIndex:indexPath.row]];
-    
-    UIImageView *imageView;
-    UIImage *image;
-    image = [UIImage imageNamed:@"fukidashi2.png"];
-    imageView = [[UIImageView alloc] initWithImage:image];
-    cell.backgroundView = imageView;
+    cell.wordLabel.text = [NSString stringWithFormat:@"%@", [reply objectAtIndex:indexPath.row]];
     
     //NSDate *object = _objects[indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", [keyword objectAtIndex:indexPath.row]];//[object description];
-    
-    cell.detailTextLabel.textColor = [UIColor blackColor];
+    cell.keywordLabel.text = [NSString stringWithFormat:@"%@", [keyword objectAtIndex:indexPath.row]];//[object description];
+    cell.imgView.image = [UIImage imageNamed:@"fukidashi2.png"];
     
     return cell;
 }

@@ -101,6 +101,9 @@
     tv.delegate = self;
     tv.dataSource = self;
     tv.rowHeight = 70.f;
+    [tv setSeparatorInset:UIEdgeInsetsZero];
+    //tv.separatorColor = [UIColor colorWithRed:0.01 green:0.01 blue:0.01 alpha:1.0];
+    tv.separatorColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
     
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.227 green:0.114 blue:0.369 alpha:1.0];
     
