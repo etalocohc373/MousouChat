@@ -126,10 +126,6 @@ static int chatInputStartingHeight = 40;
     [super viewDidLoad];
     
     store = [NSUserDefaults standardUserDefaults];
-    
-    UISwipeGestureRecognizer *swipeRightGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(back)];
-    swipeRightGesture.direction = UISwipeGestureRecognizerDirectionRight;
-    [self.view addGestureRecognizer:swipeRightGesture];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -545,11 +541,6 @@ static int chatInputStartingHeight = 40;
     _tintColor = tintColor;
 }
 
-
-
--(void)back{
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 - (UIStoryboard *)getStoryBoard2
 {

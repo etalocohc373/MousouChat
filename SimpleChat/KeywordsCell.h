@@ -12,6 +12,5 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *keywordLabel;
 @property (weak, nonatomic) IBOutlet UILabel *wordLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *imgView;
 
 @end

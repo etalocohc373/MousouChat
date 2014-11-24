@@ -47,6 +47,7 @@
     searchArrayImg = [NSMutableArray array];
     
     self.tableView.sectionHeaderHeight = 23;
+    self.tableView.bounces = NO;
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     
@@ -107,7 +108,7 @@
         talks = [mar3 mutableCopy];
     }
     
-    [store setFloat:0.1 forKey:@"kidokuDelay"];
+    [store setFloat:0.0 forKey:@"kidokuDelay"];
     
     if(users.count > 1) editBtn.enabled = YES;
     else editBtn.enabled = NO;
@@ -117,6 +118,8 @@
     [self.tableView reloadData];
     
     [self createNavTitle:[NSString stringWithFormat:@"友だち (%lu人)", (unsigned long)users.count]];
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)didReceiveMemoryWarning
@@ -312,7 +315,7 @@
     //view.layer.borderWidth = 2.f;
     
     view.profileImgView.layer.cornerRadius = 5.0;
-    view.profileImgView.layer.borderWidth = 1.0;
+    //view.profileImgView.layer.borderWidth = 1.0;
     view.profileImgView.layer.borderColor = [[UIColor darkGrayColor] CGColor];
     view.profileImgView.layer.masksToBounds = YES;
     [view.profileImgView setImage:profileImage];

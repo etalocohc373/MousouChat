@@ -64,7 +64,6 @@
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
     [tv deselectRowAtIndexPath:tv.indexPathForSelectedRow animated:YES];
-    [tv reloadData];
     
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
     //rows = [store integerForKey:@"kaisu"];
@@ -88,6 +87,8 @@
     }
     
     [tv reloadData];
+    
+    tv.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)didReceiveMemoryWarning
@@ -119,7 +120,11 @@
     
     //NSDate *object = _objects[indexPath.row];
     cell.keywordLabel.text = [NSString stringWithFormat:@"%@", [keyword objectAtIndex:indexPath.row]];//[object description];
-    cell.imgView.image = [UIImage imageNamed:@"fukidashi2.png"];
+    
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 58)];
+    imgView.image = [UIImage imageNamed:@"fukidashi2.png"];
+    [cell addSubview:imgView];
+    [cell sendSubviewToBack:imgView];
     
     return cell;
 }

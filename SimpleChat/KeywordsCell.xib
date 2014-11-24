@@ -14,10 +14,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fukidashi2.png" id="liO-bR-Knd">
-                        <rect key="frame" x="0.0" y="4" width="320" height="34"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="j3g-Ab-ZfA">
                         <rect key="frame" x="29" y="24" width="156" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -35,16 +31,12 @@
                 </subviews>
             </tableViewCellContentView>
             <connections>
-                <outlet property="imgView" destination="liO-bR-Knd" id="Ahx-sm-khI"/>
                 <outlet property="keywordLabel" destination="kKe-4G-omI" id="4N7-JZ-yRk"/>
                 <outlet property="wordLabel" destination="j3g-Ab-ZfA" id="LSd-Uh-3aT"/>
             </connections>
             <point key="canvasLocation" x="288" y="210"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="fukidashi2.png" width="618" height="69"/>
-    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

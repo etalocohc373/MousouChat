@@ -30,6 +30,9 @@
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.227 green:0.114 blue:0.369 alpha:1.0];
     
     self.tableView.allowsMultipleSelection = YES;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+    self.tableView.separatorColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
     
     NSArray *mar3 = [NSArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"pimages"]];
     
@@ -75,7 +78,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return @"友だち";
+    return @"　友だち";
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -108,6 +111,7 @@
     
     // Configure the cell...
     cell.textLabel.text = [users objectAtIndex:indexPath.row];
+    cell.textLabel.font = [UIFont fontWithName:@"Hiragino Kaku Gothic ProN W3" size:18];
     cell.imageView.image = [[UIImage alloc] initWithData:[images objectAtIndex:indexPath.row]];
     
     return cell;

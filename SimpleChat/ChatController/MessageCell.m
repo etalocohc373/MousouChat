@@ -16,6 +16,9 @@
 #import "MessageCell.h"
 #import "MyMacros.h"
 
+#import "RNBlurModalView.h"
+#import "CustomAlertView.h"
+
 // External Constants
 int const outlineSpace = 22; // 11 px on each side for border
 int const maxBubbleWidth = 260; // Max Bubble Size
@@ -50,6 +53,7 @@ static int minimumHeight = 30;
 @property CGSize textSize;
 
 // Bubble, Text, ImgV
+@property (strong, nonatomic) UILabel *nameLabel;
 @property (strong, nonatomic) UILabel *textLabel;
 @property (strong, nonatomic) UILabel *bgLabel;
 @property (strong, nonatomic) UILabel *readLabel;
@@ -85,6 +89,15 @@ static int minimumHeight = 30;
             [self.contentView addSubview:_bgLabel];
         }
         
+        if (!_nameLabel) {
+            _nameLabel = [UILabel new];
+            _nameLabel.font = [UIFont fontWithName:@"Hiragino Kaku Gothic ProN" size:11];
+            _nameLabel.layer.rasterizationScale = 2.0f;
+            _nameLabel.layer.shouldRasterize = YES;
+            _nameLabel.textColor = [UIColor darkTextColor];
+            [self.contentView addSubview:_nameLabel];
+        }
+        
         if (!_textLabel) {
             _textLabel = [UILabel new];
             _textLabel.layer.rasterizationScale = 2.0f;
@@ -111,10 +124,12 @@ static int minimumHeight = 30;
             _readLabel.font = [UIFont systemFontOfSize:10.0f];
             _readLabel.textColor = [UIColor darkTextColor];
             _readLabel.numberOfLines = 1;
+            _readLabel.hidden = YES;
+            [self.contentView addSubview:_readLabel];
         }
     }
     
-    [NSObject cancelPreviousPerformRequestsWithTarget:nil selector:@selector(makeReadLabel) object:nil];
+    //FIXME: [NSObject cancelPreviousPerformRequestsWithTarget:nil selector:@selector(makeReadLabel) object:nil];
     
     [self performSelector:@selector(makeReadLabel) withObject:nil afterDelay:[[NSUserDefaults standardUserDefaults]floatForKey:@"kidokuDelay"]];
     
@@ -124,12 +139,13 @@ static int minimumHeight = 30;
 #pragma mark - Make 既読Label
 - (void)makeReadLabel
 {
+    //NSLog(@"%@", _message[kMessageRuntimeSentBy]);
     if([_message[kMessageRuntimeSentBy] isEqualToString:@"0"]) {
-        _readLabel.frame = CGRectMake(_timeLabel.frame.origin.x, _timeLabel.frame.origin.y - _timeLabel.frame.size.height, 30, _timeLabel.frame.size.height);
         
-        NSLog(@"%.0f, %.0f, %.0f, %.0f", _readLabel.frame.size.width, _readLabel.frame.size.height, _readLabel.frame.origin.x, _readLabel.frame.origin.y);
+        if(!_readLabel.frame.size.width) _readLabel.frame = CGRectMake(_timeLabel.frame.origin.x, 0, 30, _timeLabel.frame.size.height);
         
-        [self.contentView addSubview:_readLabel];
+        //[self.contentView addSubview:_readLabel];
+        _readLabel.hidden = NO;
     }
 }
 
@@ -138,6 +154,8 @@ static int minimumHeight = 30;
 - (void) setOpponentImage:(UIImage *)opponentImage {
     if (!_imageView) {
         _imageView = [UIImageView new];
+        _imageView.userInteractionEnabled = YES;
+        _imageView.tag = 1;
         _imageView.frame = CGRectMake(offsetX / 2, 0, minimumHeight, minimumHeight);
         _imageView.layer.cornerRadius = minimumHeight / 5;
         _imageView.layer.masksToBounds = YES;
@@ -151,8 +169,7 @@ static int minimumHeight = 30;
         // If sentby current user, or no image, hide imageView;
         _imageView.image = nil;
         _imageView.hidden = YES;
-    }
-    else {
+    } else {
         for (UIView * v in @[_bgLabel, _textLabel, _timeLabel]) {
             v.center = CGPointMake(v.center.x + _imageView.bounds.size.width, v.center.y);
         }
@@ -208,11 +225,14 @@ static int minimumHeight = 30;
         // then this is a message that the current user created . . .
         _bgLabel.frame = (UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication]statusBarOrientation])) ? CGRectMake(ScreenWidth() - offsetX, 0, -_textSize.width - outlineSpace, height) : CGRectMake(ScreenHeight() - offsetX, 0, -_textSize.width - outlineSpace, height);
         _bgLabel.layer.borderColor = _userColor.CGColor;
-    }
-    else {
+    } else if(_sentBy == kSentByOpponent) {
         // sent by opponent
-        _bgLabel.frame = CGRectMake(offsetX, 0, _textSize.width + outlineSpace, height);
+        _bgLabel.frame = CGRectMake(offsetX, 15, _textSize.width + outlineSpace, height);
         _bgLabel.layer.borderColor = _opponentColor.CGColor;
+        
+        NSArray *array = [NSArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"talks"]];
+        _nameLabel.text = [array objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]];
+        _nameLabel.frame = CGRectMake(_imageView.frame.origin.x+minimumHeight+5, 0, _bgLabel.frame.size.width, 13);
     }
     
     // Add image if we have one
@@ -228,15 +248,123 @@ static int minimumHeight = 30;
     }
     
     // position _textLabel in the _bgLabel;
-    _textLabel.frame = CGRectMake(_bgLabel.frame.origin.x + (outlineSpace / 2), 0, _bgLabel.bounds.size.width - outlineSpace, _bgLabel.bounds.size.height);
     
-    if(_sentBy == kSentByUser){
+    if([_message[kMessageRuntimeSentBy] isEqualToString:@"0"]){
+        _textLabel.frame = CGRectMake(_bgLabel.frame.origin.x + (outlineSpace / 2), 0, _bgLabel.bounds.size.width - outlineSpace, _bgLabel.bounds.size.height);
+        
         _timeLabel.frame = CGRectMake(_textLabel.center.x - (_textLabel.bounds.size.width / 2 + 40), _textLabel.bounds.size.height / 2, 30, _textLabel.bounds.size.height / 2);
     }
-    else _timeLabel.frame = CGRectMake(_textLabel.center.x + (_textLabel.bounds.size.width / 2 + 15), _textLabel.bounds.size.height / 2, 30, _textLabel.bounds.size.height / 2);
+    else {
+        _textLabel.frame = CGRectMake(_bgLabel.frame.origin.x + (outlineSpace / 2), 15, _bgLabel.bounds.size.width - outlineSpace, _bgLabel.bounds.size.height);
+        
+        _timeLabel.frame = CGRectMake(_textLabel.center.x + (_textLabel.bounds.size.width / 2 + 15), _textLabel.bounds.size.height / 2, 30, _textLabel.bounds.size.height / 2);
+        
+        _readLabel.frame = CGRectMake(_timeLabel.frame.origin.x, _timeLabel.frame.origin.y - _timeLabel.frame.size.height, 30, _timeLabel.frame.size.height);
+        
+    }
     
     _bgLabel.layer.backgroundColor = [[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.9] CGColor];
+}
+
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [touches anyObject];
     
+    RNBlurModalView *modal;
+    UIView *view;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"] inSection:1];
+    editPath = indexPath;
+    switch (touch.view.tag) {
+        case 1:
+            view = [self setUpAlertViewForIndexPath:indexPath];
+            
+            modal = [[RNBlurModalView alloc] initWithView:view];
+            modal.dismissButtonRight = YES;
+            
+            [modal show];
+            break;
+            
+        default:
+            break;
+    }
+    
+}
+
+-(UIView *)setUpAlertViewForIndexPath:(NSIndexPath *)indexPath{
+    UIImage *profileImage;
+    NSString *name;
+    NSString *intro;
+    
+    NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
+    NSArray *users = [NSArray arrayWithArray:[store objectForKey:@"users"]];
+    NSArray *intros = [NSArray arrayWithArray:[store objectForKey:@"intros"]];
+    NSArray *images = [NSArray arrayWithArray:[store objectForKey:@"pimages"]];
+    
+    if(indexPath.section){
+        profileImage = [UIImage imageWithData:[images objectAtIndex:indexPath.row]];
+        name = [users objectAtIndex:indexPath.row];
+        intro = [intros objectAtIndex:indexPath.row];
+    }else{
+        profileImage = [UIImage imageWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"myimage"]];
+        name = [[NSUserDefaults standardUserDefaults] objectForKey:@"myname"];
+        intro = [[NSUserDefaults standardUserDefaults] objectForKey:@"aboutme"];
+    }
+    
+    UINib *nib = [UINib nibWithNibName:@"CustomAlertView" bundle:nil];
+    CustomAlertView *view = [[nib instantiateWithOwner:nil options:nil] objectAtIndex:0];
+    view.layer.cornerRadius = 5.f;
+    view.layer.borderColor = [UIColor colorWithRed:0.592 green:0.435 blue:0.776 alpha:1.0].CGColor;
+    //view.layer.borderWidth = 2.f;
+    
+    view.profileImgView.layer.cornerRadius = 5.0;
+    //view.profileImgView.layer.borderWidth = 1.0;
+    view.profileImgView.layer.borderColor = [[UIColor darkGrayColor] CGColor];
+    view.profileImgView.layer.masksToBounds = YES;
+    [view.profileImgView setImage:profileImage];
+    
+    view.nameLabel.text = name;
+    [view.nameLabel sizeToFit];
+    
+    view.introLabel.numberOfLines = 2;
+    view.introLabel.text = intro;
+    [view.introLabel sizeToFit];
+    
+    CALayer *rightBorder = [CALayer layer];
+    //rightBorder.borderColor = [[UIColor colorWithRed:0.592 green:0.435 blue:0.776 alpha:1.0] CGColor];
+    rightBorder.borderColor = [[UIColor lightGrayColor] CGColor];
+    rightBorder.borderWidth = 1.f;
+    rightBorder.frame = CGRectMake(-2, 1, CGRectGetWidth(view.talkBtn.frame)+2, CGRectGetHeight(view.talkBtn.frame)+1);
+    [view.talkBtn.layer addSublayer:rightBorder];
+    [view.talkBtn addTarget:self action:@selector(jumpToTalk) forControlEvents:UIControlEventTouchUpInside];
+    view.talkBtn.backgroundColor = [UIColor whiteColor];
+    
+    CALayer *leftBorder = [CALayer layer];
+    leftBorder.borderColor = [[UIColor lightGrayColor] CGColor];;
+    leftBorder.borderWidth = 1.f;
+    leftBorder.frame = CGRectMake(-1, 1, CGRectGetWidth(view.editBtn.frame)+2, CGRectGetHeight(view.editBtn.frame)+1);
+    [view.editBtn.layer addSublayer:leftBorder];
+    [view.editBtn addTarget:self action:@selector(editProfile) forControlEvents:UIControlEventTouchUpInside];
+    view.editBtn.backgroundColor = [UIColor whiteColor];
+    
+    return view;
+}
+
+-(void)jumpToTalk{
+    
+}
+
+-(void)editProfile{
+    if(!editPath.section) [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"editMain"];
+    else{
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"editMain"];
+        [[NSUserDefaults standardUserDefaults] setInteger:editPath.row forKey:@"editUserNum"];
+    }
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    //FIXME: UIViewController *viewcon = [self.storyboard instantiateViewControllerWithIdentifier:@"profile"];
+    //FIXME: [self presentViewController:viewcon animated:YES completion:nil];
 }
 
 @end

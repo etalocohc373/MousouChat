@@ -40,7 +40,9 @@ FOUNDATION_EXPORT NSString * const kMessageContent;
 #else
 #endif
 
-@interface MessageCell : UICollectionViewCell
+@interface MessageCell : UICollectionViewCell{
+    NSIndexPath *editPath;
+}
 
 /*
  Message Property

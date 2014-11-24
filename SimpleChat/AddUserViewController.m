@@ -183,8 +183,8 @@
     
     [CoreImageHelper centerCroppingImageWithImage:originalImage atSize:CGSizeMake(hoge, hoge) completion:^(UIImage *resultImg){
         [CoreImageHelper resizeAspectFitImageWithImage:resultImg atSize:100.f completion:^(UIImage *resultImg2){
+            imgView.contentMode = UIViewContentModeScaleAspectFit;
             imgView.image = resultImg2;
-            [imgView sizeToFit];
         }];
     }];
 }

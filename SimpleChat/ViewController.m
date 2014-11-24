@@ -62,7 +62,7 @@
         if(mar3) images = [mar3 mutableCopy];
     }
     
-    [store setFloat:0.1 forKey:@"kidokuDelay"];
+    [store setFloat:0.0 forKey:@"kidokuDelay"];
     
     [store synchronize];
     [tv reloadData];
@@ -70,6 +70,8 @@
     notReadRows = [NSMutableArray array];
     if([[NSUserDefaults standardUserDefaults] objectForKey:@"notReadRows"])
         notReadRows = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"notReadRows"]];
+    
+    tv.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 /*- (void) handleTap:(UITapGestureRecognizer *)tap {
@@ -102,6 +104,7 @@
     tv.dataSource = self;
     tv.rowHeight = 70.f;
     [tv setSeparatorInset:UIEdgeInsetsZero];
+    tv.bounces = NO;
     //tv.separatorColor = [UIColor colorWithRed:0.01 green:0.01 blue:0.01 alpha:1.0];
     tv.separatorColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
     
@@ -115,8 +118,7 @@
     searchBar.placeholder = @"トークを検索";
     searchBar.delegate = self;
     [searchBar sizeToFit];
-    
-    tv.tableHeaderView = searchBar;
+    //tv.tableHeaderView = searchBar;
     
     [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
     [UINavigationBar appearance].tintColor = [UIColor whiteColor];
