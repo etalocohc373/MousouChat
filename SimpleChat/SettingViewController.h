@@ -18,8 +18,6 @@
     NSMutableArray *keyword;
     NSMutableArray *reply;
     NSArray *talks;
-    
-    int kaisu;
 }
 
 @property(weak,nonatomic) IBOutlet UITextField *tf;

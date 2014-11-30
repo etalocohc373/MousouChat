@@ -52,7 +52,7 @@
         <!--キーワード追加-->
         <scene sceneID="pUd-BG-9Uc">
             <objects>
-                <tableViewController id="fqM-ON-TbD" customClass="SettingViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="setting" id="fqM-ON-TbD" customClass="SettingViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="rgG-ow-4nV">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

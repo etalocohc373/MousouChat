@@ -66,7 +66,6 @@
     [tv deselectRowAtIndexPath:tv.indexPathForSelectedRow animated:YES];
     
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
-    //rows = [store integerForKey:@"kaisu"];
     
     talks = [NSArray arrayWithArray:[store objectForKey:@"talks"]];
     
@@ -185,7 +184,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
+    
     [store setInteger:[indexPath row] forKey:@"selectedrow"];
+    [store setBool:YES forKey:@"editKeyword"];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    SettingViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"setting"];
+    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:controller];
+    nc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentViewController:nc animated:YES completion:nil];
+    
     [tv deselectRowAtIndexPath:tv.indexPathForSelectedRow animated:YES];
 }
 

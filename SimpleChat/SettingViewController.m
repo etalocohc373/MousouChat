@@ -31,15 +31,13 @@
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
+    BOOL edit = [store boolForKey:@"editKeyword"];
+    
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     self.tableView.allowsSelection = NO;
     
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.227 green:0.114 blue:0.369 alpha:1.0];
-    
-    NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
-    kaisu = (int)[store integerForKey:@"kaisu"];
     
     [tf becomeFirstResponder];
     
@@ -57,6 +55,14 @@
     key = [NSString stringWithFormat:@"replies%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
     keywordmodoki = [store objectForKey:key];
     if(keywordmodoki) reply = [keywordmodoki mutableCopy];
+    
+    
+    if(edit){
+        self.title = @"キーワード編集";
+        
+        tf.text = [keyword objectAtIndex:[store integerForKey:@"selectedrow"]];
+        tf2.text = [reply objectAtIndex:[store integerForKey:@"selectedrow"]];
+    }
     
     /*[keyword removeAllObjects];
     [word removeAllObjects];
@@ -91,22 +97,44 @@
 }
 
 -(IBAction)dainyu{
-    kaisu++;
-    //kaisu = 0;
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
+    BOOL edit = [store boolForKey:@"editKeyword"];
     
-    [keyword addObject:tf.text];
-    NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
-    [store setObject:keyword forKey:key];
-    
-    [reply addObject:tf2.text];
-    key = [NSString stringWithFormat:@"replies%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
-    [store setObject:reply forKey:key];
-    
-    [store synchronize];
-
-    //[self.delegate settingViewControllerDidFinish:self item:self.tf.text];
-    [self back];
+    if(edit){
+        if([keyword containsObject:tf.text] && ![tf.text isEqualToString:[keyword objectAtIndex:[store integerForKey:@"selectedrow"]]]) [self showError];
+        else{
+            int editRow = (int)[store integerForKey:@"selectedrow"];
+            
+            [keyword replaceObjectAtIndex:editRow withObject:tf.text];
+            NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
+            [store setObject:keyword forKey:key];
+            
+            [reply replaceObjectAtIndex:editRow withObject:tf2.text];
+            key = [NSString stringWithFormat:@"replies%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
+            [store setObject:reply forKey:key];
+            
+            [store synchronize];
+            
+            [self back];
+        }
+    }else{
+        if(![keyword containsObject:tf.text]){
+            [keyword addObject:tf.text];
+            NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
+            [store setObject:keyword forKey:key];
+            
+            [reply addObject:tf2.text];
+            key = [NSString stringWithFormat:@"replies%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
+            [store setObject:reply forKey:key];
+            
+            [store synchronize];
+            
+            //[self.delegate settingViewControllerDidFinish:self item:self.tf.text];
+            [self back];
+        }else{
+            [self showError];
+        }
+    }
 }
 
 -(IBAction)back{
@@ -119,6 +147,11 @@
     }else{
         done.enabled = NO;
     }
+}
+
+-(void)showError{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"キーワードが重複しています" message:@"キーワードを変更してください" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 @end

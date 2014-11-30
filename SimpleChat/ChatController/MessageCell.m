@@ -240,6 +240,7 @@ static int minimumHeight = 30;
         // If sentby current user, or no image, hide imageView;
         _imageView.image = nil;
         _imageView.hidden = YES;
+        _nameLabel.text = @"";
     } else {
         for (UIView * v in @[_bgLabel, _textLabel,  _timeLabel]) {
             v.center = CGPointMake(v.center.x + _imageView.bounds.size.width, v.center.y);
