@@ -246,7 +246,6 @@
         [back setEnabled:YES];
         [items addObject:editButton];
     }
-    [tb setItems:items];
 }
 
 -(void)back{
