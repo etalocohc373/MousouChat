@@ -11,7 +11,6 @@
 
 @interface MasterViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>{
     IBOutlet UITableView *tv;
-    IBOutlet UIToolbar *tb;
     
     UIBarButtonItem *back;
     

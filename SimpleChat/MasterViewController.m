@@ -37,6 +37,7 @@
     back = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     self.navigationItem.leftBarButtonItem = back;
     
+    /*
     NSMutableArray *items = [NSMutableArray array];
     UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     
@@ -47,6 +48,7 @@
     
     [items addObject:editButton];
     [tb setItems:items];
+     */
     
     //self.navigationItem.leftBarButtonItem = self.editButtonItem;
     //[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];

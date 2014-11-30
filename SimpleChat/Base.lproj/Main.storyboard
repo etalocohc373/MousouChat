@@ -25,11 +25,6 @@
                                     <outlet property="delegate" destination="DVV-Bc-UTw" id="iAA-Wx-jY4"/>
                                 </connections>
                             </tableView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XuE-kM-is1">
-                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
-                                <color key="backgroundColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
-                                <items/>
-                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -41,7 +36,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="tb" destination="XuE-kM-is1" id="ZTc-6Q-7m0"/>
                         <outlet property="tv" destination="dFC-i6-6SH" id="M2f-Bz-UG4"/>
                     </connections>
                 </viewController>
