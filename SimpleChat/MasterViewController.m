@@ -53,7 +53,7 @@
     
     tv.delegate = self;
     tv.dataSource = self;
-    tv.rowHeight = 58.0;
+    tv.rowHeight = 50.0;
     
     UINib *nib = [UINib nibWithNibName:@"KeywordsCell" bundle:nil];
     [tv registerNib:nib forCellReuseIdentifier:@"Cell"];
@@ -116,7 +116,7 @@
     //NSDate *object = _objects[indexPath.row];
     cell.keywordLabel.text = [NSString stringWithFormat:@"%@", [keyword objectAtIndex:indexPath.row]];//[object description];
     
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 58)];
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
     imgView.image = [UIImage imageNamed:@"fukidashi2.png"];
     [cell addSubview:imgView];
     [cell sendSubviewToBack:imgView];

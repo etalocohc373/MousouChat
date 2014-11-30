@@ -62,6 +62,8 @@
 		ECD9E1B91A1A21B9007EF34F /* KeywordsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD9E1B71A1A21B9007EF34F /* KeywordsCell.m */; };
 		ECD9E1BA1A1A21B9007EF34F /* KeywordsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECD9E1B81A1A21B9007EF34F /* KeywordsCell.xib */; };
 		ECD9E1BC1A1A3F21007EF34F /* fukidashi2.png in Resources */ = {isa = PBXBuildFile; fileRef = ECD9E1BB1A1A3F21007EF34F /* fukidashi2.png */; };
+		ECD9E1C11A2AFD2B007EF34F /* CustomToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD9E1C01A2AFD2B007EF34F /* CustomToolBar.m */; };
+		ECD9E1C31A2AFD46007EF34F /* CustomToolBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECD9E1C21A2AFD46007EF34F /* CustomToolBar.xib */; };
 		ECEF183A19A220B600511EA5 /* mizutama.png in Resources */ = {isa = PBXBuildFile; fileRef = ECEF183919A220B600511EA5 /* mizutama.png */; };
 		ECF3653F191616CF002EFD3A /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF3653E191616CF002EFD3A /* MasterViewController.m */; };
 		ECF365771917152E002EFD3A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF365761917152E002EFD3A /* ViewController.m */; };
@@ -160,6 +162,9 @@
 		ECD9E1B71A1A21B9007EF34F /* KeywordsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeywordsCell.m; sourceTree = "<group>"; };
 		ECD9E1B81A1A21B9007EF34F /* KeywordsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KeywordsCell.xib; sourceTree = "<group>"; };
 		ECD9E1BB1A1A3F21007EF34F /* fukidashi2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fukidashi2.png; sourceTree = "<group>"; };
+		ECD9E1BF1A2AFD2B007EF34F /* CustomToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomToolBar.h; sourceTree = "<group>"; };
+		ECD9E1C01A2AFD2B007EF34F /* CustomToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomToolBar.m; sourceTree = "<group>"; };
+		ECD9E1C21A2AFD46007EF34F /* CustomToolBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomToolBar.xib; sourceTree = "<group>"; };
 		ECEF183919A220B600511EA5 /* mizutama.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mizutama.png; sourceTree = "<group>"; };
 		ECF3653D191616CF002EFD3A /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		ECF3653E191616CF002EFD3A /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
@@ -389,6 +394,9 @@
 				ECD9E1B61A1A21B9007EF34F /* KeywordsCell.h */,
 				ECD9E1B71A1A21B9007EF34F /* KeywordsCell.m */,
 				ECD9E1B81A1A21B9007EF34F /* KeywordsCell.xib */,
+				ECD9E1BF1A2AFD2B007EF34F /* CustomToolBar.h */,
+				ECD9E1C01A2AFD2B007EF34F /* CustomToolBar.m */,
+				ECD9E1C21A2AFD46007EF34F /* CustomToolBar.xib */,
 			);
 			name = KeywordsViewController;
 			sourceTree = "<group>";
@@ -495,6 +503,7 @@
 				ECD9E1BA1A1A21B9007EF34F /* KeywordsCell.xib in Resources */,
 				809B507518D7B55B0032A48D /* InfoPlist.strings in Resources */,
 				ECAC824E19CAEBF200A32514 /* done.png in Resources */,
+				ECD9E1C31A2AFD46007EF34F /* CustomToolBar.xib in Resources */,
 				ECD9E1AA1A187FE3007EF34F /* CustomAlertView.xib in Resources */,
 				ECC2BB4C19C6F40100BA7DC7 /* badge_1.png in Resources */,
 				ECD9E1961A1771E4007EF34F /* TalkTableViewCell.xib in Resources */,
@@ -534,6 +543,7 @@
 				ECF3658219177D6B002EFD3A /* CoreImageHelper.m in Sources */,
 				ECD9E1AD1A18A983007EF34F /* WSCoachMarksView.m in Sources */,
 				EC18ECA51915D507004B4215 /* SettingViewController.m in Sources */,
+				ECD9E1C11A2AFD2B007EF34F /* CustomToolBar.m in Sources */,
 				809B50CD18D80E040032A48D /* TopBar.m in Sources */,
 				EC6800DF1918796800DEE8CF /* ProfileViewController.m in Sources */,
 				ECC2ADB9197B7F490015CCF5 /* EditProfileViewController.m in Sources */,
