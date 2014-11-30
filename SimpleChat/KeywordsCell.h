@@ -10,6 +10,9 @@
 
 @interface KeywordsCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIButton *checkBtn;
+@property (weak, nonatomic) IBOutlet UIImageView *checkbox;
+
 @property (weak, nonatomic) IBOutlet UILabel *keywordLabel;
 @property (weak, nonatomic) IBOutlet UILabel *wordLabel;
 

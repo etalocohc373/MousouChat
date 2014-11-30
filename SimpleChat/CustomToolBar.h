@@ -10,4 +10,8 @@
 
 @interface CustomToolBar : UIView
 
+@property (weak, nonatomic) IBOutlet UIButton *trash;
+@property (weak, nonatomic) IBOutlet UIButton *edit;
+@property (weak, nonatomic) IBOutlet UIButton *hide;
+
 @end

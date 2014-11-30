@@ -9,6 +9,7 @@
 #import "MasterViewController.h"
 #import "SettingViewController.h"
 #import "KeywordsCell.h"
+#import "CustomToolBar.h"
 
 @interface MasterViewController ()<SettingViewControllerDelegate> {
     NSMutableArray *_objects;
@@ -118,10 +119,10 @@
     //NSDate *object = _objects[indexPath.row];
     cell.keywordLabel.text = [NSString stringWithFormat:@"%@", [keyword objectAtIndex:indexPath.row]];//[object description];
     
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(50, 0, 270, 50)];
     imgView.image = [UIImage imageNamed:@"fukidashi2.png"];
-    [cell addSubview:imgView];
-    [cell sendSubviewToBack:imgView];
+    [cell.contentView addSubview:imgView];
+    [cell.contentView sendSubviewToBack:imgView];
     
     return cell;
 }

@@ -41,8 +41,6 @@
 		ECAC824719C7B70800A32514 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 809B507C18D7B55B0032A48D /* Main.storyboard */; };
 		ECAC824919CAEA1600A32514 /* addchat.png in Resources */ = {isa = PBXBuildFile; fileRef = ECAC824819CAEA1600A32514 /* addchat.png */; };
 		ECAC824C19CAEB1800A32514 /* EditFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECAC824B19CAEB1800A32514 /* EditFriendViewController.m */; };
-		ECAC824E19CAEBF200A32514 /* done.png in Resources */ = {isa = PBXBuildFile; fileRef = ECAC824D19CAEBF200A32514 /* done.png */; };
-		ECAC825019CAEC6700A32514 /* cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = ECAC824F19CAEC6700A32514 /* cancel.png */; };
 		ECC2ADB6197AA5AB0015CCF5 /* AddTalkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC2ADB5197AA5AB0015CCF5 /* AddTalkViewController.m */; };
 		ECC2ADB9197B7F490015CCF5 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC2ADB8197B7F490015CCF5 /* EditProfileViewController.m */; };
 		ECC2ADBB197B91EA0015CCF5 /* APJapanesefont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ECC2ADBA197B8BC10015CCF5 /* APJapanesefont.ttf */; };
@@ -64,6 +62,10 @@
 		ECD9E1BC1A1A3F21007EF34F /* fukidashi2.png in Resources */ = {isa = PBXBuildFile; fileRef = ECD9E1BB1A1A3F21007EF34F /* fukidashi2.png */; };
 		ECD9E1C11A2AFD2B007EF34F /* CustomToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD9E1C01A2AFD2B007EF34F /* CustomToolBar.m */; };
 		ECD9E1C31A2AFD46007EF34F /* CustomToolBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECD9E1C21A2AFD46007EF34F /* CustomToolBar.xib */; };
+		ECD9E1C51A2B01D8007EF34F /* cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = ECD9E1C41A2B01D8007EF34F /* cancel.png */; };
+		ECD9E1C71A2B01F0007EF34F /* done.png in Resources */ = {isa = PBXBuildFile; fileRef = ECD9E1C61A2B01F0007EF34F /* done.png */; };
+		ECD9E1C91A2B04D7007EF34F /* trash.png in Resources */ = {isa = PBXBuildFile; fileRef = ECD9E1C81A2B04D7007EF34F /* trash.png */; };
+		ECD9E1CB1A2B08EF007EF34F /* checkbox-plain.png in Resources */ = {isa = PBXBuildFile; fileRef = ECD9E1CA1A2B08EF007EF34F /* checkbox-plain.png */; };
 		ECEF183A19A220B600511EA5 /* mizutama.png in Resources */ = {isa = PBXBuildFile; fileRef = ECEF183919A220B600511EA5 /* mizutama.png */; };
 		ECF3653F191616CF002EFD3A /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF3653E191616CF002EFD3A /* MasterViewController.m */; };
 		ECF365771917152E002EFD3A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF365761917152E002EFD3A /* ViewController.m */; };
@@ -133,8 +135,6 @@
 		ECAC824819CAEA1600A32514 /* addchat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addchat.png; sourceTree = "<group>"; };
 		ECAC824A19CAEB1800A32514 /* EditFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditFriendViewController.h; sourceTree = "<group>"; };
 		ECAC824B19CAEB1800A32514 /* EditFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditFriendViewController.m; sourceTree = "<group>"; };
-		ECAC824D19CAEBF200A32514 /* done.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = done.png; sourceTree = "<group>"; };
-		ECAC824F19CAEC6700A32514 /* cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel.png; sourceTree = "<group>"; };
 		ECC2ADB4197AA5AB0015CCF5 /* AddTalkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTalkViewController.h; sourceTree = "<group>"; };
 		ECC2ADB5197AA5AB0015CCF5 /* AddTalkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTalkViewController.m; sourceTree = "<group>"; };
 		ECC2ADB7197B7F490015CCF5 /* EditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
@@ -165,6 +165,10 @@
 		ECD9E1BF1A2AFD2B007EF34F /* CustomToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomToolBar.h; sourceTree = "<group>"; };
 		ECD9E1C01A2AFD2B007EF34F /* CustomToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomToolBar.m; sourceTree = "<group>"; };
 		ECD9E1C21A2AFD46007EF34F /* CustomToolBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomToolBar.xib; sourceTree = "<group>"; };
+		ECD9E1C41A2B01D8007EF34F /* cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel.png; sourceTree = "<group>"; };
+		ECD9E1C61A2B01F0007EF34F /* done.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = done.png; sourceTree = "<group>"; };
+		ECD9E1C81A2B04D7007EF34F /* trash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash.png; sourceTree = "<group>"; };
+		ECD9E1CA1A2B08EF007EF34F /* checkbox-plain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-plain.png"; sourceTree = "<group>"; };
 		ECEF183919A220B600511EA5 /* mizutama.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mizutama.png; sourceTree = "<group>"; };
 		ECF3653D191616CF002EFD3A /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		ECF3653E191616CF002EFD3A /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
@@ -327,10 +331,12 @@
 		EC6800D51917ADB400DEE8CF /* images */ = {
 			isa = PBXGroup;
 			children = (
+				ECD9E1CA1A2B08EF007EF34F /* checkbox-plain.png */,
+				ECD9E1C81A2B04D7007EF34F /* trash.png */,
 				ECD9E1BB1A1A3F21007EF34F /* fukidashi2.png */,
 				ECD9E1AE1A1A2157007EF34F /* fukidashi.png */,
-				ECAC824F19CAEC6700A32514 /* cancel.png */,
-				ECAC824D19CAEBF200A32514 /* done.png */,
+				ECD9E1C41A2B01D8007EF34F /* cancel.png */,
+				ECD9E1C61A2B01F0007EF34F /* done.png */,
 				ECAC824819CAEA1600A32514 /* addchat.png */,
 				ECC2BB4B19C6F40100BA7DC7 /* badge_1.png */,
 				ECEF183919A220B600511EA5 /* mizutama.png */,
@@ -488,13 +494,16 @@
 				ECF3658419178148002EFD3A /* friends.png in Resources */,
 				EC9AC03919E0D4F10098707E /* Launch Screen.xib in Resources */,
 				ECD9E1BC1A1A3F21007EF34F /* fukidashi2.png in Resources */,
+				ECD9E1C91A2B04D7007EF34F /* trash.png in Resources */,
 				ECEF183A19A220B600511EA5 /* mizutama.png in Resources */,
 				ECF36586191781F9002EFD3A /* plus.png in Resources */,
 				EC6800E6191882E300DEE8CF /* savebt.png in Resources */,
 				ECD9E1AF1A1A2157007EF34F /* fukidashi.png in Resources */,
+				ECD9E1CB1A2B08EF007EF34F /* checkbox-plain.png in Resources */,
 				EC6800D41917ADB000DEE8CF /* addword.png in Resources */,
+				ECD9E1C51A2B01D8007EF34F /* cancel.png in Resources */,
 				ECD9E1A21A186037007EF34F /* FriendsCell.xib in Resources */,
-				ECAC825019CAEC6700A32514 /* cancel.png in Resources */,
+				ECD9E1C71A2B01F0007EF34F /* done.png in Resources */,
 				809B51A618DABBA90032A48D /* License in Resources */,
 				EC6800D01917AB2B00DEE8CF /* pimage.png in Resources */,
 				809B50CC18D80E040032A48D /* Previous.png in Resources */,
@@ -502,7 +511,6 @@
 				809B508318D7B55B0032A48D /* Images.xcassets in Resources */,
 				ECD9E1BA1A1A21B9007EF34F /* KeywordsCell.xib in Resources */,
 				809B507518D7B55B0032A48D /* InfoPlist.strings in Resources */,
-				ECAC824E19CAEBF200A32514 /* done.png in Resources */,
 				ECD9E1C31A2AFD46007EF34F /* CustomToolBar.xib in Resources */,
 				ECD9E1AA1A187FE3007EF34F /* CustomAlertView.xib in Resources */,
 				ECC2BB4C19C6F40100BA7DC7 /* badge_1.png in Resources */,
