@@ -75,16 +75,12 @@
     NSArray *keywordmodoki = [NSArray array];
     NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
     keywordmodoki = [store objectForKey:key];
-    if(keywordmodoki){
-        keyword = [keywordmodoki mutableCopy];
-    }
+    if(keywordmodoki) keyword = [keywordmodoki mutableCopy];
     
     reply = [NSMutableArray array];
     key = [NSString stringWithFormat:@"replies%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
     keywordmodoki = [store objectForKey:key];
-    if(keywordmodoki){
-        reply = [keywordmodoki mutableCopy];
-    }
+    if(keywordmodoki) reply = [keywordmodoki mutableCopy];
     
     [tv reloadData];
     
