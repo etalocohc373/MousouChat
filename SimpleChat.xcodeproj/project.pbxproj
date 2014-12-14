@@ -30,6 +30,7 @@
 		EC18ECA51915D507004B4215 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC18ECA41915D507004B4215 /* SettingViewController.m */; };
 		EC18ECA91915DE48004B4215 /* Previous2.png in Resources */ = {isa = PBXBuildFile; fileRef = EC18ECA81915DE48004B4215 /* Previous2.png */; };
 		EC5AC8E2197A9FA900869567 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC5AC8E1197A9FA900869567 /* FriendsViewController.m */; };
+		EC5C20051A3D6F1F00D4C794 /* TimeSpecViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC5C20041A3D6F1F00D4C794 /* TimeSpecViewController.m */; };
 		EC6800D01917AB2B00DEE8CF /* pimage.png in Resources */ = {isa = PBXBuildFile; fileRef = EC6800CF1917AB2A00DEE8CF /* pimage.png */; };
 		EC6800D21917ABD500DEE8CF /* words.png in Resources */ = {isa = PBXBuildFile; fileRef = EC6800D11917ABD500DEE8CF /* words.png */; };
 		EC6800D41917ADB000DEE8CF /* addword.png in Resources */ = {isa = PBXBuildFile; fileRef = EC6800D31917ADB000DEE8CF /* addword.png */; };
@@ -123,6 +124,8 @@
 		EC18ECA81915DE48004B4215 /* Previous2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Previous2.png; path = ChatController/Previous2.png; sourceTree = "<group>"; };
 		EC5AC8E0197A9FA900869567 /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
 		EC5AC8E1197A9FA900869567 /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; usesTabs = 0; };
+		EC5C20031A3D6F1F00D4C794 /* TimeSpecViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeSpecViewController.h; sourceTree = "<group>"; };
+		EC5C20041A3D6F1F00D4C794 /* TimeSpecViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeSpecViewController.m; sourceTree = "<group>"; };
 		EC6800CF1917AB2A00DEE8CF /* pimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pimage.png; sourceTree = "<group>"; };
 		EC6800D11917ABD500DEE8CF /* words.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = words.png; sourceTree = "<group>"; };
 		EC6800D31917ADB000DEE8CF /* addword.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addword.png; sourceTree = "<group>"; };
@@ -273,6 +276,8 @@
 				ECD9E1B01A1A216C007EF34F /* KeywordsViewController */,
 				EC18ECA31915D507004B4215 /* SettingViewController.h */,
 				EC18ECA41915D507004B4215 /* SettingViewController.m */,
+				EC5C20031A3D6F1F00D4C794 /* TimeSpecViewController.h */,
+				EC5C20041A3D6F1F00D4C794 /* TimeSpecViewController.m */,
 				EC9AC03819E0D4F10098707E /* Launch Screen.xib */,
 				809B508218D7B55B0032A48D /* Images.xcassets */,
 				809B507118D7B55B0032A48D /* Supporting Files */,
@@ -545,6 +550,7 @@
 				ECF3657A19171928002EFD3A /* AddUserViewController.m in Sources */,
 				809B507B18D7B55B0032A48D /* AppDelegate.m in Sources */,
 				809B507718D7B55B0032A48D /* main.m in Sources */,
+				EC5C20051A3D6F1F00D4C794 /* TimeSpecViewController.m in Sources */,
 				ECC2ADB6197AA5AB0015CCF5 /* AddTalkViewController.m in Sources */,
 				ECD9E1911A1745C9007EF34F /* RNBlurModalView.m in Sources */,
 				809B50CB18D80E040032A48D /* MessageCell.m in Sources */,

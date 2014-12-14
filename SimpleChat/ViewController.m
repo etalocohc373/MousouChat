@@ -11,6 +11,7 @@
 #import <AudioToolbox/AudioServices.h>
 
 #import "TalkTableViewCell.h"
+#import "WSCoachMarksView.h"
 
 #define SCREEN_HEIGHT [UIScreen mainScreen].applicationFrame.size.height
 
@@ -129,6 +130,8 @@
     [tv registerNib:nib forCellReuseIdentifier:@"Cell"];
     
     [self.searchDisplayController.searchResultsTableView registerNib:nib forCellReuseIdentifier:@"Cell"];
+    
+    if([self isFirstRun]) [self activateTutorial];
 }
 
 -(IBAction)edit{
@@ -458,6 +461,34 @@
     tLabel.adjustsFontSizeToFitWidth = YES;
     tLabel.font = [UIFont fontWithName:@"MS ゴシック" size:17];
     self.navigationItem.titleView = tLabel;
+}
+
+- (BOOL)isFirstRun
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    NSMutableArray *hoge = [NSMutableArray arrayWithArray:[userDefaults objectForKey:@"didRunArray"]];
+    
+    if ([hoge containsObject:@"ViewController"]) return NO;
+    
+    [hoge addObject:@"ViewController"];
+    
+    [userDefaults setObject:hoge forKey:@"didRunArray"];
+    [userDefaults synchronize];
+    
+    return YES;
+}
+
+-(void)activateTutorial{
+    NSArray *coachMarks = @[
+                            @{
+                                @"rect": [NSValue valueWithCGRect:(CGRect){{271, 22},{40, 40}}],
+                                @"caption": @"トークを追加"
+                                }
+                            ];
+    WSCoachMarksView *coachMarksView = [[WSCoachMarksView alloc] initWithFrame:self.tabBarController.view.bounds coachMarks:coachMarks];
+    [self.tabBarController.view addSubview:coachMarksView];
+    [coachMarksView start];
 }
 
 @end

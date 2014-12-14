@@ -7,6 +7,7 @@
 //
 
 #import "SettingViewController.h"
+#import "TimeSpecViewController.h"
 
 @interface SettingViewController ()
 
@@ -35,7 +36,7 @@
     BOOL edit = [store boolForKey:@"editKeyword"];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
-    self.tableView.allowsSelection = NO;
+    //self.tableView.allowsSelection = NO;
     
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.227 green:0.114 blue:0.369 alpha:1.0];
     
@@ -80,21 +81,26 @@
 
 #pragma mark - Table view data source
 
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     switch (section) {
         case 0:
-            return @"キーワード";
-            break;
-            
-        case 1:
-            return @"返答";
+            return 30;
             break;
             
         default:
+            return 20;
             break;
     }
-    return nil;
 }
+
+/*-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.row == 3){
+        TimeSpecViewController *secondVC =  [self.storyboard instantiateViewControllerWithIdentifier:@"time"];
+        [self.navigationController pushViewController:secondVC animated:YES];
+        
+        [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+    }
+}*/
 
 -(IBAction)dainyu{
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];

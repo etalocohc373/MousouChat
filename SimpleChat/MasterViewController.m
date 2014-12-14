@@ -9,6 +9,7 @@
 #import "MasterViewController.h"
 #import "SettingViewController.h"
 #import "KeywordsCell.h"
+#import "WSCoachMarksView.h"
 
 @interface KeywordsCellData:NSObject {
     BOOL _isChecked;
@@ -60,7 +61,7 @@
     
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.227 green:0.114 blue:0.369 alpha:1.0];
     
-    back = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+    back = [[UIBarButtonItem alloc] initWithTitle:@"戻る" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     self.navigationItem.leftBarButtonItem = back;
     
     /*
@@ -112,6 +113,8 @@
     [tv reloadData];
     
     tv.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    if([self isFirstRun]) [self activateTutorial];
 }
 
 - (void)didReceiveMemoryWarning
@@ -220,6 +223,12 @@
     KeywordsCellData *cellData = [_cellDataArray objectAtIndex:indexPath.row];
     cellData.isChecked = !cellData.isChecked;
     [cell setCheckboxState:cellData.isChecked];
+    
+    [UIView animateWithDuration:0.5f
+                     animations:^{
+                         tv.frame = CGRectMake(0, 0, 320, 524);
+                         customBar.frame = CGRectMake(0, 524, 320, 44);
+                     }];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -288,6 +297,37 @@
 
 -(void)back{
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (BOOL)isFirstRun
+{
+    if(keyword.count){
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        
+        NSMutableArray *hoge = [NSMutableArray arrayWithArray:[userDefaults objectForKey:@"didRunArray"]];
+        
+        if ([hoge containsObject:@"MasterViewController"]) return NO;
+        
+        [hoge addObject:@"MasterViewController"];
+        
+        [userDefaults setObject:hoge forKey:@"didRunArray"];
+        [userDefaults synchronize];
+        
+        return YES;
+    }
+    else return NO;
+}
+
+-(void)activateTutorial{
+    NSArray *coachMarks = @[
+                            @{
+                                @"rect": [NSValue valueWithCGRect:(CGRect){{0, 60},{320, 58}}],
+                                @"caption": @"タップしてキーワードを編集"
+                                }
+                            ];
+    WSCoachMarksView *coachMarksView = [[WSCoachMarksView alloc] initWithFrame:self.navigationController.view.bounds coachMarks:coachMarks];
+    [self.navigationController.view addSubview:coachMarksView];
+    [coachMarksView start];
 }
 
 @end

@@ -14,6 +14,7 @@
 @interface SettingViewController : UITableViewController<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>{
     IBOutlet UITextField *tf2;
     IBOutlet UIBarButtonItem *done;
+    IBOutlet UISwitch *timeSpec;
     
     NSMutableArray *keyword;
     NSMutableArray *reply;

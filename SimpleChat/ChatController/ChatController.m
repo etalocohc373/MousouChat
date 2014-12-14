@@ -16,6 +16,7 @@
 #import "ChatController.h"
 #import "MessageCell.h"
 #import "MyMacros.h"
+#import "WSCoachMarksView.h"
 
 #define SCREEN_HEIGHT [[UIScreen mainScreen] applicationFrame].size.height
 #define SCREEN_WIDTH [[UIScreen mainScreen] applicationFrame].size.width
@@ -158,9 +159,7 @@ static int chatInputStartingHeight = 40;
     //ここまで
     
     // Fix if we receive Null
-    if (![_messagesArray.class isSubclassOfClass:[NSArray class]]) {
-        _messagesArray = [NSMutableArray new];
-    }
+    if (![_messagesArray.class isSubclassOfClass:[NSArray class]]) _messagesArray = [NSMutableArray new];
     
     [_myCollectionView reloadData];
     
@@ -173,6 +172,8 @@ static int chatInputStartingHeight = 40;
     
     NSLog(@"loadedSentBy: %@", dic[kMessageRuntimeSentBy]);
      */
+    
+    if([self isFirstRun]) [self activateTutorial];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -545,6 +546,36 @@ static int chatInputStartingHeight = 40;
 - (UIStoryboard *)getStoryBoard2
 {
     return self.storyboard;
+}
+
+
+
+- (BOOL)isFirstRun
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    NSMutableArray *hoge = [NSMutableArray arrayWithArray:[userDefaults objectForKey:@"didRunArray"]];
+    
+    if ([hoge containsObject:@"ChatController"]) return NO;
+    
+    [hoge addObject:@"ChatController"];
+    
+    [userDefaults setObject:hoge forKey:@"didRunArray"];
+    [userDefaults synchronize];
+    
+    return YES;
+}
+
+-(void)activateTutorial{
+    NSArray *coachMarks = @[
+                            @{
+                                @"rect": [NSValue valueWithCGRect:(CGRect){{274, 22},{35, 35}}],
+                                @"caption": @"キーワードを追加"
+                                }
+                            ];
+    WSCoachMarksView *coachMarksView = [[WSCoachMarksView alloc] initWithFrame:self.tabBarController.view.bounds coachMarks:coachMarks];
+    [self.tabBarController.view addSubview:coachMarksView];
+    [coachMarksView start];
 }
 
 @end

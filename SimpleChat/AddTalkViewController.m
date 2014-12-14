@@ -109,6 +109,7 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         [self dismissViewControllerAnimated:YES completion:nil];
     }else{
+        [self showError];
         [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
     }
 }
@@ -126,6 +127,11 @@
     tLabel.adjustsFontSizeToFitWidth = YES;
     tLabel.font = [UIFont fontWithName:@"MS Gothic" size:17];
     self.navigationItem.titleView = tLabel;
+}
+
+-(void)showError{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"既にトークが作成済みです" message:@"他のフレンドを選択してください" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 @end

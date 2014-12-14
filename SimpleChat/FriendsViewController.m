@@ -11,6 +11,8 @@
 #import "FriendsCell.h"
 #import "CustomAlertView.h"
 
+#import "WSCoachMarksView.h"
+
 @interface FriendsViewController ()
 
 @end
@@ -120,6 +122,8 @@
     [self createNavTitle:[NSString stringWithFormat:@"友だち (%lu人)", (unsigned long)users.count]];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    if([self isFirstRun]) [self activateTutorial];
 }
 
 - (void)didReceiveMemoryWarning
@@ -348,29 +352,34 @@
 }
 
 -(void)jumpToTalk{
+    NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
+    
+    [store setInteger:editPath.row forKey:@"selecteduser"];
+    
     if([talks containsObject:[users objectAtIndex:editPath.row]]){
-        
-        NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
-        
-        [store setInteger:editPath.row forKey:@"selecteduser"];
-        
         NSMutableArray *notReadRows = [NSMutableArray arrayWithArray:[store objectForKey:@"notReadRows"]];
         
         if([notReadRows containsObject:[talks objectAtIndex:(int)editPath.row]]){
             [notReadRows removeObject:[talks objectAtIndex:(int)editPath.row]];
             [store setObject:notReadRows forKey:@"notReadRows"];
         }
+    }else{
+        NSArray *userimages = [NSArray arrayWithArray:[store objectForKey:@"pimages"]];
+        [talks addObject:[users objectAtIndex:(int)editPath.row]];
+        [images addObject:[userimages objectAtIndex:(int)editPath.row]];
         
-        [store synchronize];
-        
-        if (!_chatController) _chatController = [ChatController new];
-        _chatController.delegate = (id<ChatControllerDelegate>)self;
-        _chatController.opponentImg = [[UIImage alloc] initWithData:[images objectAtIndex:editPath.row]];
-        
-        _chatController.hidesBottomBarWhenPushed = YES;
-        
-        [self.navigationController pushViewController:_chatController animated:YES];
+        [store setObject:talks forKey:@"talks"];
+        [store setObject:images forKey:@"talkimages"];
     }
+    [store synchronize];
+    
+    if (!_chatController) _chatController = [ChatController new];
+    _chatController.delegate = (id<ChatControllerDelegate>)self;
+    _chatController.opponentImg = [[UIImage alloc] initWithData:[images objectAtIndex:editPath.row]];
+    
+    _chatController.hidesBottomBarWhenPushed = YES;
+    
+    [self.navigationController pushViewController:_chatController animated:YES];
 }
 
 -(void)editProfile{
@@ -455,6 +464,38 @@
 -(void)reset{
     NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+}
+
+- (BOOL)isFirstRun
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    NSMutableArray *hoge = [NSMutableArray arrayWithArray:[userDefaults objectForKey:@"didRunArray"]];
+    
+    if ([hoge containsObject:@"FriendsViewController"]) return NO;
+    
+    [hoge addObject:@"FriendsViewController"];
+    
+    [userDefaults setObject:hoge forKey:@"didRunArray"];
+    [userDefaults synchronize];
+    
+    return YES;
+}
+
+-(void)activateTutorial{
+    NSArray *coachMarks = @[
+                            @{
+                                @"rect": [NSValue valueWithCGRect:(CGRect){{276, 22},{40, 40}}],
+                                @"caption": @"タップしてフレンドを\n追加"
+                                },
+                            @{
+                                @"rect": [NSValue valueWithCGRect:(CGRect){{0.0f, 87.0f},{320.0f, 50.0f}}],
+                                @"caption": @"自分のプロフィールを\n編集"
+                                }
+                            ];
+    WSCoachMarksView *coachMarksView = [[WSCoachMarksView alloc] initWithFrame:self.tabBarController.view.bounds coachMarks:coachMarks];
+    [self.tabBarController.view addSubview:coachMarksView];
+    [coachMarksView start];
 }
 
 @end

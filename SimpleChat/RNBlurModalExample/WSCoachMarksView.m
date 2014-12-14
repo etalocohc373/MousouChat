@@ -80,7 +80,7 @@ static const BOOL kEnableSkipButton = YES;
     // Shape layer mask
     mask = [CAShapeLayer layer];
     [mask setFillRule:kCAFillRuleEvenOdd];
-    [mask setFillColor:[[UIColor colorWithHue:0.0f saturation:0.0f brightness:0.0f alpha:0.9f] CGColor]];
+    [mask setFillColor:[[UIColor colorWithHue:0.0f saturation:0.0f brightness:0.0f alpha:0.7f] CGColor]];
     [self.layer addSublayer:mask];
 
     // Capture touches
@@ -91,7 +91,7 @@ static const BOOL kEnableSkipButton = YES;
     self.lblCaption = [[UILabel alloc] initWithFrame:(CGRect){{0.0f, 0.0f}, {self.maxLblWidth, 0.0f}}];
     self.lblCaption.backgroundColor = [UIColor clearColor];
     self.lblCaption.textColor = [UIColor whiteColor];
-    self.lblCaption.font = [UIFont systemFontOfSize:20.0f];
+    self.lblCaption.font = [UIFont fontWithName:@"HiraKakuProN-W6" size:20];
     self.lblCaption.lineBreakMode = NSLineBreakByWordWrapping;
     self.lblCaption.numberOfLines = 0;
     self.lblCaption.textAlignment = NSTextAlignmentCenter;
@@ -144,7 +144,7 @@ static const BOOL kEnableSkipButton = YES;
 
 - (void)userDidTap:(UITapGestureRecognizer *)recognizer {
     // Go to the next coach mark
-    [self goToCoachMarkIndexed:(markIndex+1)];
+    [self goToCoachMarkIndexed:(markIndex + 1)];
 }
 
 #pragma mark - Navigation
@@ -221,16 +221,16 @@ static const BOOL kEnableSkipButton = YES;
     // Show continue lbl if first mark
     if (self.enableContinueLabel) {
         if (markIndex == 0) {
-            lblContinue = [[UILabel alloc] initWithFrame:(CGRect){{0, self.bounds.size.height - 30.0f}, {lblContinueWidth, 30.0f}}];
+            /*lblContinue = [[UILabel alloc] initWithFrame:(CGRect){{0, self.bounds.size.height - 30.0f}, {lblContinueWidth, 30.0f}}];
             lblContinue.font = [UIFont boldSystemFontOfSize:13.0f];
             lblContinue.textAlignment = NSTextAlignmentCenter;
-            lblContinue.text = @"Tap to continue";
+            lblContinue.text = @"タップして進む";
             lblContinue.alpha = 0.0f;
             lblContinue.backgroundColor = [UIColor whiteColor];
             [self addSubview:lblContinue];
             [UIView animateWithDuration:0.3f delay:1.0f options:0 animations:^{
                 lblContinue.alpha = 1.0f;
-            } completion:nil];
+            } completion:nil];*/
         } else if (markIndex > 0 && lblContinue != nil) {
             // Otherwise, remove the lbl
             [lblContinue removeFromSuperview];
@@ -242,7 +242,7 @@ static const BOOL kEnableSkipButton = YES;
         btnSkipCoach = [[UIButton alloc] initWithFrame:(CGRect){{lblContinueWidth, self.bounds.size.height - 30.0f}, {btnSkipWidth, 30.0f}}];
         [btnSkipCoach addTarget:self action:@selector(skipCoach) forControlEvents:UIControlEventTouchUpInside];
         [btnSkipCoach setTitle:@"Skip" forState:UIControlStateNormal];
-        btnSkipCoach.titleLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+        btnSkipCoach.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W6" size:13];
         btnSkipCoach.alpha = 0.0f;
         btnSkipCoach.tintColor = [UIColor whiteColor];
         [self addSubview:btnSkipCoach];
