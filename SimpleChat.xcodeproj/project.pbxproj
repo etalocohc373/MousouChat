@@ -36,6 +36,8 @@
 		EC6800DC1917B3EF00DEE8CF /* TouchableTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6800DB1917B3EF00DEE8CF /* TouchableTableView.m */; };
 		EC6800DF1918796800DEE8CF /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6800DE1918796800DEE8CF /* ProfileViewController.m */; };
 		EC6800E6191882E300DEE8CF /* savebt.png in Resources */ = {isa = PBXBuildFile; fileRef = EC6800E5191882E300DEE8CF /* savebt.png */; };
+		EC782C9B1A3C02F900ABDCC3 /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = EC782C9A1A3C02F900ABDCC3 /* checkmark.png */; };
+		EC782C9E1A3C04B900ABDCC3 /* uncheckmark.png in Resources */ = {isa = PBXBuildFile; fileRef = EC782C9C1A3C047400ABDCC3 /* uncheckmark.png */; };
 		EC9AC03919E0D4F10098707E /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC9AC03819E0D4F10098707E /* Launch Screen.xib */; };
 		EC9AC03A19E179810098707E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC9AC03619E035380098707E /* QuartzCore.framework */; };
 		ECAC824719C7B70800A32514 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 809B507C18D7B55B0032A48D /* Main.storyboard */; };
@@ -65,7 +67,6 @@
 		ECD9E1C51A2B01D8007EF34F /* cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = ECD9E1C41A2B01D8007EF34F /* cancel.png */; };
 		ECD9E1C71A2B01F0007EF34F /* done.png in Resources */ = {isa = PBXBuildFile; fileRef = ECD9E1C61A2B01F0007EF34F /* done.png */; };
 		ECD9E1C91A2B04D7007EF34F /* trash.png in Resources */ = {isa = PBXBuildFile; fileRef = ECD9E1C81A2B04D7007EF34F /* trash.png */; };
-		ECD9E1CB1A2B08EF007EF34F /* checkbox-plain.png in Resources */ = {isa = PBXBuildFile; fileRef = ECD9E1CA1A2B08EF007EF34F /* checkbox-plain.png */; };
 		ECEF183A19A220B600511EA5 /* mizutama.png in Resources */ = {isa = PBXBuildFile; fileRef = ECEF183919A220B600511EA5 /* mizutama.png */; };
 		ECF3653F191616CF002EFD3A /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF3653E191616CF002EFD3A /* MasterViewController.m */; };
 		ECF365771917152E002EFD3A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF365761917152E002EFD3A /* ViewController.m */; };
@@ -130,6 +131,8 @@
 		EC6800DD1918796800DEE8CF /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		EC6800DE1918796800DEE8CF /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		EC6800E5191882E300DEE8CF /* savebt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = savebt.png; sourceTree = "<group>"; };
+		EC782C9A1A3C02F900ABDCC3 /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkmark.png; sourceTree = "<group>"; };
+		EC782C9C1A3C047400ABDCC3 /* uncheckmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uncheckmark.png; sourceTree = "<group>"; };
 		EC9AC03619E035380098707E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		EC9AC03819E0D4F10098707E /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		ECAC824819CAEA1600A32514 /* addchat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addchat.png; sourceTree = "<group>"; };
@@ -168,7 +171,6 @@
 		ECD9E1C41A2B01D8007EF34F /* cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel.png; sourceTree = "<group>"; };
 		ECD9E1C61A2B01F0007EF34F /* done.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = done.png; sourceTree = "<group>"; };
 		ECD9E1C81A2B04D7007EF34F /* trash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash.png; sourceTree = "<group>"; };
-		ECD9E1CA1A2B08EF007EF34F /* checkbox-plain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-plain.png"; sourceTree = "<group>"; };
 		ECEF183919A220B600511EA5 /* mizutama.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mizutama.png; sourceTree = "<group>"; };
 		ECF3653D191616CF002EFD3A /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		ECF3653E191616CF002EFD3A /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
@@ -331,7 +333,8 @@
 		EC6800D51917ADB400DEE8CF /* images */ = {
 			isa = PBXGroup;
 			children = (
-				ECD9E1CA1A2B08EF007EF34F /* checkbox-plain.png */,
+				EC782C9A1A3C02F900ABDCC3 /* checkmark.png */,
+				EC782C9C1A3C047400ABDCC3 /* uncheckmark.png */,
 				ECD9E1C81A2B04D7007EF34F /* trash.png */,
 				ECD9E1BB1A1A3F21007EF34F /* fukidashi2.png */,
 				ECD9E1AE1A1A2157007EF34F /* fukidashi.png */,
@@ -495,11 +498,12 @@
 				EC9AC03919E0D4F10098707E /* Launch Screen.xib in Resources */,
 				ECD9E1BC1A1A3F21007EF34F /* fukidashi2.png in Resources */,
 				ECD9E1C91A2B04D7007EF34F /* trash.png in Resources */,
+				EC782C9B1A3C02F900ABDCC3 /* checkmark.png in Resources */,
 				ECEF183A19A220B600511EA5 /* mizutama.png in Resources */,
 				ECF36586191781F9002EFD3A /* plus.png in Resources */,
 				EC6800E6191882E300DEE8CF /* savebt.png in Resources */,
 				ECD9E1AF1A1A2157007EF34F /* fukidashi.png in Resources */,
-				ECD9E1CB1A2B08EF007EF34F /* checkbox-plain.png in Resources */,
+				EC782C9E1A3C04B900ABDCC3 /* uncheckmark.png in Resources */,
 				EC6800D41917ADB000DEE8CF /* addword.png in Resources */,
 				ECD9E1C51A2B01D8007EF34F /* cancel.png in Resources */,
 				ECD9E1A21A186037007EF34F /* FriendsCell.xib in Resources */,

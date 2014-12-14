@@ -8,15 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import "CustomToolBar.h"
 
 @interface MasterViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>{
     IBOutlet UITableView *tv;
+    IBOutlet CustomToolBar *customBar;
     
     UIBarButtonItem *back;
     
     NSMutableArray *keyword;
     NSMutableArray *reply;
     NSArray *talks;
+    NSArray *_cellDataArray;
     
     int rows;
     

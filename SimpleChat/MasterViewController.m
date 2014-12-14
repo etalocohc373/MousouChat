@@ -9,7 +9,17 @@
 #import "MasterViewController.h"
 #import "SettingViewController.h"
 #import "KeywordsCell.h"
-#import "CustomToolBar.h"
+
+@interface KeywordsCellData:NSObject {
+    BOOL _isChecked;
+}
+@property(nonatomic, assign) BOOL isChecked;
+@end
+
+@implementation KeywordsCellData
+@synthesize isChecked = _isChecked;
+
+@end
 
 @interface MasterViewController ()<SettingViewControllerDelegate> {
     NSMutableArray *_objects;
@@ -26,6 +36,21 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
+}
+
+- (id)init
+{
+    self = [super init];
+    if (self){
+        NSMutableArray *tmpArr = [[NSMutableArray alloc] init];
+        for (int i = 0; i < 100; i++){
+            KeywordsCellData *cellData = [[KeywordsCellData alloc] init];
+            cellData.isChecked = NO;
+            [tmpArr addObject:cellData];
+        }
+        _cellDataArray = [[NSArray alloc] initWithArray:tmpArr];
+    }
+    return self;
 }
 
 - (void)viewDidLoad
@@ -114,6 +139,8 @@
     //UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
     KeywordsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
+    if(!cell) cell = [[KeywordsCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
+    
     cell.wordLabel.text = [NSString stringWithFormat:@"%@", [reply objectAtIndex:indexPath.row]];
     
     //NSDate *object = _objects[indexPath.row];
@@ -123,6 +150,8 @@
     imgView.image = [UIImage imageNamed:@"fukidashi2.png"];
     [cell.contentView addSubview:imgView];
     [cell.contentView sendSubviewToBack:imgView];
+    
+    [cell setCheckboxState:[(KeywordsCellData *)[_cellDataArray objectAtIndex:indexPath.row] isChecked]];
     
     return cell;
 }
@@ -184,6 +213,14 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (void)cell:(KeywordsCell *)cell checkboxTappedEvent:(UITouch *)touch
+{
+    CGPoint touchPt = [touch locationInView:self.view];
+    NSIndexPath *indexPath = [tv indexPathForRowAtPoint:touchPt];
+    KeywordsCellData *cellData = [_cellDataArray objectAtIndex:indexPath.row];
+    cellData.isChecked = !cellData.isChecked;
+    [cell setCheckboxState:cellData.isChecked];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];

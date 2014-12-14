@@ -8,16 +8,34 @@
 
 #import "KeywordsCell.h"
 
-@implementation KeywordsCell
+@interface KeywordsCell()
+- (void)checkboxTapped:(id)sender event:(id)event;
+@end
 
-- (void)awakeFromNib {
-    // Initialization code
+@implementation KeywordsCell
+@synthesize delegate = _delegate;
+
+- (IBAction)checkboxTapped:(id)sender event:(id)event
+{
+    NSString *checkedImgPath = [[NSBundle mainBundle] pathForResource:@"checkmark" ofType:@"png"];
+    _checkedImage = [[UIImage alloc] initWithContentsOfFile:checkedImgPath];
+    NSSet *set = [event allTouches];
+    UITouch *touch = [set anyObject];
+    
+    if (touch && [_delegate respondsToSelector:@selector(cell:checkboxTappedEvent:)]){
+        [_delegate cell:self checkboxTappedEvent:touch];
+    }
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+- (void)setCheckboxState:(BOOL)isCheck
+{
+    if(isCheck) [_checkBtn setImage:_checkedImage forState:UIControlStateNormal];
+    else [_checkBtn setImage:_uncheckedImage forState:UIControlStateNormal];
+}
 
-    // Configure the view for the selected state
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+    [super setSelected:selected animated:animated];
 }
 
 @end
