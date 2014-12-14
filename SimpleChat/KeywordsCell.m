@@ -9,16 +9,38 @@
 #import "KeywordsCell.h"
 
 @interface KeywordsCell()
+
 - (void)checkboxTapped:(id)sender event:(id)event;
+
 @end
 
 @implementation KeywordsCell
 @synthesize delegate = _delegate;
 
+
+
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        /*
+         _checkBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+         NSString *checkedImgPath = [[NSBundle mainBundle] pathForResource:@"checkedmark" ofType:@"png"];
+         NSString *uncheckedImgPath = [[NSBundle mainBundle] pathForResource:@"uncheckmark" ofType:@"png"];
+         */
+        _checkbox.userInteractionEnabled = YES;
+        
+        _checkedImage = [UIImage imageNamed:@"checkmark.png"];
+        _uncheckedImage = [UIImage imageNamed:@"uncheckmark.png"];
+        
+        _checkbox.image = _uncheckedImage;
+        
+    }
+    return self;
+}
+
 - (IBAction)checkboxTapped:(id)sender event:(id)event
 {
-    NSString *checkedImgPath = [[NSBundle mainBundle] pathForResource:@"checkmark" ofType:@"png"];
-    _checkedImage = [[UIImage alloc] initWithContentsOfFile:checkedImgPath];
     NSSet *set = [event allTouches];
     UITouch *touch = [set anyObject];
     
@@ -29,13 +51,30 @@
 
 - (void)setCheckboxState:(BOOL)isCheck
 {
-    if(isCheck) [_checkBtn setImage:_checkedImage forState:UIControlStateNormal];
-    else [_checkBtn setImage:_uncheckedImage forState:UIControlStateNormal];
+    if(isCheck) {
+        //MARK:fixed
+        
+        NSString *path = [[NSString alloc]initWithString:[[NSBundle mainBundle] pathForResource:@"checkmark" ofType:@"png"]];
+        _checkedImage = [[UIImage alloc] initWithContentsOfFile:path];
+        _checkbox.image = _checkedImage;
+        
+    }else {
+        NSString *path = [[NSString alloc] initWithString:[[NSBundle mainBundle] pathForResource:@"uncheckmark" ofType:@"png"]];
+        
+        _checkedImage = [[UIImage alloc] initWithContentsOfFile:path];
+        _checkbox.image = _checkedImage;
+    }
 }
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
+    if (selected){
+        _keywordLabel.textColor = [UIColor whiteColor];
+    }else{
+        _keywordLabel.textColor = [UIColor blackColor];
+    }
 }
 
 @end

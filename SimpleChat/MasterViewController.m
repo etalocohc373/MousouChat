@@ -39,21 +39,6 @@
     [super awakeFromNib];
 }
 
-- (id)init
-{
-    self = [super init];
-    if (self){
-        NSMutableArray *tmpArr = [[NSMutableArray alloc] init];
-        for (int i = 0; i < 100; i++){
-            KeywordsCellData *cellData = [[KeywordsCellData alloc] init];
-            cellData.isChecked = NO;
-            [tmpArr addObject:cellData];
-        }
-        _cellDataArray = [[NSArray alloc] initWithArray:tmpArr];
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -110,6 +95,14 @@
     keywordmodoki = [store objectForKey:key];
     if(keywordmodoki) reply = [keywordmodoki mutableCopy];
     
+    NSMutableArray *tmpArr = [[NSMutableArray alloc] init];
+    for (int i = 0; i < keyword.count; i++){
+        KeywordsCellData *cellData = [[KeywordsCellData alloc] init];
+        cellData.isChecked = NO;
+        [tmpArr addObject:cellData];
+    }
+    _cellDataArray = [[NSArray alloc] initWithArray:tmpArr];
+    
     [tv reloadData];
     
     tv.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -143,6 +136,8 @@
     KeywordsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
     if(!cell) cell = [[KeywordsCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
+    
+    cell.delegate = self;
     
     cell.wordLabel.text = [NSString stringWithFormat:@"%@", [reply objectAtIndex:indexPath.row]];
     
@@ -218,17 +213,12 @@
 
 - (void)cell:(KeywordsCell *)cell checkboxTappedEvent:(UITouch *)touch
 {
-    CGPoint touchPt = [touch locationInView:self.view];
+    CGPoint touchPt = [tv convertPoint:[touch locationInView:self.view] fromView:tv.superview];
     NSIndexPath *indexPath = [tv indexPathForRowAtPoint:touchPt];
     KeywordsCellData *cellData = [_cellDataArray objectAtIndex:indexPath.row];
+    
     cellData.isChecked = !cellData.isChecked;
     [cell setCheckboxState:cellData.isChecked];
-    
-    [UIView animateWithDuration:0.5f
-                     animations:^{
-                         tv.frame = CGRectMake(0, 0, 320, 524);
-                         customBar.frame = CGRectMake(0, 524, 320, 44);
-                     }];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

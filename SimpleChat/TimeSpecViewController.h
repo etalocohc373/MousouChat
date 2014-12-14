@@ -8,11 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TimeSpecViewController : UITableViewController{
+@interface TimeSpecViewController : UITableViewController<UITableViewDataSource>{
+    IBOutlet UIDatePicker *datePicker;
     IBOutlet UISwitch *doRepeat;
-    IBOutlet UILabel *timeLabel;
-    
-    UIDatePicker *datePicker;
 }
 
 @end

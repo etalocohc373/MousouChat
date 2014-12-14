@@ -17,11 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 325, 320, 162)];
-    datePicker.datePickerMode = UIDatePickerModeDateAndTime;
-    datePicker.minimumDate = [NSDate date];
-    
-    [self.view addSubview:datePicker];
+    [self dateChanged];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -29,7 +25,14 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
+-(IBAction)dateChanged{
+    
+}
+
+-(void)showError{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"設定時刻が不適切です" message:@"現在時刻より後にしてください" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];
+}
 
 
 @end
