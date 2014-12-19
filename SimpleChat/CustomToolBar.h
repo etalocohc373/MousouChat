@@ -8,10 +8,23 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CustomToolBar : UIView
+@class CustomToolBar;
+
+@protocol CustomToolBarDelegate <NSObject>
+
+@optional
+-(void)bar:(CustomToolBar *)bar barButtonTappedEvent:(UITouch *)touch;
+
+@end
+
+@interface CustomToolBar : UIView{
+    id<CustomToolBarDelegate> delegate;
+}
 
 @property (weak, nonatomic) IBOutlet UIButton *trash;
 @property (weak, nonatomic) IBOutlet UIButton *edit;
 @property (weak, nonatomic) IBOutlet UIButton *hide;
+
+@property(nonatomic, assign) id <CustomToolBarDelegate> delegate;
 
 @end

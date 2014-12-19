@@ -29,7 +29,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="k4C-oa-1ZQ">
-                        <rect key="frame" x="8" y="9" width="22" height="22"/>
+                        <rect key="frame" x="8" y="8" width="22" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <state key="normal" backgroundImage="uncheckmark.png">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -38,11 +38,16 @@
                             <action selector="checkboxTapped:event:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="HCR-m1-yN6"/>
                         </connections>
                     </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.png" id="HrZ-f7-kth">
+                        <rect key="frame" x="8" y="8" width="22" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                 </subviews>
-                <color key="backgroundColor" red="1" green="1" blue="0.95542464719999998" alpha="1" colorSpace="calibratedRGB"/>
+                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             </tableViewCellContentView>
             <connections>
                 <outlet property="checkBtn" destination="k4C-oa-1ZQ" id="eIM-yX-inl"/>
+                <outlet property="checkbox" destination="HrZ-f7-kth" id="rNw-GZ-lcq"/>
                 <outlet property="keywordLabel" destination="kKe-4G-omI" id="4N7-JZ-yRk"/>
                 <outlet property="wordLabel" destination="j3g-Ab-ZfA" id="LSd-Uh-3aT"/>
             </connections>
@@ -50,6 +55,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="checkmark.png" width="22" height="22"/>
         <image name="uncheckmark.png" width="22" height="22"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

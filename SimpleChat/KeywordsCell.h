@@ -19,7 +19,7 @@
 @interface KeywordsCell : UITableViewCell{
     UIImage *_checkedImage;
     UIImage *_uncheckedImage;
-    __unsafe_unretained id<KeywordsCellDelegate> _delegate;
+    id<KeywordsCellDelegate> delegate;
 }
 
 @property (weak, nonatomic) IBOutlet UIButton *checkBtn;
@@ -29,6 +29,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *wordLabel;
 
 @property(nonatomic, assign) id <KeywordsCellDelegate> delegate;
+
+
 - (void)setCheckboxState:(BOOL)isCheck;
 
 @end

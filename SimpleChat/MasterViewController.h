@@ -12,7 +12,7 @@
 
 @interface MasterViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>{
     IBOutlet UITableView *tv;
-    IBOutlet CustomToolBar *customBar;
+    CustomToolBar *customBar;
     
     UIBarButtonItem *back;
     

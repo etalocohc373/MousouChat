@@ -15,9 +15,8 @@
 @end
 
 @implementation KeywordsCell
+
 @synthesize delegate = _delegate;
-
-
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

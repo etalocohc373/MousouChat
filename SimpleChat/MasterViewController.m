@@ -107,6 +107,12 @@
     
     tv.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
+    UINib *nib = [UINib nibWithNibName:@"CustomToolBar" bundle:nil];
+    customBar = [[nib instantiateWithOwner:nil options:nil] objectAtIndex:0];
+    //customBar = [[CustomToolBar alloc] initWithFrame:CGRectMake(0, 500, 320, 44)];
+    customBar.frame = CGRectMake(0, 568, 320, 44);
+    [self.view addSubview:customBar];
+    
     if([self isFirstRun]) [self activateTutorial];
 }
 
@@ -137,7 +143,7 @@
     
     if(!cell) cell = [[KeywordsCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
     
-    cell.delegate = self;
+    cell.delegate = (id<KeywordsCellDelegate>)self;
     
     cell.wordLabel.text = [NSString stringWithFormat:@"%@", [reply objectAtIndex:indexPath.row]];
     
@@ -181,8 +187,6 @@
     [store synchronize];
 }
 
-
-// Override to support conditional rearranging of the table view.
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the item to be re-orderable.
@@ -219,6 +223,26 @@
     
     cellData.isChecked = !cellData.isChecked;
     [cell setCheckboxState:cellData.isChecked];
+    
+    BOOL checked = NO;
+    
+    for (int i = 0; i < _cellDataArray.count; i++) {
+        KeywordsCellData *hoge = [_cellDataArray objectAtIndex:i];
+        if(hoge.isChecked) checked = YES;
+    }
+    
+    [self moveCustomToolBarUp:checked];
+}
+
+-(void)bar:(CustomToolBar *)bar barButtonTappedEvent:(UITouch *)touch{
+    for (NSInteger j = 0; j < [tv numberOfSections]; j++)
+    {
+        for (NSInteger i = 0; i < [tv numberOfRowsInSection:j]; i++)
+        {
+            KeywordsCell *cell = (KeywordsCell *)[tv cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:j]];
+            [cell setCheckboxState:NO];
+        }
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -318,6 +342,19 @@
     WSCoachMarksView *coachMarksView = [[WSCoachMarksView alloc] initWithFrame:self.navigationController.view.bounds coachMarks:coachMarks];
     [self.navigationController.view addSubview:coachMarksView];
     [coachMarksView start];
+}
+
+-(void)moveCustomToolBarUp:(BOOL)up{
+    if(up && customBar.center.y < 568) return;
+    if(!up && customBar.center.y > 568) return;
+    
+    float movement = 44.f;
+    if(up) movement *= -1;
+    
+    [UIView animateWithDuration:0.2f
+                     animations:^{
+                         customBar.center = CGPointMake(customBar.center.x, customBar.center.y + movement);
+                     }];
 }
 
 @end
