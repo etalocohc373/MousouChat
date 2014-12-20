@@ -111,6 +111,7 @@
     customBar = [[nib instantiateWithOwner:nil options:nil] objectAtIndex:0];
     //customBar = [[CustomToolBar alloc] initWithFrame:CGRectMake(0, 500, 320, 44)];
     customBar.frame = CGRectMake(0, 568, 320, 44);
+    customBar.delegate = (id<CustomToolBarDelegate>)self;
     [self.view addSubview:customBar];
     
     if([self isFirstRun]) [self activateTutorial];
@@ -232,20 +233,13 @@
     }
     
     [self moveCustomToolBarUp:checked];
-}
-
--(void)bar:(CustomToolBar *)bar barButtonTappedEvent:(UITouch *)touch{
-    for (NSInteger j = 0; j < [tv numberOfSections]; j++)
-    {
-        for (NSInteger i = 0; i < [tv numberOfRowsInSection:j]; i++)
-        {
-            KeywordsCell *cell = (KeywordsCell *)[tv cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:j]];
-            [cell setCheckboxState:NO];
-        }
-    }
+    
+    [self changeEditBtnStatus];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self moveCustomToolBarUp:NO];
+    
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
     
     [store setInteger:[indexPath row] forKey:@"selectedrow"];
@@ -355,6 +349,57 @@
                      animations:^{
                          customBar.center = CGPointMake(customBar.center.x, customBar.center.y + movement);
                      }];
+}
+
+#pragma mark - Custom Toolbar Delegate
+
+-(void)closeButtonTappedEvent{
+    for (NSInteger j = 0; j < [tv numberOfSections]; j++)
+    {
+        for (NSInteger i = 0; i < [tv numberOfRowsInSection:j]; i++)
+        {
+            KeywordsCell *cell = (KeywordsCell *)[tv cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:j]];
+            [cell setCheckboxState:NO];
+        }
+    }
+}
+
+-(void)changeEditBtnStatus{
+    int count = 0;
+    
+    for (int i = 0; i < _cellDataArray.count; i++) {
+        KeywordsCellData *cellData = [_cellDataArray objectAtIndex:i];
+        if(cellData.isChecked) count++;
+    }
+    
+    if(count <= 1) [customBar setEditBtnState:YES];
+    else [customBar setEditBtnState:NO];
+}
+
+-(void)deleteButtonTappedEvent{
+    NSIndexPath *indexPath;
+    for (int i = 0; i < _cellDataArray.count; i++) {
+        KeywordsCellData *cellData = [_cellDataArray objectAtIndex:i];
+        if(cellData.isChecked) indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+    }
+    
+    [self tableView:tv commitEditingStyle:UITableViewCellEditingStyleDelete forRowAtIndexPath:indexPath];
+}
+
+-(void)editButtonTappedEvent{
+    NSIndexPath *indexPath;
+    
+    for (int i = 0; i < _cellDataArray.count; i++) {
+        KeywordsCellData *cellData = [_cellDataArray objectAtIndex:i];
+        if(cellData.isChecked){
+            indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+            break;
+        }
+    }
+    
+    [self tableView:tv didSelectRowAtIndexPath:indexPath];
+    
+    [self moveCustomToolBarUp:NO];
 }
 
 @end

@@ -13,7 +13,9 @@
 @protocol CustomToolBarDelegate <NSObject>
 
 @optional
--(void)bar:(CustomToolBar *)bar barButtonTappedEvent:(UITouch *)touch;
+-(void)deleteButtonTappedEvent;
+-(void)editButtonTappedEvent;
+-(void)closeButtonTappedEvent;
 
 @end
 
@@ -26,5 +28,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *hide;
 
 @property(nonatomic, assign) id <CustomToolBarDelegate> delegate;
+
+-(void)setEditBtnState:(BOOL)editable;
 
 @end

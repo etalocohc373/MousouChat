@@ -41,17 +41,25 @@
     return self;
 }
 
+-(IBAction)deleteBtnTapped{
+    if([_delegate respondsToSelector:@selector(deleteButtonTappedEvent)]) [_delegate deleteButtonTappedEvent];
+}
+
+-(IBAction)editBtnTapped{
+    if([_delegate respondsToSelector:@selector(editButtonTappedEvent)]) [_delegate editButtonTappedEvent];
+}
+
 -(IBAction)dismiss:(id)sender event:(id)event{
     [UIView animateWithDuration:0.2f
                      animations:^{
                          self.center = CGPointMake(160, 590);
                      }];
-    NSSet *set = [event allTouches];
-    UITouch *touch = [set anyObject];
     
-    if (touch && [_delegate respondsToSelector:@selector(bar:barButtonTappedEvent:)]){
-        [_delegate bar:self barButtonTappedEvent:touch];
-    }
+    if ([_delegate respondsToSelector:@selector(closeButtonTappedEvent)]) [_delegate closeButtonTappedEvent];
+}
+
+-(void)setEditBtnState:(BOOL)editable{
+    _edit.enabled = editable;
 }
 
 @end
