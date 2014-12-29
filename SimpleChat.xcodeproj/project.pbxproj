@@ -29,6 +29,11 @@
 		EC02802019C6C505003C9CAD /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC02801F19C6C505003C9CAD /* AudioToolbox.framework */; };
 		EC18ECA51915D507004B4215 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC18ECA41915D507004B4215 /* SettingViewController.m */; };
 		EC18ECA91915DE48004B4215 /* Previous2.png in Resources */ = {isa = PBXBuildFile; fileRef = EC18ECA81915DE48004B4215 /* Previous2.png */; };
+		EC2EE4DE1A503D4F0096CAA2 /* actionBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = EC2EE4DD1A503D4F0096CAA2 /* actionBtn.png */; };
+		EC2EE4E01A503F1E0096CAA2 /* editBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = EC2EE4DF1A503F1E0096CAA2 /* editBtn.png */; };
+		EC2EE4E21A5041F50096CAA2 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC2EE4E11A5041F50096CAA2 /* Social.framework */; };
+		EC2EE4E41A5042B90096CAA2 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC2EE4E31A5042B90096CAA2 /* Twitter.framework */; };
+		EC2EE4E71A516AE40096CAA2 /* KeywordData.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2EE4E61A516AE40096CAA2 /* KeywordData.m */; };
 		EC5AC8E2197A9FA900869567 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC5AC8E1197A9FA900869567 /* FriendsViewController.m */; };
 		EC5C20051A3D6F1F00D4C794 /* TimeSpecViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC5C20041A3D6F1F00D4C794 /* TimeSpecViewController.m */; };
 		EC6800D01917AB2B00DEE8CF /* pimage.png in Resources */ = {isa = PBXBuildFile; fileRef = EC6800CF1917AB2A00DEE8CF /* pimage.png */; };
@@ -76,6 +81,7 @@
 		ECF3658219177D6B002EFD3A /* CoreImageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF3658119177D6B002EFD3A /* CoreImageHelper.m */; };
 		ECF3658419178148002EFD3A /* friends.png in Resources */ = {isa = PBXBuildFile; fileRef = ECF3658319178148002EFD3A /* friends.png */; };
 		ECF36586191781F9002EFD3A /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = ECF36585191781F9002EFD3A /* plus.png */; };
+		ECFFF57B1A45909A00F06F15 /* UserData.m in Sources */ = {isa = PBXBuildFile; fileRef = ECFFF57A1A45909A00F06F15 /* UserData.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +128,12 @@
 		EC18ECA31915D507004B4215 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		EC18ECA41915D507004B4215 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		EC18ECA81915DE48004B4215 /* Previous2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Previous2.png; path = ChatController/Previous2.png; sourceTree = "<group>"; };
+		EC2EE4DD1A503D4F0096CAA2 /* actionBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = actionBtn.png; sourceTree = "<group>"; };
+		EC2EE4DF1A503F1E0096CAA2 /* editBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = editBtn.png; sourceTree = "<group>"; };
+		EC2EE4E11A5041F50096CAA2 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		EC2EE4E31A5042B90096CAA2 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		EC2EE4E51A516AE40096CAA2 /* KeywordData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeywordData.h; sourceTree = "<group>"; };
+		EC2EE4E61A516AE40096CAA2 /* KeywordData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeywordData.m; sourceTree = "<group>"; };
 		EC5AC8E0197A9FA900869567 /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
 		EC5AC8E1197A9FA900869567 /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; usesTabs = 0; };
 		EC5C20031A3D6F1F00D4C794 /* TimeSpecViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeSpecViewController.h; sourceTree = "<group>"; };
@@ -186,6 +198,8 @@
 		ECF3658119177D6B002EFD3A /* CoreImageHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreImageHelper.m; sourceTree = "<group>"; };
 		ECF3658319178148002EFD3A /* friends.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = friends.png; sourceTree = "<group>"; };
 		ECF36585191781F9002EFD3A /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
+		ECFFF5791A45909A00F06F15 /* UserData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserData.h; sourceTree = "<group>"; };
+		ECFFF57A1A45909A00F06F15 /* UserData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserData.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +207,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC2EE4E41A5042B90096CAA2 /* Twitter.framework in Frameworks */,
+				EC2EE4E21A5041F50096CAA2 /* Social.framework in Frameworks */,
 				ECD9E18E1A174582007EF34F /* Accelerate.framework in Frameworks */,
 				EC9AC03A19E179810098707E /* QuartzCore.framework in Frameworks */,
 				EC02802019C6C505003C9CAD /* AudioToolbox.framework in Frameworks */,
@@ -238,6 +254,8 @@
 		809B506918D7B55B0032A48D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EC2EE4E31A5042B90096CAA2 /* Twitter.framework */,
+				EC2EE4E11A5041F50096CAA2 /* Social.framework */,
 				ECD9E18D1A174582007EF34F /* Accelerate.framework */,
 				EC9AC03619E035380098707E /* QuartzCore.framework */,
 				EC02801F19C6C505003C9CAD /* AudioToolbox.framework */,
@@ -278,6 +296,10 @@
 				EC18ECA41915D507004B4215 /* SettingViewController.m */,
 				EC5C20031A3D6F1F00D4C794 /* TimeSpecViewController.h */,
 				EC5C20041A3D6F1F00D4C794 /* TimeSpecViewController.m */,
+				ECFFF5791A45909A00F06F15 /* UserData.h */,
+				ECFFF57A1A45909A00F06F15 /* UserData.m */,
+				EC2EE4E51A516AE40096CAA2 /* KeywordData.h */,
+				EC2EE4E61A516AE40096CAA2 /* KeywordData.m */,
 				EC9AC03819E0D4F10098707E /* Launch Screen.xib */,
 				809B508218D7B55B0032A48D /* Images.xcassets */,
 				809B507118D7B55B0032A48D /* Supporting Files */,
@@ -338,6 +360,8 @@
 		EC6800D51917ADB400DEE8CF /* images */ = {
 			isa = PBXGroup;
 			children = (
+				EC2EE4DF1A503F1E0096CAA2 /* editBtn.png */,
+				EC2EE4DD1A503D4F0096CAA2 /* actionBtn.png */,
 				EC782C9A1A3C02F900ABDCC3 /* checkmark.png */,
 				EC782C9C1A3C047400ABDCC3 /* uncheckmark.png */,
 				ECD9E1C81A2B04D7007EF34F /* trash.png */,
@@ -496,6 +520,7 @@
 			files = (
 				ECAC824719C7B70800A32514 /* Main.storyboard in Resources */,
 				ECD9E0FA1A14E821007EF34F /* KozGoPro-Medium.otf in Resources */,
+				EC2EE4E01A503F1E0096CAA2 /* editBtn.png in Resources */,
 				EC18ECA91915DE48004B4215 /* Previous2.png in Resources */,
 				ECC2BB4A19C6CD1C00BA7DC7 /* massu.jpg in Resources */,
 				ECAC824919CAEA1600A32514 /* addchat.png in Resources */,
@@ -504,6 +529,7 @@
 				ECD9E1BC1A1A3F21007EF34F /* fukidashi2.png in Resources */,
 				ECD9E1C91A2B04D7007EF34F /* trash.png in Resources */,
 				EC782C9B1A3C02F900ABDCC3 /* checkmark.png in Resources */,
+				EC2EE4DE1A503D4F0096CAA2 /* actionBtn.png in Resources */,
 				ECEF183A19A220B600511EA5 /* mizutama.png in Resources */,
 				ECF36586191781F9002EFD3A /* plus.png in Resources */,
 				EC6800E6191882E300DEE8CF /* savebt.png in Resources */,
@@ -552,10 +578,12 @@
 				809B507718D7B55B0032A48D /* main.m in Sources */,
 				EC5C20051A3D6F1F00D4C794 /* TimeSpecViewController.m in Sources */,
 				ECC2ADB6197AA5AB0015CCF5 /* AddTalkViewController.m in Sources */,
+				ECFFF57B1A45909A00F06F15 /* UserData.m in Sources */,
 				ECD9E1911A1745C9007EF34F /* RNBlurModalView.m in Sources */,
 				809B50CB18D80E040032A48D /* MessageCell.m in Sources */,
 				ECAC824C19CAEB1800A32514 /* EditFriendViewController.m in Sources */,
 				ECD9E1991A17740B007EF34F /* TalkTableViewCell.m in Sources */,
+				EC2EE4E71A516AE40096CAA2 /* KeywordData.m in Sources */,
 				ECD9E1A11A186037007EF34F /* FriendsCell.m in Sources */,
 				ECD9E1A81A187FC1007EF34F /* CustomAlertView.m in Sources */,
 				ECF3658219177D6B002EFD3A /* CoreImageHelper.m in Sources */,
@@ -697,6 +725,7 @@
 				GCC_PREFIX_HEADER = "SimpleChat/SimpleChat-Prefix.pch";
 				INFOPLIST_FILE = "SimpleChat/SimpleChat-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -710,6 +739,7 @@
 				GCC_PREFIX_HEADER = "SimpleChat/SimpleChat-Prefix.pch";
 				INFOPLIST_FILE = "SimpleChat/SimpleChat-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "CustomToolBar.h"
 
-@interface MasterViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>{
+@interface MasterViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate>{
     IBOutlet UITableView *tv;
     CustomToolBar *customBar;
     
@@ -20,6 +20,8 @@
     NSMutableArray *reply;
     NSArray *talks;
     NSArray *_cellDataArray;
+    
+    NSIndexPath *sharePath;
     
     int rows;
     

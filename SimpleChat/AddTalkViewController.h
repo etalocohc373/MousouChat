@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddTalkViewController : UITableViewController{
-    NSMutableArray *users;
+@interface AddTalkViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>{
     NSMutableArray *images;
     NSArray *talks;
+    NSArray *_userDatas;
 }
 
 @end

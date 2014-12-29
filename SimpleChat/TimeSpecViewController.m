@@ -26,7 +26,8 @@
 }
 
 -(IBAction)dateChanged{
-    
+    NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
+    //[store setObject:<#(id)#> forKey:@"timeSpec"];
 }
 
 -(void)showError{

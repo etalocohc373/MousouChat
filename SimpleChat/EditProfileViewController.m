@@ -8,6 +8,8 @@
 
 #import "EditProfileViewController.h"
 
+#import "UserData.h"
+
 @interface EditProfileViewController ()
 
 @end
@@ -32,13 +34,18 @@
 -(void)viewWillAppear:(BOOL)animated{
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
     int editNum = (int)[store integerForKey:@"editUserNum"];
+    
+    NSData *data = (NSData *)[store objectForKey:@"userDatas"];
+    _userDatas = [NSMutableArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:data]];
+    UserData *userData = [_userDatas objectAtIndex:editNum];
+    
     switch ([store integerForKey:@"editprof"]) {
         case 0:
             self.title = @"名前";
             tf.textAlignment = NSTextAlignmentCenter;
             
             if([store boolForKey:@"editMain"]) tf.text = [store objectForKey:@"myname"];
-            else tf.text = [[store objectForKey:@"users"] objectAtIndex:editNum];
+            else tf.text = userData.name;
             break;
             
         default:
@@ -60,54 +67,67 @@
 -(IBAction)done{
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
     
-    NSMutableArray *users = [NSMutableArray arrayWithArray:[store objectForKey:@"users"]];
-    NSMutableArray *intros = [NSMutableArray arrayWithArray:[store objectForKey:@"intros"]];
-    NSMutableArray *talks = [NSMutableArray arrayWithArray:[store objectForKey:@"talks"]];
-    
     int editNum = (int)[store integerForKey:@"editUserNum"];
+    
+    UserData *userData = [_userDatas objectAtIndex:editNum];
+    
+    NSMutableArray *talks = [store objectForKey:@"talks"];
     
     switch ([store integerForKey:@"editprof"]) {
         case 0:
             if([store boolForKey:@"editMain"]) [store setObject:tf.text forKey:@"myname"];
             else {
-                if([users containsObject:tf.text] && ![tf.text isEqualToString:[users objectAtIndex:editNum]]) {
+                BOOL chofuku = NO;
+                
+                for (int i = 0; i < _userDatas.count; i++) {
+                    UserData *hogeUserData = [_userDatas objectAtIndex:i];
+                    if([hogeUserData.name isEqualToString:tf.text]) chofuku = YES;
+                }
+                
+                if(chofuku && ![tf.text isEqualToString:userData.name]) {
                     [self showAlert:@"この名前は既に使われています" message:@"別の名前に変更してください"];
                     return;
                 }
                 
-                if([talks containsObject:[users objectAtIndex:editNum]]){
-                    NSString *key = [NSString stringWithFormat:@"keywords%@", [users objectAtIndex:editNum]];
+                if([talks containsObject:userData.name]){
+                    NSString *key = [NSString stringWithFormat:@"keywords%@", userData.name];
                     NSArray *hogeArr = [store objectForKey:key];
                     [store setObject:nil forKey:key];
                     
-                    [talks replaceObjectAtIndex:[talks indexOfObject:[users objectAtIndex:editNum]] withObject:tf.text];
+                    [talks replaceObjectAtIndex:[talks indexOfObject:userData.name] withObject:tf.text];
                     [store setObject:talks forKey:@"talks"];
                     
                     key = [NSString stringWithFormat:@"keywords%@", tf.text];
                     [store setObject:hogeArr forKey:key];
                     
                     
-                    key = [NSString stringWithFormat:@"replies%@", [users objectAtIndex:editNum]];
+                    key = [NSString stringWithFormat:@"replies%@", userData.name];
                     hogeArr = [store objectForKey:key];
                     [store setObject:nil forKey:key];
                     
-                    [talks replaceObjectAtIndex:[talks indexOfObject:[users objectAtIndex:editNum]] withObject:tf.text];
+                    [talks replaceObjectAtIndex:[talks indexOfObject:userData.name] withObject:tf.text];
                     [store setObject:talks forKey:@"talks"];
                     
                     key = [NSString stringWithFormat:@"replies%@", tf.text];
                     [store setObject:hogeArr forKey:key];
                 }
                 
-                [users replaceObjectAtIndex:editNum withObject:tf.text];
-                [store setObject:users forKey:@"users"];
+                userData.name = tf.text;
+                [_userDatas replaceObjectAtIndex:editNum withObject:userData];
+                
+                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_userDatas];
+                [store setObject:data forKey:@"userDatas"];
             }
             break;
             
         default:
             if([store boolForKey:@"editMain"]) [store setObject:tf.text forKey:@"aboutme"];
             else {
-                [intros replaceObjectAtIndex:editNum withObject:tf.text];
-                [store setObject:intros forKey:@"intros"];
+                userData.intro = tf.text;
+                [_userDatas replaceObjectAtIndex:editNum withObject:userData];
+                
+                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_userDatas];
+                [store setObject:data forKey:@"userDatas"];
             }
             break;
     }

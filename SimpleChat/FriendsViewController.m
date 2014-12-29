@@ -12,6 +12,8 @@
 #import "CustomAlertView.h"
 
 #import "WSCoachMarksView.h"
+#import "UserData.h"
+#import "KeywordData.h"
 
 @interface FriendsViewController ()
 
@@ -32,7 +34,7 @@
 {
     [super viewDidLoad];
     
-    //[self reset];
+    [self reset];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     
@@ -56,7 +58,6 @@
     [UINavigationBar appearance].tintColor = [UIColor whiteColor];
     [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
     
-    
     talks = [NSMutableArray array];
     if([[NSUserDefaults standardUserDefaults] objectForKey:@"talks"]){
         talks = [[NSUserDefaults standardUserDefaults] objectForKey:@"talks"];
@@ -71,55 +72,34 @@
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
-    NSArray *mar3 = [store objectForKey:@"users"];
     
-    if(mar3){
-        users = [NSMutableArray array];
-        users = [mar3 mutableCopy];
+    _userDatas = [NSMutableArray array];
+    
+    if([store objectForKey:@"userDatas"]){
+        NSData *data = (NSData *)[store objectForKey:@"userDatas"];
+        _userDatas = [[NSKeyedUnarchiver unarchiveObjectWithData:data] mutableCopy];
     }else{
-        users = [NSMutableArray arrayWithObjects:@"まっすー", nil];
-        [store setObject:users forKey:@"users"];
-    }
-    
-    mar3 = [NSArray arrayWithArray:[store objectForKey:@"pimages"]];
-    
-    if([mar3 count]){
-        images = [NSMutableArray array];
-        images = [mar3 mutableCopy];
-    }else{
-        NSData *pngData = [[NSData alloc] initWithData:UIImagePNGRepresentation([UIImage imageNamed:@"massu.jpg"])];
+        UserData *userData = [[UserData alloc] init];
+        userData.name = @"まっすー";
+        userData.image = UIImageJPEGRepresentation([UIImage imageNamed:@"massu.jpg"], 0.8);
+        userData.intro = @"こんにちは！";
+        [_userDatas addObject:userData];
         
-        images = [NSMutableArray arrayWithObjects:pngData, nil];
-        [store setObject:images forKey:@"pimages"];
-    }
-    
-    mar3 = [NSArray arrayWithArray:[store objectForKey:@"intros"]];
-    
-    if([mar3 count]){
-        intros = [NSMutableArray array];
-        intros = [mar3 mutableCopy];
-    }else{
-        intros = [NSMutableArray arrayWithObjects:@"こんにちは！", nil];
-        [store setObject:intros forKey:@"intros"];
-    }
-    
-    mar3 = [NSArray arrayWithArray:[store objectForKey:@"talks"]];
-    
-    talks = [NSMutableArray array];
-    if(mar3){
-        talks = [mar3 mutableCopy];
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_userDatas];
+        [store setObject:data forKey:@"userDatas"];
+        [store synchronize];
     }
     
     [store setFloat:0.0 forKey:@"kidokuDelay"];
     
-    if(users.count > 1) editBtn.enabled = YES;
+    if(_userDatas.count > 1) editBtn.enabled = YES;
     else editBtn.enabled = NO;
     
     [store synchronize];
     
     [self.tableView reloadData];
     
-    [self createNavTitle:[NSString stringWithFormat:@"友だち (%lu人)", (unsigned long)users.count]];
+    [self createNavTitle:[NSString stringWithFormat:@"友だち (%lu人)", (unsigned long)_userDatas.count]];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
@@ -145,7 +125,7 @@
     // Return the number of rows in the section.
     switch (section) {
         case 1:
-            if(!searching) return [users count];
+            if(!searching) return _userDatas.count;
             else return [searchArray count];
             break;
             
@@ -159,18 +139,14 @@
 {
     FriendsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
-    /*//重複ラベルの消去
-    for (UILabel *subview in [cell.contentView subviews]) [subview removeFromSuperview];
-    for (UIImageView *img in [cell.contentView subviews]) [img removeFromSuperview];
-    //ここまで*/
+    __strong UserData *userData = [_userDatas objectAtIndex:indexPath.row];
     
-    // Configure the cell...
     switch (indexPath.section) {
         case 1:
             if (!searching){
-                cell.nameLabel.text = [users objectAtIndex:indexPath.row];
-                cell.introLabel.text = [intros objectAtIndex:indexPath.row];
-                cell.profileImageView.image = [[UIImage alloc] initWithData:[images objectAtIndex:indexPath.row]];
+                cell.nameLabel.text = userData.name;
+                cell.introLabel.text = userData.intro;
+                cell.profileImageView.image = [[UIImage alloc] initWithData:userData.image];
             }else{
                 cell.nameLabel.text = [searchArray objectAtIndex:indexPath.row];
                 cell.introLabel.text = [searchArrayIntros objectAtIndex:indexPath.row];
@@ -207,7 +183,7 @@
     tableView.sectionHeaderHeight = headerView.frame.size.height;
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, headerView.frame.size.width - 10, 23)];
     
-    NSString *title = [NSString stringWithFormat:@"友だち (%lu)", (unsigned long)users.count];
+    NSString *title = [NSString stringWithFormat:@"友だち (%lu)", (unsigned long)_userDatas.count];
     switch (section) {
         case 0:
             label.text = @"プロフィール";
@@ -257,23 +233,28 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    UserData *userData = [_userDatas objectAtIndex:deletepath.row];
+    NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
+    
     switch (buttonIndex) {
         case 1:
-            if([talks indexOfObject:[users objectAtIndex:deletepath.row]] != NSNotFound){
-                [talks removeObjectAtIndex:[talks indexOfObject:[users objectAtIndex:deletepath.row]]];
-                [[NSUserDefaults standardUserDefaults] setObject:talks forKey:@"talks"];
+            if([talks indexOfObject:userData.name] != NSNotFound){
+                [talks removeObjectAtIndex:[talks indexOfObject:userData.name]];
+                [store setObject:talks forKey:@"talks"];
                 
-                NSString *key = [NSString stringWithFormat:@"keywords%@", [users objectAtIndex:deletepath.row]];
-                [[NSUserDefaults standardUserDefaults] setObject:nil forKey:key];
+                NSString *key = [NSString stringWithFormat:@"keywords%@", userData.name];
+                [store setObject:nil forKey:key];
                 
-                key = [NSString stringWithFormat:@"replies%@", [users objectAtIndex:deletepath.row]];
-                [[NSUserDefaults standardUserDefaults] setObject:nil forKey:key];
+                key = [NSString stringWithFormat:@"replies%@", userData.name];
+                [store setObject:nil forKey:key];
             }
             
-            [users removeObjectAtIndex:deletepath.row];
-            [[NSUserDefaults standardUserDefaults] setObject:users forKey:@"users"];
+            [_userDatas removeObjectAtIndex:deletepath.row];
+            data = [NSKeyedArchiver archivedDataWithRootObject:_userDatas];
             
-            [[NSUserDefaults standardUserDefaults] synchronize];
+            [store setObject:data forKey:@"userDatas"];
+            
+            [store synchronize];
             [self.tableView deleteRowsAtIndexPaths:@[deletepath] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
@@ -298,14 +279,15 @@
 }
 
 -(UIView *)setUpAlertViewForIndexPath:(NSIndexPath *)indexPath{
+    UserData *userData = [_userDatas objectAtIndex:indexPath.row];
     UIImage *profileImage;
     NSString *name;
     NSString *intro;
     
     if(indexPath.section){
-        profileImage = [UIImage imageWithData:[images objectAtIndex:indexPath.row]];
-        name = [users objectAtIndex:indexPath.row];
-        intro = [intros objectAtIndex:indexPath.row];
+        profileImage = [UIImage imageWithData:userData.image];
+        name = userData.name;
+        intro = userData.intro;
     }else{
         profileImage = [UIImage imageWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"myimage"]];
         name = [[NSUserDefaults standardUserDefaults] objectForKey:@"myname"];
@@ -353,10 +335,11 @@
 
 -(void)jumpToTalk{
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
+    UserData *userData = [_userDatas objectAtIndex:editPath.row];
     
     [store setInteger:editPath.row forKey:@"selecteduser"];
     
-    if([talks containsObject:[users objectAtIndex:editPath.row]]){
+    if([talks containsObject:userData.name]){
         NSMutableArray *notReadRows = [NSMutableArray arrayWithArray:[store objectForKey:@"notReadRows"]];
         
         if([notReadRows containsObject:[talks objectAtIndex:(int)editPath.row]]){
@@ -364,18 +347,18 @@
             [store setObject:notReadRows forKey:@"notReadRows"];
         }
     }else{
-        NSArray *userimages = [NSArray arrayWithArray:[store objectForKey:@"pimages"]];
-        [talks addObject:[users objectAtIndex:(int)editPath.row]];
-        [images addObject:[userimages objectAtIndex:(int)editPath.row]];
+        NSMutableArray *talkimages = [NSMutableArray arrayWithArray:[store objectForKey:@"talkimages"]];
+        [talks addObject:userData.name];
+        [talkimages addObject:userData.image];
         
         [store setObject:talks forKey:@"talks"];
-        [store setObject:images forKey:@"talkimages"];
+        [store setObject:talkimages forKey:@"talkimages"];
     }
     [store synchronize];
     
     if (!_chatController) _chatController = [ChatController new];
     _chatController.delegate = (id<ChatControllerDelegate>)self;
-    _chatController.opponentImg = [[UIImage alloc] initWithData:[images objectAtIndex:editPath.row]];
+    _chatController.opponentImg = [[UIImage alloc] initWithData:userData.image];
     
     _chatController.hidesBottomBarWhenPushed = YES;
     
@@ -400,12 +383,13 @@
 }
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    for (int i = 0; i < users.count; i++) {
-        NSRange range = [[users objectAtIndex:i] rangeOfString:searchBar.text];
+    for (int i = 0; i < _userDatas.count; i++) {
+        UserData *userData = [_userDatas objectAtIndex:i];
+        NSRange range = [userData.name rangeOfString:searchBar.text];
         if (range.location != NSNotFound) {
-            [searchArray addObject:[users objectAtIndex:i]];
-            [searchArrayIntros addObject:[intros objectAtIndex:i]];
-            [searchArrayImg addObject:[images objectAtIndex:i]];
+            [searchArray addObject:userData.name];
+            [searchArrayIntros addObject:userData.intro];
+            [searchArrayImg addObject:userData.image];
         }
     }
     searching = YES;

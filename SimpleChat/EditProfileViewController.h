@@ -10,6 +10,8 @@
 
 @interface EditProfileViewController : UIViewController<UITextFieldDelegate, UITextViewDelegate>{
     IBOutlet UITextField *tf;
+    
+    NSMutableArray *_userDatas;
 }
 
 @end

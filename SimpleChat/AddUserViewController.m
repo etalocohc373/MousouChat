@@ -8,6 +8,8 @@
 
 #import "AddUserViewController.h"
 
+#import "UserData.h"
+
 @interface AddUserViewController ()
 
 @end
@@ -59,39 +61,34 @@
 -(IBAction)done{
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
     
-    NSArray *mar3 = [NSArray arrayWithArray:[store objectForKey:@"users"]];
-    NSMutableArray *users = [NSMutableArray array];
+    NSData *data = (NSData *)[store objectForKey:@"userDatas"];
+    NSMutableArray *_userDatas = [NSMutableArray array];
     
-    if(mar3) users = [mar3 mutableCopy];
+    if([store objectForKey:@"userDatas"]){
+        NSData *data = (NSData *)[store objectForKey:@"userDatas"];
+        _userDatas = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    }
     
-    if([users indexOfObject:tf.text] == NSNotFound){//ユーザー名重複判定
-        //ユーザー名保存
-        [users addObject:tf.text];
-        //ここまで
-        
-        //プロ画保存
-        mar3 = [NSArray arrayWithArray:[store objectForKey:@"pimages"]];
-        NSMutableArray *images = [NSMutableArray array];
-        if(mar3) images = [mar3 mutableCopy];
+    BOOL chofuku = NO;
+    for (int i = 0; i < _userDatas.count; i++) {
+        UserData *userData = [_userDatas objectAtIndex:i];
+        if([userData.name isEqualToString:tf.text]) chofuku = YES;
+    }
+    
+    if(!chofuku){//ユーザー名重複判定
+        UserData *userData = [[UserData alloc] init];
+        userData.name = tf.text;
         
         if(imgView.image == [UIImage imageNamed:@"pimage.png"]) [self trimImage:[UIImage imageNamed:@"pimage.png"]];
-        
         NSData *pngData = [[NSData alloc] initWithData:UIImagePNGRepresentation(imgView.image)];
-        [images addObject:pngData];
-        //ここまで
+        userData.image = pngData;
         
-        //自己紹介保存
-        mar3 = [NSArray arrayWithArray:[store objectForKey:@"intros"]];
-        NSMutableArray *intros = [NSMutableArray array];
-        if(mar3) intros = [mar3 mutableCopy];
+        userData.intro = tv.text;
         
-        [intros addObject:tv.text];
-        //ここまで
+        [_userDatas addObject:userData];
         
-        [store setObject:users forKey:@"users"];
-        [store setObject:images forKey:@"pimages"];
-        [store setObject:intros forKey:@"intros"];
-        
+        data = [NSKeyedArchiver archivedDataWithRootObject:_userDatas];
+        [store setObject:data forKey:@"userDatas"];
         [store synchronize];
         
         [self cancel];

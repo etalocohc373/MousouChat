@@ -17,6 +17,8 @@
     IBOutlet UIImageView *imgView;
     IBOutlet UILabel *name;
     IBOutlet UILabel *about;
+    
+    NSMutableArray *_userDatas;
 }
 
 @end

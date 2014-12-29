@@ -12,6 +12,7 @@
 
 #import "TalkTableViewCell.h"
 #import "WSCoachMarksView.h"
+#import "UserData.h"
 
 #define SCREEN_HEIGHT [UIScreen mainScreen].applicationFrame.size.height
 
@@ -21,19 +22,10 @@
 
 @implementation ViewController
 
-/*- (id)initWithStyle:(UITableViewStyle)style
- {
- self = [super initWithStyle:style];
- if (self) {
- // Custom initialization
- }
- return self;
- }*/
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    // Do any additional setup after loading the view, typically from a nib.
     
     [self back];
 }
@@ -46,15 +38,16 @@
     talks = [NSMutableArray array];
     if(mar3) talks = [mar3 mutableCopy];
     
-    users = [NSArray arrayWithArray:[store objectForKey:@"users"]];
-    
-    userimages = [NSArray arrayWithArray:[store objectForKey:@"pimages"]];
-    
     mar3 = [store objectForKey:@"talkimages"];
     
     if([store integerForKey:@"addtalk"]){
-        [talks addObject:[users objectAtIndex:[store integerForKey:@"addtalk"] - 1]];
-        [images addObject:[userimages objectAtIndex:[store integerForKey:@"addtalk"] - 1]];
+        NSData *data = (NSData *)[store objectForKey:@"userDatas"];
+        _userDatas = [NSArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:data]];
+        
+        UserData *userData = [_userDatas objectAtIndex:[store integerForKey:@"addtalk"] - 1];
+        
+        [talks addObject:userData.name];
+        [images addObject:userData.image];
         [store setInteger:0 forKey:@"addtalk"];
         [store setObject:talks forKey:@"talks"];
         [store setObject:images forKey:@"talkimages"];
@@ -239,24 +232,24 @@
     [_chatController addNewMessage:newMessageOb];
     
     if(talks.count > 1 && [store integerForKey:@"selecteduser"]){
-    if(![[store objectForKey:@"controllerOpen"] isEqualToString:[talks objectAtIndex:(int)[store integerForKey:@"selecteduser"]]]){
-        alert = YES;
-        alertRow = (int)[store integerForKey:@"selecteduser"];
-    }
-    //[tv moveRowAtIndexPath:[NSIndexPath indexPathForRow:alertRow inSection:0] toIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    
-    NSString *hoge = [talks objectAtIndex:0];
-    [talks replaceObjectAtIndex:0 withObject:[talks objectAtIndex:alertRow]];
-    [talks removeObjectAtIndex:alertRow];
-    [talks insertObject:hoge atIndex:1];
-    [store setObject:talks forKey:@"talks"];
-    
-    [notReadRows addObject:[talks objectAtIndex:0]];
-    [store setObject:notReadRows forKey:@"notReadRows"];
-    
-    [store synchronize];
-    
-    [tv reloadData];
+        if(![[store objectForKey:@"controllerOpen"] isEqualToString:[talks objectAtIndex:(int)[store integerForKey:@"selecteduser"]]]){
+            alert = YES;
+            alertRow = (int)[store integerForKey:@"selecteduser"];
+        }
+        //[tv moveRowAtIndexPath:[NSIndexPath indexPathForRow:alertRow inSection:0] toIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        
+        NSString *hoge = [talks objectAtIndex:0];
+        [talks replaceObjectAtIndex:0 withObject:[talks objectAtIndex:alertRow]];
+        [talks removeObjectAtIndex:alertRow];
+        [talks insertObject:hoge atIndex:1];
+        [store setObject:talks forKey:@"talks"];
+        
+        [notReadRows addObject:[talks objectAtIndex:0]];
+        [store setObject:notReadRows forKey:@"notReadRows"];
+        
+        [store synchronize];
+        
+        [tv reloadData];
     }
     //}
 }
@@ -289,10 +282,10 @@
     }
     
     /*//重複ラベルの消去
-    for (UILabel *subview in [cell.contentView subviews]) [subview removeFromSuperview];
-    
-    for (UIImageView *img in [cell.contentView subviews]) [img removeFromSuperview];
-    //ここまで*/
+     for (UILabel *subview in [cell.contentView subviews]) [subview removeFromSuperview];
+     
+     for (UIImageView *img in [cell.contentView subviews]) [img removeFromSuperview];
+     //ここまで*/
     
     // Configure the cell...
     //アイコンバッジ作成
@@ -313,19 +306,19 @@
     UIImage *hoge;
     NSString *key;
     
-
+    
     if(!searching){//検索中でない
         cell.nameLabel.text = [talks objectAtIndex:indexPath.row];//トーク相手
         
         key = [NSString stringWithFormat:@"message%@", [talks objectAtIndex:indexPath.row]];
         
-        hoge = [[UIImage alloc] initWithData:[images objectAtIndex:[users indexOfObject:[talks objectAtIndex:indexPath.row]]]];//トプ画
+        hoge = [[UIImage alloc] initWithData:[images objectAtIndex:indexPath.row]];//トプ画
     }else{//検索中
         cell.nameLabel.text = [searchArray objectAtIndex:indexPath.row];
         
         key = [NSString stringWithFormat:@"message%@", [searchArray objectAtIndex:indexPath.row]];
         
-        hoge = [[UIImage alloc] initWithData:[searchArrayImg objectAtIndex:[users indexOfObject:[talks objectAtIndex:indexPath.row]]]];
+        hoge = [[UIImage alloc] initWithData:[searchArrayImg objectAtIndex:indexPath.row]];
     }
     
     NSArray *hogeArray = [NSArray array];
@@ -428,7 +421,7 @@
 }
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)search{
-    for (int i = 0; i < users.count; i++) {
+    for (int i = 0; i < _userDatas.count; i++) {
         NSRange range = [[talks objectAtIndex:i] rangeOfString:search.text];
         if (range.location != NSNotFound) {
             [searchArray addObject:[talks objectAtIndex:i]];

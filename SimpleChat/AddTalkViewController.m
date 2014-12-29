@@ -8,6 +8,8 @@
 
 #import "AddTalkViewController.h"
 
+#import "UserData.h"
+
 @interface AddTalkViewController ()
 
 @end
@@ -30,15 +32,9 @@
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.227 green:0.114 blue:0.369 alpha:1.0];
     
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
-    NSArray *mar3 = [store objectForKey:@"users"];
     
-    users = [NSMutableArray array];
-    users = [mar3 mutableCopy];
-    
-    mar3 = [NSArray arrayWithArray:[store objectForKey:@"pimages"]];
-    
-    images = [NSMutableArray array];
-    images = [mar3 mutableCopy];
+    NSData *data = (NSData *)[store objectForKey:@"userDatas"];
+    _userDatas = [NSArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:data]];
     
     talks = [NSArray arrayWithArray:[store objectForKey:@"talks"]];
     
@@ -82,21 +78,19 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [users count];
+    return _userDatas.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    if(cell == nil){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-    }
+    if(!cell) cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     
-    // Configure the cell...
+    UserData *userData = [_userDatas objectAtIndex:indexPath.row];
     
-    cell.textLabel.text = [users objectAtIndex:indexPath.row];
+    cell.textLabel.text = userData.name;
     cell.textLabel.font = [UIFont fontWithName:@"Hiragino Kaku Gothic ProN W6" size:17];
-    cell.imageView.image = [[UIImage alloc] initWithData:[images objectAtIndex:indexPath.row]];
+    cell.imageView.image = [[UIImage alloc] initWithData:userData.image];
     
     return cell;
 }
@@ -104,7 +98,9 @@
 #pragma mark - Navigation
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if([talks indexOfObject:[users objectAtIndex:indexPath.row]] == NSNotFound){
+    UserData *userData = [_userDatas objectAtIndex:indexPath.row];
+    
+    if([talks indexOfObject:userData.name] == NSNotFound){
         [[NSUserDefaults standardUserDefaults] setInteger:indexPath.row + 1 forKey:@"addtalk"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         [self dismissViewControllerAnimated:YES completion:nil];
@@ -119,7 +115,7 @@
 }
 
 -(void)createNavTitle:(NSString *)title{
-    UILabel* tLabel = [[UILabel alloc] initWithFrame:CGRectMake(-50, 0, 300, 40)];
+    UILabel *tLabel = [[UILabel alloc] initWithFrame:CGRectMake(-50, 0, 300, 40)];
     tLabel.text = title;
     tLabel.textColor = [UIColor whiteColor];
     tLabel.backgroundColor = [UIColor clearColor];

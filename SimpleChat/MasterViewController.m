@@ -7,9 +7,11 @@
 //
 
 #import "MasterViewController.h"
+#import <Social/Social.h>
 #import "SettingViewController.h"
 #import "KeywordsCell.h"
 #import "WSCoachMarksView.h"
+#import "UserData.h"
 
 @interface KeywordsCellData:NSObject {
     BOOL _isChecked;
@@ -354,10 +356,8 @@
 #pragma mark - Custom Toolbar Delegate
 
 -(void)closeButtonTappedEvent{
-    for (NSInteger j = 0; j < [tv numberOfSections]; j++)
-    {
-        for (NSInteger i = 0; i < [tv numberOfRowsInSection:j]; i++)
-        {
+    for (NSInteger j = 0; j < [tv numberOfSections]; j++){
+        for (NSInteger i = 0; i < [tv numberOfRowsInSection:j]; i++){
             KeywordsCell *cell = (KeywordsCell *)[tv cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:j]];
             [cell setCheckboxState:NO];
         }
@@ -380,13 +380,139 @@
     NSIndexPath *indexPath;
     for (int i = 0; i < _cellDataArray.count; i++) {
         KeywordsCellData *cellData = [_cellDataArray objectAtIndex:i];
-        if(cellData.isChecked) indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        if(cellData.isChecked){
+            indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+            [self tableView:tv commitEditingStyle:UITableViewCellEditingStyleDelete forRowAtIndexPath:indexPath];
+        }
     }
     
-    [self tableView:tv commitEditingStyle:UITableViewCellEditingStyleDelete forRowAtIndexPath:indexPath];
+    [self moveCustomToolBarUp:NO];
 }
 
 -(void)editButtonTappedEvent{
+    NSIndexPath *indexPath = [self getCheckedIndexPath];
+    
+    [self tableView:tv didSelectRowAtIndexPath:indexPath];
+    
+    [self moveCustomToolBarUp:NO];
+}
+
+-(void)actionButtonTappedEvent{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"共有" delegate:self cancelButtonTitle:@"キャンセル" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"Twitter", @"LINE", nil];
+    [actionSheet showInView:self.view];
+    
+}
+
+-(void)actionSheet:(UIActionSheet*)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSIndexPath *indexPath = [self getCheckedIndexPath];
+    NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
+    NSData *data = (NSData *)[store objectForKey:@"userDatas"];
+    NSArray *_userDatas = [NSArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:data]];
+    UserData *userData = [_userDatas objectAtIndex:[store integerForKey:@"selecteduser"]];
+    
+    NSString *str = [NSString stringWithFormat:@"自分「%@」 %@「%@」", [keyword objectAtIndex:indexPath.row], userData.name, [reply objectAtIndex:indexPath.row]];
+    
+    switch (buttonIndex) {
+        case 0:
+            [self makeShare:str];
+            break;
+        case 1:
+            [self makeTweet:str];
+            break;
+        case 2:
+            [self makeLine:str];
+            break;
+    }
+    
+}
+
+- (void)makeShare:(NSString *)sender {
+    if (![SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"シェアエラー"
+                                                        message:@"facebookアカウントが設定されていません。"
+                                                       delegate:nil
+                                              cancelButtonTitle:nil
+                                              otherButtonTitles:@"OK", nil];
+        [alert show];
+        return;
+    }
+    
+    NSString *text = @"hogehoge";
+    NSURL *URL = [NSURL URLWithString:@"hogehoge"];
+    NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"hogehoge"]];
+    SLComposeViewController *controller = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+    [controller setInitialText:text];
+    [controller addURL:URL];
+    [controller addImage:[[UIImage alloc] initWithData:imageData]];
+    controller.completionHandler =^(SLComposeViewControllerResult result){
+        [self dismissViewControllerAnimated:YES completion:nil];
+    };
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
+- (void)makeTweet:(NSString *)sender {
+    if (![SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ツイートエラー"
+                                                        message:@"Twitterアカウントが設定されていません。"
+                                                       delegate:nil
+                                              cancelButtonTitle:nil
+                                              otherButtonTitles:@"OK", nil];
+        [alert show];
+        return;
+    }
+    
+    NSString *text = sender;
+    SLComposeViewController *controller = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+    [controller setInitialText:text];
+    controller.completionHandler = ^(SLComposeViewControllerResult result){
+        [self dismissViewControllerAnimated:YES completion:nil];
+    };
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
+-(void)makeLine:(NSString *)sender{
+    NSString *string = sender;
+    
+    string = [string
+              stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSString *LINEUrlString = [NSString
+                               stringWithFormat:@"line://msg/text/%@", string];
+    
+    //LINEがインストールされているか確認。されていなければアラート→AppStoreを開く
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:LINEUrlString]]) {
+        [[UIApplication sharedApplication]
+         openURL:[NSURL URLWithString:LINEUrlString]];
+    } else {
+        [self cannotOpenAlert];
+    }
+}
+
+-(void)cannotOpenAlert{
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"LINEがインストールされていません"
+                          message:@"LINEをインストールしますか？"
+                          delegate:self
+                          cancelButtonTitle:@"いいえ"
+                          otherButtonTitles:@"はい", nil
+                          ];
+    [alert show];
+}
+
+-(void)alertView:(UIAlertView*)alertView
+clickedButtonAtIndex:(NSInteger)buttonIndex{
+    switch (buttonIndex) {
+        case 0://いいえのとき
+            break;
+        case 1://はいのとき
+            [[UIApplication sharedApplication]
+             openURL:[NSURL
+                      URLWithString:@"https://itunes.apple.com/jp/app/line/id443904275?mt=8"]];
+            break;
+    }
+}
+
+-(NSIndexPath *)getCheckedIndexPath{
     NSIndexPath *indexPath;
     
     for (int i = 0; i < _cellDataArray.count; i++) {
@@ -397,9 +523,7 @@
         }
     }
     
-    [self tableView:tv didSelectRowAtIndexPath:indexPath];
-    
-    [self moveCustomToolBarUp:NO];
+    return indexPath;
 }
 
 @end

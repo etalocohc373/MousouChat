@@ -14,6 +14,7 @@
 
 @optional
 -(void)deleteButtonTappedEvent;
+-(void)actionButtonTappedEvent;
 -(void)editButtonTappedEvent;
 -(void)closeButtonTappedEvent;
 
@@ -25,6 +26,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *trash;
 @property (weak, nonatomic) IBOutlet UIButton *edit;
+@property (weak, nonatomic) IBOutlet UIButton *action;
 @property (weak, nonatomic) IBOutlet UIButton *hide;
 
 @property(nonatomic, assign) id <CustomToolBarDelegate> delegate;

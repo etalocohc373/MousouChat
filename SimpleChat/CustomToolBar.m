@@ -49,6 +49,10 @@
     if([_delegate respondsToSelector:@selector(editButtonTappedEvent)]) [_delegate editButtonTappedEvent];
 }
 
+-(IBAction)actionBtnTapped{
+    if([_delegate respondsToSelector:@selector(actionButtonTappedEvent)]) [_delegate actionButtonTappedEvent];
+}
+
 -(IBAction)dismiss:(id)sender event:(id)event{
     [UIView animateWithDuration:0.2f
                      animations:^{
@@ -60,6 +64,7 @@
 
 -(void)setEditBtnState:(BOOL)editable{
     _edit.enabled = editable;
+    _action.enabled = editable;
 }
 
 @end

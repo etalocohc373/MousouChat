@@ -21,15 +21,14 @@
     BOOL searching;
     BOOL alert;
     
-    NSArray *users;
-    NSArray *userimages;
-    
     NSMutableArray *searchArray;
     NSMutableArray *searchArrayImg;
     
     NSMutableArray *notReadRows;
     NSMutableArray *talks;
     NSMutableArray *images;
+    
+    NSArray *_userDatas;
     
     NSArray *keyword;
     NSArray *reply;

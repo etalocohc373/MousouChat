@@ -39,15 +39,24 @@
                         <action selector="deleteBtnTapped" destination="Zky-mL-ytl" eventType="touchUpInside" id="tl2-6q-hOV"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6mb-lh-Jqk">
-                    <rect key="frame" x="124" y="0.0" width="72" height="44"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="6mb-lh-Jqk">
+                    <rect key="frame" x="99" y="7" width="32" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                    <state key="normal" title="編集">
+                    <state key="normal" image="editBtn.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
                         <action selector="editBtnTapped" destination="Zky-mL-ytl" eventType="touchUpInside" id="lAh-fc-oCt"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4Yi-Vb-PeW">
+                    <rect key="frame" x="171" y="10" width="62" height="28"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="actionBtn.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="actionBtnTapped" destination="Zky-mL-ytl" eventType="touchUpInside" id="ceb-eR-kZd"/>
                     </connections>
                 </button>
             </subviews>
@@ -55,6 +64,7 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="action" destination="4Yi-Vb-PeW" id="1Mr-9n-gxG"/>
                 <outlet property="edit" destination="6mb-lh-Jqk" id="Zbq-W1-D9v"/>
                 <outlet property="hide" destination="T0R-wn-Iur" id="cEO-Nq-Dco"/>
                 <outlet property="trash" destination="6dn-4L-nIB" id="sHK-va-nfU"/>
@@ -63,7 +73,9 @@
         </view>
     </objects>
     <resources>
+        <image name="actionBtn.png" width="27" height="25"/>
         <image name="cancel.png" width="25" height="25"/>
+        <image name="editBtn.png" width="30" height="28"/>
         <image name="trash.png" width="25" height="30"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

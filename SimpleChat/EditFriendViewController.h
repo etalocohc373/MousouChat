@@ -11,8 +11,7 @@
 @interface EditFriendViewController : UITableViewController<UITableViewDelegate, UITableViewDataSource>{
     IBOutlet UIBarButtonItem *deleteBtn;
     
-    NSMutableArray *users;
-    NSMutableArray *images;
+    NSMutableArray *_userDatas;
     NSMutableArray *talks;
     NSMutableArray *selectedRow;
 }

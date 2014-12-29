@@ -8,6 +8,8 @@
 
 #import "EditFriendViewController.h"
 
+#import "UserData.h"
+
 @interface EditFriendViewController ()
 
 @end
@@ -33,25 +35,17 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     self.tableView.separatorColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
-    
-    NSArray *mar3 = [NSArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"pimages"]];
-    
-    images = [NSMutableArray array];
-    images = [mar3 mutableCopy];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
-    NSArray *mar3 = [store objectForKey:@"users"];
     
-    users = [NSMutableArray array];
-    users = [mar3 mutableCopy];
+    NSData *data = (NSData *)[store objectForKey:@"userDatas"];
+    _userDatas = [[NSKeyedUnarchiver unarchiveObjectWithData:data] mutableCopy];
     
     talks = [NSMutableArray array];
-    mar3 = [NSArray arrayWithArray:[store objectForKey:@"talks"]];
-    if(mar3){
-        talks = [mar3 mutableCopy];
-    }
+    NSArray *mar3 = [NSArray arrayWithArray:[store objectForKey:@"talks"]];
+    if(mar3) talks = [mar3 mutableCopy];
     
     selectedRow = [NSMutableArray array];
 }
@@ -73,7 +67,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return users.count;
+    return _userDatas.count;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -109,10 +103,11 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     if(!cell) cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     
-    // Configure the cell...
-    cell.textLabel.text = [users objectAtIndex:indexPath.row];
+    UserData *userData = [_userDatas objectAtIndex:indexPath.row];
+
+    cell.textLabel.text = userData.name;
     cell.textLabel.font = [UIFont fontWithName:@"Hiragino Kaku Gothic ProN W3" size:18];
-    cell.imageView.image = [[UIImage alloc] initWithData:[images objectAtIndex:indexPath.row]];
+    cell.imageView.image = [[UIImage alloc] initWithData:userData.image];
     
     return cell;
 }
@@ -128,36 +123,44 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     int hoge;
-    NSArray *user2 = [NSArray arrayWithArray:users];
+    
+    //NSArray *_userDatasClone = [NSArray arrayWithArray:_userDatas];
     NSArray *talk2 = [NSArray arrayWithArray:talks];
-    NSArray *image2 = [NSArray arrayWithArray:images];
+    
+    NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
+    
     switch (buttonIndex) {
         case 1:
             for (int i = 0; i < selectedRow.count; i++) {
                 hoge = [[selectedRow objectAtIndex:i] intValue];
                 //トーク削除
-                if([talk2 indexOfObject:[user2 objectAtIndex:hoge]] != NSNotFound){
-                    [talks removeObject:[talk2 objectAtIndex:[talk2 indexOfObject:[user2 objectAtIndex:hoge]]]];
-                    [[NSUserDefaults standardUserDefaults] setObject:talks forKey:@"talks"];
+                BOOL chofuku = NO;
+                
+                UserData *userData = [_userDatas objectAtIndex:hoge];
+                
+                for (int x = 0; x < _userDatas.count; x++) {
+                    if([[talk2 objectAtIndex:x] isEqualToString:userData.name]) chofuku = YES;
+                }
+                
+                if(chofuku){
+                    [talks removeObject:userData.name];
+                    [store setObject:talks forKey:@"talks"];
                     
-                    NSString *key = [NSString stringWithFormat:@"keywords%@", [user2 objectAtIndex:hoge]];
-                    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:key];
+                    NSString *key = [NSString stringWithFormat:@"keywords%@", userData.name];
+                    [store setObject:nil forKey:key];
                     
-                    key = [NSString stringWithFormat:@"replies%@", [user2 objectAtIndex:hoge]];
-                    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:key];
+                    key = [NSString stringWithFormat:@"replies%@", userData.name];
+                    [store setObject:nil forKey:key];
                 }//ここまで
                 
                 //ユーザ削除
-                [users removeObject:[user2 objectAtIndex:hoge]];
-                [[NSUserDefaults standardUserDefaults] setObject:users forKey:@"users"];
+                [_userDatas removeObject:userData];
+                
+                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_userDatas];
+                [store setObject:data forKey:@"userDatas"];
                 //ここまで
                 
-                //プロフ画削除
-                [images removeObject:[image2 objectAtIndex:hoge]];
-                [[NSUserDefaults standardUserDefaults] setObject:images forKey:@"pimages"];
-                //ここまで
-                
-                [[NSUserDefaults standardUserDefaults] synchronize];
+                [store synchronize];
                 [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:hoge inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
             }
             

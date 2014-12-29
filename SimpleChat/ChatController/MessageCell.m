@@ -18,6 +18,7 @@
 
 #import "RNBlurModalView.h"
 #import "CustomAlertView.h"
+#import "UserData.h"
 
 // External Constants
 int const outlineSpace = 22; // 11 px on each side for border
@@ -300,14 +301,14 @@ static int minimumHeight = 30;
     NSString *intro;
     
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
-    NSArray *users = [NSArray arrayWithArray:[store objectForKey:@"users"]];
-    NSArray *intros = [NSArray arrayWithArray:[store objectForKey:@"intros"]];
-    NSArray *images = [NSArray arrayWithArray:[store objectForKey:@"pimages"]];
+    NSData *data = (NSData *)[store objectForKey:@"userDatas"];
+    NSArray *_userDatas = [NSArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:data]];
     
     if(indexPath.section){
-        profileImage = [UIImage imageWithData:[images objectAtIndex:indexPath.row]];
-        name = [users objectAtIndex:indexPath.row];
-        intro = [intros objectAtIndex:indexPath.row];
+        UserData *userData = [_userDatas objectAtIndex:indexPath.row];
+        profileImage = [UIImage imageWithData:userData.image];
+        name = userData.name;
+        intro = userData.intro;
     }else{
         profileImage = [UIImage imageWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"myimage"]];
         name = [[NSUserDefaults standardUserDefaults] objectForKey:@"myname"];

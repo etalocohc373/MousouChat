@@ -8,6 +8,8 @@
 
 #import "ProfileViewController.h"
 
+#import "UserData.h"
+
 @interface ProfileViewController ()
 
 @end
@@ -34,6 +36,9 @@
 -(void)back{
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
     
+    NSData *data = (NSData *)[store objectForKey:@"userDatas"];
+    _userDatas = [NSMutableArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:data]];
+    
     about.font = [UIFont fontWithName:@"Hiragino Kaku Gothic ProN W6" size:22];
     
     if([store boolForKey:@"editMain"]){
@@ -42,10 +47,11 @@
         about.text = [store objectForKey:@"aboutme"];
     }else{
         int editNum = (int)[store integerForKey:@"editUserNum"];
+        UserData *userData = [_userDatas objectAtIndex:editNum];
         
-        imgView.image = [[UIImage alloc] initWithData:[[store objectForKey:@"pimages"] objectAtIndex:editNum]];
-        name.text = [[store objectForKey:@"users"] objectAtIndex:editNum];
-        about.text = [[store objectForKey:@"intros"] objectAtIndex:editNum];
+        imgView.image = [[UIImage alloc] initWithData:userData.image];
+        name.text = userData.name;
+        about.text = userData.intro;
     }
     
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.227 green:0.114 blue:0.369 alpha:1.0];
@@ -58,9 +64,11 @@
     
     if([store boolForKey:@"editMain"]) [store setObject:[[NSData alloc] initWithData:UIImagePNGRepresentation(imgView.image)] forKey:@"myimage"];
     else{
-        NSMutableArray *images = [NSMutableArray arrayWithArray:[store objectForKey:@"pimages"]];
-        [images replaceObjectAtIndex:[store integerForKey:@"editUserNum"] withObject:[[NSData alloc] initWithData:UIImagePNGRepresentation(imgView.image)]];
-        [store setObject:images forKey:@"pimages"];
+        UserData *userData = [_userDatas objectAtIndex:[store integerForKey:@"editUserNum"]];
+        userData.image = [[NSData alloc] initWithData:UIImagePNGRepresentation(imgView.image)];
+        
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_userDatas];
+        [store setObject:data forKey:@"userDatas"];
     }
     
     [store synchronize];
