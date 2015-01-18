@@ -137,7 +137,14 @@ static int chatInputStartingHeight = 40;
     
     [self.view addSubview:_myCollectionView];
     
+<<<<<<< HEAD
     NSArray *array = [NSArray arrayWithArray:[store objectForKey:@"talks"]];
+=======
+    NSArray *array = [NSArray array];
+    array = [store objectForKey:@"talks"];
+    
+#warning ここなおして
+>>>>>>> b09b9dc4fcc934231f23d6941043c6bdedc33b90
     self.title = [array objectAtIndex:[store integerForKey:@"selecteduser"]];
     
     NSArray *_userDatas = [store objectForKey:@"userDatas"];
