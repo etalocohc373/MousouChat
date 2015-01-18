@@ -137,20 +137,16 @@ static int chatInputStartingHeight = 40;
     
     [self.view addSubview:_myCollectionView];
     
-<<<<<<< HEAD
+
     NSArray *array = [NSArray arrayWithArray:[store objectForKey:@"talks"]];
-=======
-    NSArray *array = [NSArray array];
-    array = [store objectForKey:@"talks"];
     
-#warning ここなおして
->>>>>>> b09b9dc4fcc934231f23d6941043c6bdedc33b90
-    self.title = [array objectAtIndex:[store integerForKey:@"selecteduser"]];
-    
-    NSArray *_userDatas = [store objectForKey:@"userDatas"];
+    NSData *data = (NSData *)[store objectForKey:@"userDatas"];
+    NSArray *_userDatas = [NSArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:data]];
     UserData *userData = [_userDatas objectAtIndex:[store integerForKey:@"selecteduser"]];
     
-    int index = (int)[array indexOfObject:userData.name];
+    talkIndex = (int)[array indexOfObject:userData.name];
+    
+    self.title = [array objectAtIndex:talkIndex];
     
     
     [store setObject:self.title forKey:@"controllerOpen"];
@@ -164,7 +160,7 @@ static int chatInputStartingHeight = 40;
     [_myCollectionView reloadData];
     
     //メッセージ読み込み
-    NSString *key = [NSString stringWithFormat:@"message%@", [[store objectForKey:@"talks"] objectAtIndex:[store integerForKey:@"selecteduser"]]];
+    NSString *key = [NSString stringWithFormat:@"message%@", [[store objectForKey:@"talks"] objectAtIndex:talkIndex]];
     
     if([store objectForKey:key]) _messagesArray = [[NSKeyedUnarchiver unarchiveObjectWithData:[store objectForKey:key]] mutableCopy];
     else _messagesArray = [NSMutableArray new];
@@ -271,10 +267,10 @@ static int chatInputStartingHeight = 40;
     
     /*NSArray *talks = [store objectForKey:@"talks"];
     
-    if(talks.count > 1 && [store integerForKey:@"selecteduser"]){
-        if(![[store objectForKey:@"controllerOpen"] isEqualToString:[talks objectAtIndex:(int)[store integerForKey:@"selecteduser"]]]){
+    if(talks.count > 1 && talkIndex){
+        if(![[store objectForKey:@"controllerOpen"] isEqualToString:[talks objectAtIndex:(int)talkIndex]]){
             alert = YES;
-            alertRow = (int)[store integerForKey:@"selecteduser"];
+            alertRow = (int)talkIndex;
         }
         //[tv moveRowAtIndexPath:[NSIndexPath indexPathForRow:alertRow inSection:0] toIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
         
@@ -386,7 +382,7 @@ static int chatInputStartingHeight = 40;
     [_messagesArray addObject:message];
     
     NSLog(@"sentMessage: %@", message);
-    NSString *key = [NSString stringWithFormat:@"message%@", [[store objectForKey:@"talks"] objectAtIndex:[store integerForKey:@"selecteduser"]]];
+    NSString *key = [NSString stringWithFormat:@"message%@", [[store objectForKey:@"talks"] objectAtIndex:talkIndex]];
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_messagesArray];
     
     [store setObject:data forKey:key];
@@ -626,7 +622,7 @@ static int chatInputStartingHeight = 40;
 
 /*- (void) setMessagesArray:(NSMutableArray *)messagesArray {
     //_messagesArray = messagesArray;
-    NSString *key = [NSString stringWithFormat:@"message%@", [[store objectForKey:@"talks"] objectAtIndex:[store integerForKey:@"selecteduser"]]];
+    NSString *key = [NSString stringWithFormat:@"message%@", [[store objectForKey:@"talks"] objectAtIndex:talkIndex]];
     _messagesArray = [store objectForKey:key];
     
     // Fix if we receive Null

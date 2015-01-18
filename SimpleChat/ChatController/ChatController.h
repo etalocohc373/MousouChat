@@ -43,6 +43,7 @@ FOUNDATION_EXPORT NSString * const kMessageTimestamp;
 
 @interface ChatController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, TopBarDelegate, ChatInputDelegate>{
     NSUserDefaults *store;
+    int talkIndex;
 }
 
 
