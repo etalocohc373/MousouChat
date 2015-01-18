@@ -19,6 +19,7 @@
 #import "WSCoachMarksView.h"
 #import "ViewController.h"
 #import "UserData.h"
+#import "KeywordData.h"
 
 #define SCREEN_HEIGHT [[UIScreen mainScreen] applicationFrame].size.height
 #define SCREEN_WIDTH [[UIScreen mainScreen] applicationFrame].size.width
@@ -189,23 +190,40 @@ static int chatInputStartingHeight = 40;
     NSString *userName = [talks objectAtIndex:[store integerForKey:@"selecteeduser"]];
     
     if([store objectForKey:@"unsentDic"]) dic = [store objectForKey:@"unsentDic"];
-    
+    NSLog(@"dic: %@", dic);
     if([dic objectForKey:userName]){
         NSMutableArray *mar = [dic objectForKey:userName];
         
         for (int i = 0; i < mar.count; i++){
             NSMutableDictionary *timeDic = [NSMutableDictionary dictionaryWithDictionary:[mar objectAtIndex:i]];
-#warning あああああああああああああ！！！！！！！！！！！！！！！！！！！！！
+#warning あああああああああああああ！！！！！！！！！１１１１！！！！！！！
             
             NSArray *allKeys = [NSArray arrayWithArray:[timeDic allKeys]];
             NSDate *sendDate = [timeDic objectForKey:[allKeys objectAtIndex:0]];
+            
             /*if([sendDate compare:[NSDate date]] != NSOrderedDescending){
                 [self henshin:[allKeys objectAtIndex:0]];
                 [timeDic removeObjectForKey:[allKeys objectAtIndex:0]];
             }*/
             
-            [self performSelector:@selector(henshin:) withObject:[allKeys objectAtIndex:i] afterDelay:[sendDate timeIntervalSinceDate:[NSDate date]]];
-            [timeDic removeObjectForKey:[allKeys objectAtIndex:i]];
+            [self performSelector:@selector(henshin:) withObject:[allKeys objectAtIndex:0] afterDelay:[sendDate timeIntervalSinceDate:[NSDate date]]];
+            
+            NSData *hogedata = (NSData *)[store objectForKey:@"keywordDatas"];
+            NSArray *_keywordDatas = [NSArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:hogedata]];
+            
+            BOOL doRepeat = NO;
+            
+            for (int i = 0; i < _keywordDatas.count; i++) {
+                KeywordData *keywordData = [_keywordDatas objectAtIndex:i];
+                
+                if([keywordData.reply isEqualToString:[allKeys objectAtIndex:0]] && [keywordData.sendDate compare:sendDate] == NSOrderedSame) doRepeat = keywordData.doRepeat;
+            }
+            
+            NSDate *dateClone = [NSDate dateWithTimeInterval:86400 sinceDate:[timeDic objectForKey:[allKeys objectAtIndex:0]]];
+            [timeDic removeObjectForKey:[allKeys objectAtIndex:0]];
+            
+            NSLog(@"keywrdata: %@", _keywordDatas);
+            if(doRepeat) [timeDic setObject:dateClone forKey:[allKeys objectAtIndex:0]];
             
             [mar replaceObjectAtIndex:i withObject:timeDic];
             [dic setObject:mar forKey:userName];
