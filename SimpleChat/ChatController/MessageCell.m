@@ -143,7 +143,7 @@ static int minimumHeight = 30;
     //NSLog(@"%@", _message[kMessageRuntimeSentBy]);
     if([_message[kMessageRuntimeSentBy] isEqualToString:@"0"]) {
         
-        if(!_readLabel.frame.size.width) _readLabel.frame = CGRectMake(_timeLabel.frame.origin.x, 0, 30, _timeLabel.frame.size.height);
+        if(!_readLabel.frame.size.width) _readLabel.frame = CGRectMake(_timeLabel.frame.origin.x, 0, 40, _timeLabel.frame.size.height);
         
         //[self.contentView addSubview:_readLabel];
         _readLabel.hidden = NO;

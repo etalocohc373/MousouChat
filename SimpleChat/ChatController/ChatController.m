@@ -17,6 +17,7 @@
 #import "MessageCell.h"
 #import "MyMacros.h"
 #import "WSCoachMarksView.h"
+#import "ViewController.h"
 
 #define SCREEN_HEIGHT [[UIScreen mainScreen] applicationFrame].size.height
 #define SCREEN_WIDTH [[UIScreen mainScreen] applicationFrame].size.width
@@ -174,6 +175,36 @@ static int chatInputStartingHeight = 40;
      */
     
     if([self isFirstRun]) [self activateTutorial];
+    
+    NSArray *talks = [store objectForKey:@"talks"];
+    
+    NSMutableDictionary *dic = [NSMutableDictionary new];
+    NSString *userName = [talks objectAtIndex:[store integerForKey:@"selecteeduser"]];
+    
+    if([store objectForKey:@"unsentDic"]) dic = [store objectForKey:@"unsentDic"];
+    
+    if([dic objectForKey:userName]){
+        NSMutableArray *mar = [dic objectForKey:userName];
+        
+        for (int i = 0; i < mar.count; i++){
+            NSMutableDictionary *timeDic = [NSMutableDictionary dictionaryWithDictionary:[mar objectAtIndex:i]];
+            
+            
+            NSArray *allKeys = [NSArray arrayWithArray:[timeDic allKeys]];
+            NSDate *sendDate = [timeDic objectForKey:[allKeys objectAtIndex:0]];
+            
+            if([sendDate compare:[NSDate date]] != NSOrderedDescending){
+                [self henshin:[allKeys objectAtIndex:0]];
+                [timeDic removeObjectForKey:[allKeys objectAtIndex:0]];
+            }
+            
+            [mar replaceObjectAtIndex:i withObject:timeDic];
+            [dic setObject:mar forKey:userName];
+        }
+        
+        [store setObject:dic forKey:@"unsentDic"];
+        [store synchronize];
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -186,6 +217,68 @@ static int chatInputStartingHeight = 40;
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)henshin:(NSString *)reply{//返信させる
+    NSString *str = reply;
+    
+    [store setBool:YES forKey:@"henshin"];
+    [store synchronize];
+    
+    NSMutableDictionary * newMessageOb = [NSMutableDictionary new];
+    newMessageOb[kMessageContent] = str;
+    newMessageOb[kMessageTimestamp] = [NSString stringWithFormat:@"%f",[[NSDate new] timeIntervalSince1970] * 1000];;
+    
+    newMessageOb[@"sentByUserId"] = @"currentUserId";
+    
+    newMessageOb[kMessageRuntimeSentBy] = @"1";
+    
+    //現在日時の取得
+    NSDate *now = [NSDate date];
+    
+    newMessageOb[@"daySent"] = now;
+    //ここまで
+    
+    NSMutableDictionary * attributes = [NSMutableDictionary new];
+    attributes[NSFontAttributeName] = [UIFont systemFontOfSize:15.0f];
+    attributes[NSStrokeColorAttributeName] = [UIColor darkTextColor];
+    
+    NSAttributedString * attrStr = [[NSAttributedString alloc] initWithString:[newMessageOb objectForKey:kMessageContent]
+                                                                   attributes:attributes];
+    
+    // Here's the maximum width we'll allow our outline to be // 260 so it's offset
+    
+    CGRect rect = [attrStr boundingRectWithSize:CGSizeMake(260 - 22, 100000)
+                                        options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                                        context:nil];
+    
+    newMessageOb[kMessageSize] = [NSValue valueWithCGSize:rect.size];
+    
+    [self addNewMessage:newMessageOb];
+    
+    /*NSArray *talks = [store objectForKey:@"talks"];
+    
+    if(talks.count > 1 && [store integerForKey:@"selecteduser"]){
+        if(![[store objectForKey:@"controllerOpen"] isEqualToString:[talks objectAtIndex:(int)[store integerForKey:@"selecteduser"]]]){
+            alert = YES;
+            alertRow = (int)[store integerForKey:@"selecteduser"];
+        }
+        //[tv moveRowAtIndexPath:[NSIndexPath indexPathForRow:alertRow inSection:0] toIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        
+        NSString *hoge = [talks objectAtIndex:0];
+        [talks replaceObjectAtIndex:0 withObject:[talks objectAtIndex:alertRow]];
+        [talks removeObjectAtIndex:alertRow];
+        [talks insertObject:hoge atIndex:1];
+        [store setObject:talks forKey:@"talks"];
+        
+        [notReadRows addObject:[talks objectAtIndex:0]];
+        [store setObject:notReadRows forKey:@"notReadRows"];
+        
+        [store synchronize];
+        
+        [tv reloadData];
+    }
+    //}*/
 }
 
 #pragma mark CLEAN UP
@@ -274,7 +367,7 @@ static int chatInputStartingHeight = 40;
 
 - (void) addNewMessage:(NSDictionary *)message {
     
-    if (_messagesArray == nil)  _messagesArray = [NSMutableArray new];
+    if (!_messagesArray)  _messagesArray = [NSMutableArray new];
     
     // preload message into array;
     [_messagesArray addObject:message];
@@ -292,9 +385,9 @@ static int chatInputStartingHeight = 40;
     //NSDictionary *dic = [[NSDictionary alloc] initWithDictionary:[hogeArray objectAtIndex:hogeArray.count - 1]];
     
     // add extra cell, and load it into view;
-    [_myCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:_messagesArray.count -1 inSection:0]]];
-    
     [_myCollectionView reloadData];
+    //[_myCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:_messagesArray.count - 1 inSection:0]]];
+    
     
     // show us the message
     [self scrollToBottom];

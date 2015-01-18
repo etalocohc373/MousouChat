@@ -13,6 +13,7 @@
 @synthesize keyword = _keyword;
 @synthesize reply = _reply;
 @synthesize sendDate = _sendDate;
+@synthesize setTime = _setTime;
 @synthesize doRepeat = _doRepeat;
 
 - (id)initWithCoder:(NSCoder *)coder {
@@ -21,6 +22,7 @@
         _keyword = [coder decodeObjectForKey:@"keyword"];
         _reply = [coder decodeObjectForKey:@"reply"];
         _sendDate = [coder decodeObjectForKey:@"sendDate"];
+        _setTime = [coder decodeBoolForKey:@"setTime"];
         _doRepeat = [coder decodeBoolForKey:@"doRepeat"];
     }
     return self;
@@ -30,6 +32,7 @@
     [coder encodeObject:_keyword forKey:@"keyword"];
     [coder encodeObject:_reply forKey:@"reply"];
     [coder encodeObject:_sendDate forKey:@"sendDate"];
+    [coder encodeBool:_setTime forKey:@"setTime"];
     [coder encodeBool:_doRepeat forKey:@"doRepeat"];
 }
 
@@ -38,6 +41,7 @@
     self.keyword = nil;
     self.reply = nil;
     self.sendDate = nil;
+    self.setTime = nil;
     self.doRepeat = nil;
 }
 

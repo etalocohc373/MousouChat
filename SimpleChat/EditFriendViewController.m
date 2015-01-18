@@ -148,9 +148,6 @@
                     
                     NSString *key = [NSString stringWithFormat:@"keywords%@", userData.name];
                     [store setObject:nil forKey:key];
-                    
-                    key = [NSString stringWithFormat:@"replies%@", userData.name];
-                    [store setObject:nil forKey:key];
                 }//ここまで
                 
                 //ユーザ削除

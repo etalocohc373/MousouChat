@@ -13,7 +13,6 @@
 
 #import "WSCoachMarksView.h"
 #import "UserData.h"
-#import "KeywordData.h"
 
 @interface FriendsViewController ()
 
@@ -235,6 +234,7 @@
 {
     UserData *userData = [_userDatas objectAtIndex:deletepath.row];
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
+    NSData *data;
     
     switch (buttonIndex) {
         case 1:
@@ -243,9 +243,6 @@
                 [store setObject:talks forKey:@"talks"];
                 
                 NSString *key = [NSString stringWithFormat:@"keywords%@", userData.name];
-                [store setObject:nil forKey:key];
-                
-                key = [NSString stringWithFormat:@"replies%@", userData.name];
                 [store setObject:nil forKey:key];
             }
             
@@ -470,12 +467,12 @@
     NSArray *coachMarks = @[
                             @{
                                 @"rect": [NSValue valueWithCGRect:(CGRect){{276, 22},{40, 40}}],
-                                @"caption": @"タップしてフレンドを\n追加"
-                                },
+                                @"caption": @"タップして友だちを\n追加"
+                                }/*,
                             @{
                                 @"rect": [NSValue valueWithCGRect:(CGRect){{0.0f, 87.0f},{320.0f, 50.0f}}],
                                 @"caption": @"自分のプロフィールを\n編集"
-                                }
+                                }*/
                             ];
     WSCoachMarksView *coachMarksView = [[WSCoachMarksView alloc] initWithFrame:self.tabBarController.view.bounds coachMarks:coachMarks];
     [self.tabBarController.view addSubview:coachMarksView];

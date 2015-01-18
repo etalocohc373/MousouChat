@@ -13,6 +13,7 @@
 @property (nonatomic) NSString *keyword;
 @property (nonatomic) NSString *reply;
 @property (nonatomic) NSDate *sendDate;
+@property (nonatomic) BOOL setTime;
 @property (nonatomic) BOOL doRepeat;
 
 - (id)initWithCoder:(NSCoder *)coder;

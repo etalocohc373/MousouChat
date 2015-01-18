@@ -7,6 +7,7 @@
 //
 
 #import "TimeSpecViewController.h"
+#import "KeywordData.h"
 
 @interface TimeSpecViewController ()
 
@@ -17,6 +18,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSDate *d = [NSDate dateWithTimeIntervalSinceNow:60 * 5];
+    [datePicker setDate:d animated:NO];
     [self dateChanged];
 }
 
@@ -27,7 +30,45 @@
 
 -(IBAction)dateChanged{
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
-    //[store setObject:<#(id)#> forKey:@"timeSpec"];
+   /*
+    if([store boolForKey:@"editKeyword"]){
+        NSArray *talks = [store objectForKey:@"talks"];
+        NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
+        NSData *data = (NSData *)[store objectForKey:key];
+        NSMutableArray *_keywordDatas = [[NSKeyedUnarchiver unarchiveObjectWithData:data] mutableCopy];
+        
+        KeywordData *keywordData = [_keywordDatas objectAtIndex:[store integerForKey:@"selecteduser"]];
+        keywordData.sendDate = datePicker.date;
+        data = [NSKeyedArchiver archivedDataWithRootObject:_keywordDatas];
+        [store setObject:data forKey:key];
+    }else{*/
+    
+    if([datePicker.date compare:[NSDate date]] != NSOrderedDescending){
+        [self showError];
+        
+        NSDate *d = [NSDate dateWithTimeIntervalSinceNow:60 * 5];
+        [datePicker setDate:d animated:YES];
+    }
+    
+    [store setObject:datePicker.date forKey:@"keywordDate"];
+    [store synchronize];
+}
+
+-(IBAction)repeatChanged{
+    NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
+    /*if([store boolForKey:@"editKeyword"]){
+        NSArray *talks = [store objectForKey:@"talks"];
+        NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
+        NSData *data = (NSData *)[store objectForKey:key];
+        NSMutableArray *_keywordDatas = [[NSKeyedUnarchiver unarchiveObjectWithData:data] mutableCopy];
+        
+        KeywordData *keywordData = [_keywordDatas objectAtIndex:[store integerForKey:@"selecteduser"]];
+        keywordData.doRepeat = doRepeat.on;
+        data = [NSKeyedArchiver archivedDataWithRootObject:_keywordDatas];
+        [store setObject:data forKey:key];
+    }else{*/
+    [store setBool:doRepeat.on forKey:@"keywordDoRepeat"];
+    [store synchronize];
 }
 
 -(void)showError{

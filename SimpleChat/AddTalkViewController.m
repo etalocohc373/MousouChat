@@ -38,7 +38,7 @@
     
     talks = [NSArray arrayWithArray:[store objectForKey:@"talks"]];
     
-    [self createNavTitle:@"　友だちを選択"];
+    [self createNavTitle:@"　　　友だちを選択"];
 }
 
 -(void)viewWillAppear:(BOOL)animated{

@@ -12,6 +12,7 @@
 #import "KeywordsCell.h"
 #import "WSCoachMarksView.h"
 #import "UserData.h"
+#import "KeywordData.h"
 
 @interface KeywordsCellData:NSObject {
     BOOL _isChecked;
@@ -85,20 +86,16 @@
     
     talks = [NSArray arrayWithArray:[store objectForKey:@"talks"]];
     
-    keyword = [NSMutableArray array];
+    _keywordDatas = [NSMutableArray array];
     
-    NSArray *keywordmodoki = [NSArray array];
     NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
-    keywordmodoki = [store objectForKey:key];
-    if(keywordmodoki) keyword = [keywordmodoki mutableCopy];
-    
-    reply = [NSMutableArray array];
-    key = [NSString stringWithFormat:@"replies%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
-    keywordmodoki = [store objectForKey:key];
-    if(keywordmodoki) reply = [keywordmodoki mutableCopy];
+    if([store objectForKey:key]){
+        NSData *data = (NSData *)[store objectForKey:key];
+        _keywordDatas = [[NSKeyedUnarchiver unarchiveObjectWithData:data] mutableCopy];
+    }
     
     NSMutableArray *tmpArr = [[NSMutableArray alloc] init];
-    for (int i = 0; i < keyword.count; i++){
+    for (int i = 0; i < _keywordDatas.count; i++){
         KeywordsCellData *cellData = [[KeywordsCellData alloc] init];
         cellData.isChecked = NO;
         [tmpArr addObject:cellData];
@@ -111,10 +108,13 @@
     
     UINib *nib = [UINib nibWithNibName:@"CustomToolBar" bundle:nil];
     customBar = [[nib instantiateWithOwner:nil options:nil] objectAtIndex:0];
-    //customBar = [[CustomToolBar alloc] initWithFrame:CGRectMake(0, 500, 320, 44)];
     customBar.frame = CGRectMake(0, 568, 320, 44);
     customBar.delegate = (id<CustomToolBarDelegate>)self;
     [self.view addSubview:customBar];
+    
+    [store setObject:nil forKey:@"keywordDate"];
+    [store setBool:NO forKey:@"keywordDoRepeat"];
+    [store synchronize];
     
     if([self isFirstRun]) [self activateTutorial];
 }
@@ -135,23 +135,27 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     //return _objects.count;
-    return [keyword count];
+    return _keywordDatas.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    //UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
     KeywordsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    
     if(!cell) cell = [[KeywordsCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
     
     cell.delegate = (id<KeywordsCellDelegate>)self;
     
-    cell.wordLabel.text = [NSString stringWithFormat:@"%@", [reply objectAtIndex:indexPath.row]];
+    KeywordData *keywordData = [_keywordDatas objectAtIndex:indexPath.row];
     
-    //NSDate *object = _objects[indexPath.row];
-    cell.keywordLabel.text = [NSString stringWithFormat:@"%@", [keyword objectAtIndex:indexPath.row]];//[object description];
+    cell.wordLabel.text = keywordData.reply;
+    
+    cell.keywordLabel.text = keywordData.keyword;
+    if(keywordData.setTime){
+        NSDateFormatter *df = [[NSDateFormatter alloc] init];
+        df.dateFormat = @"MM-dd HH:mm";
+        
+        cell.keywordLabel.text = [df stringFromDate:keywordData.sendDate];
+    }
     
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(50, 0, 270, 50)];
     imgView.image = [UIImage imageNamed:@"fukidashi2.png"];
@@ -174,7 +178,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [_objects removeObjectAtIndex:indexPath.row];
         
-        [keyword removeObjectAtIndex:indexPath.row];
+        [_keywordDatas removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
@@ -182,11 +186,10 @@
     
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
     NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
-    [store setObject:keyword forKey:key];
     
-    key = [NSString stringWithFormat:@"replies%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
-    [store setObject:reply forKey:key];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_keywordDatas];
     
+    [store setObject:data forKey:key];
     [store synchronize];
 }
 
@@ -196,7 +199,7 @@
     return YES;
 }
 
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
+/*- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
 {
     int from = (int)sourceIndexPath.row;
     int to = (int)destinationIndexPath.row;
@@ -216,7 +219,7 @@
     [[NSUserDefaults standardUserDefaults] setObject:reply forKey:key];
     
     [[NSUserDefaults standardUserDefaults] synchronize];
-}
+}*/
 
 - (void)cell:(KeywordsCell *)cell checkboxTappedEvent:(UITouch *)touch
 {
@@ -311,7 +314,7 @@
 
 - (BOOL)isFirstRun
 {
-    if(keyword.count){
+    if(_keywordDatas.count){
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         
         NSMutableArray *hoge = [NSMutableArray arrayWithArray:[userDefaults objectForKey:@"didRunArray"]];
@@ -410,7 +413,9 @@
     NSArray *_userDatas = [NSArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:data]];
     UserData *userData = [_userDatas objectAtIndex:[store integerForKey:@"selecteduser"]];
     
-    NSString *str = [NSString stringWithFormat:@"自分「%@」 %@「%@」", [keyword objectAtIndex:indexPath.row], userData.name, [reply objectAtIndex:indexPath.row]];
+    KeywordData *keywordData = [_keywordDatas objectAtIndex:indexPath.row];
+    
+    NSString *str = [NSString stringWithFormat:@"自分「%@」 %@「%@」", keywordData.keyword, userData.name, keywordData.reply];
     
     switch (buttonIndex) {
         case 0:

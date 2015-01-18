@@ -30,8 +30,7 @@
     
     NSArray *_userDatas;
     
-    NSArray *keyword;
-    NSArray *reply;
+    NSArray *_keywordDatas;
     
     NSUserDefaults *store;
 }
@@ -42,5 +41,7 @@
  To set the background
  */
 @property (strong, nonatomic) UIImageView * backgroundImg;
+
+-(void)henshin:(NSString *)reply;
 
 @end

@@ -13,6 +13,7 @@
 #import "TalkTableViewCell.h"
 #import "WSCoachMarksView.h"
 #import "UserData.h"
+#import "KeywordData.h"
 
 #define SCREEN_HEIGHT [UIScreen mainScreen].applicationFrame.size.height
 
@@ -66,6 +67,7 @@
         notReadRows = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"notReadRows"]];
     
     tv.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
 }
 
 /*- (void) handleTap:(UITapGestureRecognizer *)tap {
@@ -166,25 +168,27 @@
     NSString *str = message[@"content"];
     
     NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
-    keyword = [NSArray new];
-    if([store objectForKey:key]) keyword = [store objectForKey:key];
-    
-    key = [NSString stringWithFormat:@"replies%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
-    reply = [NSArray new];
-    if([store objectForKey:key]) reply = [store objectForKey:key];
+    _keywordDatas = [NSArray array];
+    if([store objectForKey:key]){
+        NSData *data = (NSData *)[store objectForKey:key];
+        _keywordDatas = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    }
     
     //キーワード判定
-    if([keyword count] != 0){
-        for (int i = 0; i < [keyword count]; i++) {
-            NSRange range = [str rangeOfString:[keyword objectAtIndex:i]];
+    if(_keywordDatas.count != 0){
+        for (int i = 0; i < _keywordDatas.count; i++) {
+            KeywordData *keywordData = [_keywordDatas objectAtIndex:i];
+            
+            NSRange range = [str rangeOfString:keywordData.keyword];
             if (range.location != NSNotFound) {
                 float delay = arc4random()% 5 + 5;
                 
-                [self performSelector:@selector(henshin) withObject:nil afterDelay:delay + kidokuDelay];
+                NSString *reply = ((KeywordData *)[_keywordDatas objectAtIndex:i]).reply;
+                [self performSelector:@selector(henshin:) withObject:reply afterDelay:delay + kidokuDelay];
                 
                 hantei = i;
                 
-                NSString *str = [NSString stringWithFormat:@"%@: %@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]], [reply objectAtIndex:hantei]];
+                NSString *str = [NSString stringWithFormat:@"%@: %@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]], keywordData.reply];
                 
                 [self localNotify:str withDelay:delay + [store floatForKey:@"kidokuDelay"]];
                 
@@ -194,8 +198,8 @@
     }//ここまで
 }
 
--(void)henshin{//返信させる
-    NSString *str = [reply objectAtIndex:hantei];
+-(void)henshin:(NSString *)reply{//返信させる
+    NSString *str = reply;
     
     [store setBool:YES forKey:@"henshin"];
     [store synchronize];
@@ -231,7 +235,7 @@
     
     [_chatController addNewMessage:newMessageOb];
     
-    if(talks.count > 1 && [store integerForKey:@"selecteduser"]){
+    /*if(talks.count > 1 && [store integerForKey:@"selecteduser"]){
         if(![[store objectForKey:@"controllerOpen"] isEqualToString:[talks objectAtIndex:(int)[store integerForKey:@"selecteduser"]]]){
             alert = YES;
             alertRow = (int)[store integerForKey:@"selecteduser"];
@@ -251,7 +255,7 @@
         
         [tv reloadData];
     }
-    //}
+    //}*/
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -373,9 +377,6 @@
         [store setObject:talks forKey:@"talks"];
         
         NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:indexPath.row]];
-        [store setObject:nil forKey:key];
-        
-        key = [NSString stringWithFormat:@"replies%@", [talks objectAtIndex:indexPath.row]];
         [store setObject:nil forKey:key];
         
         [store synchronize];

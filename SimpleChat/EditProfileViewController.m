@@ -99,17 +99,6 @@
                     
                     key = [NSString stringWithFormat:@"keywords%@", tf.text];
                     [store setObject:hogeArr forKey:key];
-                    
-                    
-                    key = [NSString stringWithFormat:@"replies%@", userData.name];
-                    hogeArr = [store objectForKey:key];
-                    [store setObject:nil forKey:key];
-                    
-                    [talks replaceObjectAtIndex:[talks indexOfObject:userData.name] withObject:tf.text];
-                    [store setObject:talks forKey:@"talks"];
-                    
-                    key = [NSString stringWithFormat:@"replies%@", tf.text];
-                    [store setObject:hogeArr forKey:key];
                 }
                 
                 userData.name = tf.text;

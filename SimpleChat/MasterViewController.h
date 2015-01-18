@@ -16,8 +16,7 @@
     
     UIBarButtonItem *back;
     
-    NSMutableArray *keyword;
-    NSMutableArray *reply;
+    NSMutableArray *_keywordDatas;
     NSArray *talks;
     NSArray *_cellDataArray;
     

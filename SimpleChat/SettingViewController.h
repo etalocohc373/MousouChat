@@ -15,9 +15,9 @@
     IBOutlet UITextField *tf2;
     IBOutlet UIBarButtonItem *done;
     IBOutlet UISwitch *timeSpec;
+    IBOutlet UILabel *timeLabel;
     
-    NSMutableArray *keyword;
-    NSMutableArray *reply;
+    NSMutableArray *_keywordDatas;
     NSArray *talks;
 }
 
