@@ -18,6 +18,7 @@
 #import "MyMacros.h"
 #import "WSCoachMarksView.h"
 #import "ViewController.h"
+#import "UserData.h"
 
 #define SCREEN_HEIGHT [[UIScreen mainScreen] applicationFrame].size.height
 #define SCREEN_WIDTH [[UIScreen mainScreen] applicationFrame].size.width
@@ -136,9 +137,14 @@ static int chatInputStartingHeight = 40;
     
     [self.view addSubview:_myCollectionView];
     
-    NSArray *array = [NSArray array];
-    array = [store objectForKey:@"talks"];
+    NSArray *array = [NSArray arrayWithArray:[store objectForKey:@"talks"]];
     self.title = [array objectAtIndex:[store integerForKey:@"selecteduser"]];
+    
+    NSArray *_userDatas = [store objectForKey:@"userDatas"];
+    UserData *userData = [_userDatas objectAtIndex:[store integerForKey:@"selecteduser"]];
+    
+    int index = (int)[array indexOfObject:userData.name];
+    
     
     [store setObject:self.title forKey:@"controllerOpen"];
     [store synchronize];
@@ -149,8 +155,6 @@ static int chatInputStartingHeight = 40;
     _messagesArray = [NSMutableArray array];
     
     [_myCollectionView reloadData];
-    
-    //[_TopBar setTitle];
     
     //メッセージ読み込み
     NSString *key = [NSString stringWithFormat:@"message%@", [[store objectForKey:@"talks"] objectAtIndex:[store integerForKey:@"selecteduser"]]];
@@ -188,15 +192,17 @@ static int chatInputStartingHeight = 40;
         
         for (int i = 0; i < mar.count; i++){
             NSMutableDictionary *timeDic = [NSMutableDictionary dictionaryWithDictionary:[mar objectAtIndex:i]];
-            
+#warning あああああああああああああ！！！！！！！！！！！！！！！！！！！！！
             
             NSArray *allKeys = [NSArray arrayWithArray:[timeDic allKeys]];
             NSDate *sendDate = [timeDic objectForKey:[allKeys objectAtIndex:0]];
-            
-            if([sendDate compare:[NSDate date]] != NSOrderedDescending){
+            /*if([sendDate compare:[NSDate date]] != NSOrderedDescending){
                 [self henshin:[allKeys objectAtIndex:0]];
                 [timeDic removeObjectForKey:[allKeys objectAtIndex:0]];
-            }
+            }*/
+            
+            [self performSelector:@selector(henshin:) withObject:[allKeys objectAtIndex:i] afterDelay:[sendDate timeIntervalSinceDate:[NSDate date]]];
+            [timeDic removeObjectForKey:[allKeys objectAtIndex:i]];
             
             [mar replaceObjectAtIndex:i withObject:timeDic];
             [dic setObject:mar forKey:userName];
