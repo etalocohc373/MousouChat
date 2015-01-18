@@ -138,6 +138,8 @@ static int chatInputStartingHeight = 40;
     
     NSArray *array = [NSArray array];
     array = [store objectForKey:@"talks"];
+    
+#warning ここなおして
     self.title = [array objectAtIndex:[store integerForKey:@"selecteduser"]];
     
     [store setObject:self.title forKey:@"controllerOpen"];
