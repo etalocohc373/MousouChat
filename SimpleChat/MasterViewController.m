@@ -7,6 +7,7 @@
 //
 
 #import "MasterViewController.h"
+#import "ViewController.h"
 #import "NavigationBarTextColor.h"
 #import <Social/Social.h>
 #import "SettingViewController.h"
@@ -179,9 +180,16 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [_objects removeObjectAtIndex:indexPath.row];
+        KeywordData *keywordData = [_keywordDatas objectAtIndex:indexPath.row];
+        if(keywordData.setTime){
+            ViewController *hoge = [[ViewController alloc] init];
+            [NSObject cancelPreviousPerformRequestsWithTarget:hoge selector:@selector(henshin:) object:nil];
+            NSLog(@"%@", hoge);
+        }
         
+        [_objects removeObjectAtIndex:indexPath.row];
         [_keywordDatas removeObjectAtIndex:indexPath.row];
+        
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.

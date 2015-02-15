@@ -8,6 +8,7 @@
 
 #import "SettingViewController.h"
 #import "TimeSpecViewController.h"
+#import "ChatController.h"
 #import "NavigationBarTextColor.h"
 #import "KeywordData.h"
 
@@ -94,6 +95,7 @@
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
     df.dateFormat = @"MM-dd HH:mm";
     
+    
     if(keywordData.sendDate) timeLabel.text = [df stringFromDate:keywordData.sendDate];
     else if([store objectForKey:@"keywordDate"]) timeLabel.text = [df stringFromDate:[store objectForKey:@"keywordDate"]];
     else timeLabel.text = @"";
@@ -152,7 +154,6 @@
     }
     
     if(edit){
-#warning TIME!!!
         if(chofuku && ![tf.text isEqualToString:((KeywordData *)[_keywordDatas objectAtIndex:[store integerForKey:@"selectedrow"]]).keyword]){
             NSLog(@"keyworddata: %@", [_keywordDatas objectAtIndex:[store integerForKey:@"selectedrow"]]);
             [self showError];
@@ -160,6 +161,10 @@
             int editRow = (int)[store integerForKey:@"selectedrow"];
             
             KeywordData *keywordData = [_keywordDatas objectAtIndex:editRow];
+            
+            BOOL setTime = keywordData.setTime;
+            NSDate *sendDate = keywordData.sendDate;
+            
             keywordData.keyword = tf.text;
             keywordData.reply = tf2.text;
             keywordData.sendDate = [store objectForKey:@"keywordDate"];
@@ -173,6 +178,20 @@
             
             [store setBool:NO forKey:@"editKeyword"];
             [store synchronize];
+            
+            ChatController *hoge;
+            if(setTime && !timeSpec.on){
+                [ChatController cancelPreviousPerformRequestsWithTarget:hoge selector:@selector(henshin:) object:nil];
+            }
+            
+            if(!setTime && timeSpec.on){
+                [self setDicForKeywordData:keywordData];
+            }
+            
+            if(sendDate != keywordData.sendDate && timeSpec.on){
+                [ChatController cancelPreviousPerformRequestsWithTarget:hoge selector:@selector(henshin:) object:nil];
+                [self setDicForKeywordData:keywordData];
+            }
             
             [self back];
         }
@@ -196,34 +215,7 @@
             NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_keywordDatas];
             [store setObject:data forKey:key];
             
-            
-            NSString *userName = [talks objectAtIndex:[store integerForKey:@"selecteduser"]];
-            
-            NSMutableDictionary *dic = [NSMutableDictionary new];
-            if([store objectForKey:@"unsentDic"]) dic = [store objectForKey:@"unsentDic"];
-            
-            NSMutableArray *mar = [NSMutableArray array];
-            if([dic objectForKey:userName]) mar = [[dic objectForKey:userName] mutableCopy];
-            
-            NSString *str = [NSString stringWithFormat:@"%@: %@", userName, keywordData.reply];
-            
-            if(keywordData.setTime){
-                [self localNotify:str withDelay:[keywordData.sendDate timeIntervalSinceDate:[NSDate date]]];
-                
-                NSDictionary *timeDic = [NSDictionary dictionaryWithObject:keywordData.sendDate forKey:keywordData.reply];
-                [mar addObject:timeDic];
-                
-                [dic setObject:mar forKey:userName];
-                [store setObject:dic forKey:@"unsentDic"];
-            }else if([dic objectForKey:userName]){
-                [self cancelNotification:str];
-                
-                NSDictionary *timeDic = [NSDictionary dictionaryWithObject:keywordData.sendDate forKey:keywordData.reply];
-                [mar removeObjectAtIndex:[mar indexOfObject:timeDic]];
-                
-                [dic setObject:mar forKey:userName];
-                [store setObject:dic forKey:@"unsentDic"];
-            }
+            [self setDicForKeywordData:keywordData];
             
             [store synchronize];
             
@@ -235,6 +227,40 @@
     
     [store removeObjectForKey:@"keywordDate"];
     [store removeObjectForKey:@"keywordDoRepeat"];
+    [store synchronize];
+}
+
+-(void)setDicForKeywordData:(KeywordData *)keywordData{
+    NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
+    
+    NSString *userName = [talks objectAtIndex:[store integerForKey:@"selecteduser"]];
+    
+    NSMutableDictionary *dic = [NSMutableDictionary new];
+    if([store objectForKey:@"unsentDic"]) dic = [store objectForKey:@"unsentDic"];
+    
+    NSMutableArray *mar = [NSMutableArray array];
+    if([dic objectForKey:userName]) mar = [[dic objectForKey:userName] mutableCopy];
+    
+    NSString *str = [NSString stringWithFormat:@"%@: %@", userName, keywordData.reply];
+    
+    if(keywordData.setTime){
+        [self localNotify:str withDelay:[keywordData.sendDate timeIntervalSinceDate:[NSDate date]]];
+        
+        NSDictionary *timeDic = [NSDictionary dictionaryWithObject:keywordData.sendDate forKey:keywordData.reply];
+        [mar addObject:timeDic];
+        
+        [dic setObject:mar forKey:userName];
+        [store setObject:dic forKey:@"unsentDic"];
+    }else if([dic objectForKey:userName]){
+        [self cancelNotification:str];
+        
+        NSDictionary *timeDic = [NSDictionary dictionaryWithObject:keywordData.sendDate forKey:keywordData.reply];
+        [mar removeObjectAtIndex:[mar indexOfObject:timeDic]];
+        
+        [dic setObject:mar forKey:userName];
+        [store setObject:dic forKey:@"unsentDic"];
+    }
+    
     [store synchronize];
 }
 

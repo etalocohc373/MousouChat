@@ -29,6 +29,8 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     [self back];
+    
+    NSLog(@"%@", self);
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -200,7 +202,7 @@
 
 -(void)henshin:(NSString *)reply{//返信させる
     NSString *str = reply;
-    
+
     [store setBool:YES forKey:@"henshin"];
     [store synchronize];
     
