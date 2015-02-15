@@ -11,6 +11,27 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="削除" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8ta-m4-BnU">
+                    <rect key="frame" x="9" y="27" width="42" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="編集" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dne-vM-vnj">
+                    <rect key="frame" x="94" y="27" width="42" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="共有" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fhb-tY-kxF">
+                    <rect key="frame" x="181" y="27" width="42" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="cancel.png" id="0Pn-6x-a1L">
                     <rect key="frame" x="271" y="4" width="36" height="36"/>
                     <autoresizingMask key="autoresizingMask"/>
@@ -26,11 +47,11 @@
                     </connections>
                 </button>
                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="trash.png" id="ykD-Sr-V3c">
-                    <rect key="frame" x="14" y="2" width="34" height="40"/>
+                    <rect key="frame" x="14" y="-2" width="34" height="40"/>
                     <autoresizingMask key="autoresizingMask"/>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6dn-4L-nIB">
-                    <rect key="frame" x="0.0" y="0.0" width="63" height="44"/>
+                    <rect key="frame" x="0.0" y="-2" width="63" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -39,20 +60,28 @@
                         <action selector="deleteBtnTapped" destination="Zky-mL-ytl" eventType="touchUpInside" id="tl2-6q-hOV"/>
                     </connections>
                 </button>
+                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="editBtn.png" id="y0J-hd-mgX">
+                    <rect key="frame" x="102" y="7" width="27" height="25"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="6mb-lh-Jqk">
-                    <rect key="frame" x="99" y="7" width="32" height="30"/>
+                    <rect key="frame" x="87" y="0.0" width="56" height="48"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" image="editBtn.png">
+                    <state key="normal">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
                         <action selector="editBtnTapped" destination="Zky-mL-ytl" eventType="touchUpInside" id="lAh-fc-oCt"/>
                     </connections>
                 </button>
+                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="actionBtn.png" id="5Jz-nn-Sfd">
+                    <rect key="frame" x="190" y="9" width="24" height="22"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4Yi-Vb-PeW">
-                    <rect key="frame" x="171" y="10" width="62" height="28"/>
+                    <rect key="frame" x="171" y="0.0" width="62" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" image="actionBtn.png">
+                    <state key="normal">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -73,10 +102,10 @@
         </view>
     </objects>
     <resources>
-        <image name="actionBtn.png" width="27" height="25"/>
-        <image name="cancel.png" width="25" height="25"/>
-        <image name="editBtn.png" width="30" height="28"/>
-        <image name="trash.png" width="25" height="30"/>
+        <image name="actionBtn.png" width="24" height="22"/>
+        <image name="cancel.png" width="22" height="22"/>
+        <image name="editBtn.png" width="27" height="25"/>
+        <image name="trash.png" width="22" height="26"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
