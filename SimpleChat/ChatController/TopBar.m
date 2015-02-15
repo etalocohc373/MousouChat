@@ -43,9 +43,10 @@
         self.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
         
         // Default Blue
-        _tintColor = [UIColor colorWithRed:0.142954 green:0.60323 blue:0.862548 alpha:1];
+        //_tintColor = [UIColor colorWithRed:0.142954 green:0.60323 blue:0.862548 alpha:1];
+        _tintColor = [UIColor whiteColor];
         
-        _bgToolbar = [[UIToolbar alloc]init];
+        _bgToolbar = [[UIToolbar alloc] init];
         _bgToolbar.frame = self.bounds;
         _bgToolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         _bgToolbar.backgroundColor = [UIColor blackColor];

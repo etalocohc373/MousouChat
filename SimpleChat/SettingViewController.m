@@ -8,6 +8,7 @@
 
 #import "SettingViewController.h"
 #import "TimeSpecViewController.h"
+#import "NavigationBarTextColor.h"
 #import "KeywordData.h"
 
 @interface SettingViewController ()
@@ -31,7 +32,10 @@
     [super viewDidLoad];
     
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
-    BOOL edit = [store boolForKey:@"editKeyword"];
+    edit = [store boolForKey:@"editKeyword"];
+    
+    [store setBool:NO forKey:@"editKeyword"];
+    [store synchronize];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     
@@ -49,14 +53,28 @@
         _keywordDatas = [[NSKeyedUnarchiver unarchiveObjectWithData:data] mutableCopy];
     }
     
+    [NavigationBarTextColor setNavigationTitleColor:self.navigationItem withString:@"キーワード追加"];
+    
     if(edit){
         KeywordData *keywordData = [[KeywordData alloc] init];
         if(_keywordDatas.count) keywordData = [_keywordDatas objectAtIndex:[store integerForKey:@"selectedrow"]];
         
         self.title = @"キーワード編集";
+        [NavigationBarTextColor setNavigationTitleColor:self.navigationItem withString:@"キーワード編集"];
+        
+        NSDateFormatter *df = [[NSDateFormatter alloc] init];
+        df.dateFormat = @"MM-dd HH:mm";
         
         tf.text = keywordData.keyword;
         tf2.text = keywordData.reply;
+        timeLabel.text = [df stringFromDate:keywordData.sendDate];
+        timeSpec.on = keywordData.setTime;
+        
+        tf.enabled = !timeSpec.on;
+        
+        [store setObject:keywordData.sendDate forKey:@"keywordDate"];
+        [store setBool:keywordData.doRepeat forKey:@"keywordDoRepeat"];
+        [store synchronize];
     }
     
     /*[keyword removeAllObjects];
@@ -118,13 +136,14 @@
 
 -(IBAction)timeSpecChanged{
     if(timeSpec.on && [timeLabel.text isEqualToString:@""]) done.enabled = NO;
-    else [self hantei];
+    else[self hantei];
+    
+    tf.enabled = !timeSpec.on;
 }
 
 -(IBAction)dainyu{
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
-    BOOL edit = [store boolForKey:@"editKeyword"];
-    
+
     BOOL chofuku = NO;
     
     for (int i = 0; i < _keywordDatas.count; i++) {
@@ -134,7 +153,8 @@
     
     if(edit){
 #warning TIME!!!
-        if(chofuku && ![tf.text isEqualToString:[_keywordDatas objectAtIndex:[store integerForKey:@"selectedrow"]]]){
+        if(chofuku && ![tf.text isEqualToString:((KeywordData *)[_keywordDatas objectAtIndex:[store integerForKey:@"selectedrow"]]).keyword]){
+            NSLog(@"keyworddata: %@", [_keywordDatas objectAtIndex:[store integerForKey:@"selectedrow"]]);
             [self showError];
         }else{
             int editRow = (int)[store integerForKey:@"selectedrow"];
@@ -150,6 +170,8 @@
             NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
             NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_keywordDatas];
             [store setObject:data forKey:key];
+            
+            [store setBool:NO forKey:@"editKeyword"];
             [store synchronize];
             
             [self back];
@@ -210,6 +232,10 @@
             [self showError];
         }
     }
+    
+    [store removeObjectForKey:@"keywordDate"];
+    [store removeObjectForKey:@"keywordDoRepeat"];
+    [store synchronize];
 }
 
 -(IBAction)back{

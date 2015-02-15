@@ -43,12 +43,12 @@
         [store setObject:data forKey:key];
     }else{*/
     
-    if([datePicker.date compare:[NSDate date]] != NSOrderedDescending){
+    /*if([datePicker.date compare:[NSDate date]] != NSOrderedDescending){
         [self showError];
         
         NSDate *d = [NSDate dateWithTimeIntervalSinceNow:60 * 5];
         [datePicker setDate:d animated:YES];
-    }
+    }*/
     
     [store setObject:datePicker.date forKey:@"keywordDate"];
     [store synchronize];
@@ -71,10 +71,10 @@
     [store synchronize];
 }
 
--(void)showError{
+/*-(void)showError{
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"設定時刻が不適切です" message:@"現在時刻より後にしてください" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [alert show];
-}
+}*/
 
 
 @end

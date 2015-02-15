@@ -265,7 +265,7 @@
     editPath = indexPath;
     
 #warning Change this to see a custom view
-    RNBlurModalView *modal;
+    //RNBlurModalView *modal;
     
     UIView *view = [self setUpAlertViewForIndexPath:indexPath];
     
@@ -332,6 +332,7 @@
 
 -(void)jumpToTalk{
     NSUserDefaults *store = [NSUserDefaults standardUserDefaults];
+    
     UserData *userData = [_userDatas objectAtIndex:editPath.row];
     
     [store setInteger:editPath.row forKey:@"selecteduser"];
@@ -360,6 +361,8 @@
     _chatController.hidesBottomBarWhenPushed = YES;
     
     [self.navigationController pushViewController:_chatController animated:YES];
+    
+    [modal hide];
 }
 
 -(void)editProfile{
@@ -373,6 +376,8 @@
     
     UIViewController *viewcon = [self.storyboard instantiateViewControllerWithIdentifier:@"profile"];
     [self presentViewController:viewcon animated:YES completion:nil];
+    
+    [modal hide];
 }
 
 -(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{

@@ -24,6 +24,8 @@
     NSIndexPath *deletepath;
     NSIndexPath *editPath;
     
+    RNBlurModalView *modal;
+    
     BOOL searching;
 }
 

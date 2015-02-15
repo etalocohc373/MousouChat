@@ -14,12 +14,14 @@
 
 
 #import "ChatController.h"
+#import "MasterViewController.h"
 #import "MessageCell.h"
 #import "MyMacros.h"
 #import "WSCoachMarksView.h"
 #import "ViewController.h"
 #import "UserData.h"
 #import "KeywordData.h"
+#import "NavigationBarTextColor.h"
 
 #define SCREEN_HEIGHT [[UIScreen mainScreen] applicationFrame].size.height
 #define SCREEN_WIDTH [[UIScreen mainScreen] applicationFrame].size.width
@@ -130,13 +132,17 @@ static int chatInputStartingHeight = 40;
     [super viewDidLoad];
     
     store = [NSUserDefaults standardUserDefaults];
+    
+    
 }
+
 
 - (void) viewWillAppear:(BOOL)animated
 {
     // Add views here, or they will create problems when launching in landscape
     
     [self.view addSubview:_myCollectionView];
+    
     
 
     NSArray *array = [NSArray arrayWithArray:[store objectForKey:@"talks"]];
@@ -147,8 +153,9 @@ static int chatInputStartingHeight = 40;
     
     talkIndex = (int)[array indexOfObject:userData.name];
     
-    self.title = [array objectAtIndex:talkIndex];
+    [NavigationBarTextColor setNavigationTitleColor:self.navigationItem withString:[array objectAtIndex:talkIndex]];
     
+    self.title = [array objectAtIndex:talkIndex];
     
     [store setObject:self.title forKey:@"controllerOpen"];
     [store synchronize];
@@ -206,29 +213,36 @@ static int chatInputStartingHeight = 40;
                 [timeDic removeObjectForKey:[allKeys objectAtIndex:0]];
             }*/
             
-            [self performSelector:@selector(henshin:) withObject:[allKeys objectAtIndex:0] afterDelay:[sendDate timeIntervalSinceDate:[NSDate date]]];
+            BOOL isPast;
+            if([sendDate compare:[NSDate date]] == NSOrderedAscending) isPast = YES;
             
-            NSData *hogedata = (NSData *)[store objectForKey:@"keywordDatas"];
-            NSArray *_keywordDatas = [NSArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:hogedata]];
-            
-            BOOL doRepeat = NO;
-            
-            for (int i = 0; i < _keywordDatas.count; i++) {
-                KeywordData *keywordData = [_keywordDatas objectAtIndex:i];
+            if(!isPast){
+                [self performSelector:@selector(henshin:) withObject:[allKeys objectAtIndex:0] afterDelay:[sendDate timeIntervalSinceDate:[NSDate date]]];
                 
-                if([keywordData.reply isEqualToString:[allKeys objectAtIndex:0]] && [keywordData.sendDate compare:sendDate] == NSOrderedSame) doRepeat = keywordData.doRepeat;
+                NSData *hogedata = (NSData *)[store objectForKey:@"keywordDatas"];
+                NSArray *_keywordDatas = [NSArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:hogedata]];
+                
+                BOOL doRepeat = NO;
+                
+                for (int i = 0; i < _keywordDatas.count; i++) {
+                    KeywordData *keywordData = [_keywordDatas objectAtIndex:i];
+                    
+                    if([keywordData.reply isEqualToString:[allKeys objectAtIndex:0]] && [keywordData.sendDate compare:sendDate] == NSOrderedSame) doRepeat = keywordData.doRepeat;
+                }
+                
+                NSDate *dateClone = [NSDate dateWithTimeInterval:86400 sinceDate:[timeDic objectForKey:[allKeys objectAtIndex:0]]];
+                [timeDic removeObjectForKey:[allKeys objectAtIndex:0]];
+                
+                NSLog(@"keywrdata: %@", _keywordDatas);
+                if(doRepeat) [timeDic setObject:dateClone forKey:[allKeys objectAtIndex:0]];
+                
+                [mar replaceObjectAtIndex:i withObject:timeDic];
+                [dic setObject:mar forKey:userName];
             }
-            
-            NSDate *dateClone = [NSDate dateWithTimeInterval:86400 sinceDate:[timeDic objectForKey:[allKeys objectAtIndex:0]]];
-            [timeDic removeObjectForKey:[allKeys objectAtIndex:0]];
-            
-            NSLog(@"keywrdata: %@", _keywordDatas);
-            if(doRepeat) [timeDic setObject:dateClone forKey:[allKeys objectAtIndex:0]];
-            
-            [mar replaceObjectAtIndex:i withObject:timeDic];
-            [dic setObject:mar forKey:userName];
         }
         
+        
+                
         [store setObject:dic forKey:@"unsentDic"];
         [store synchronize];
     }
@@ -385,9 +399,13 @@ static int chatInputStartingHeight = 40;
     // Currently Inactive
     UIStoryboard *storyBoard = [self.delegate getStoryBoard];
     
-    UINavigationController *gameViewController = [storyBoard instantiateViewControllerWithIdentifier:@"waaaa"];
+    /*UINavigationController *gameViewController = [storyBoard instantiateViewControllerWithIdentifier:@"waaaa"];
     
-    [self presentViewController:gameViewController animated:YES completion:nil];
+    [self presentViewController:gameViewController animated:YES completion:nil];*/
+    
+    MasterViewController *master = [storyBoard instantiateViewControllerWithIdentifier:@"keyword"];
+    
+    [self.navigationController pushViewController:master animated:YES];
 }
 
 #pragma mark ADD NEW MESSAGE

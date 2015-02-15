@@ -19,6 +19,8 @@
     
     NSMutableArray *_keywordDatas;
     NSArray *talks;
+    
+    BOOL edit;
 }
 
 @property(weak,nonatomic) IBOutlet UITextField *tf;

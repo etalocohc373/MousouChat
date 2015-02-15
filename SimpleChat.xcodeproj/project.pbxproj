@@ -27,6 +27,8 @@
 		809B50CF18D814AC0032A48D /* tempUser.png in Resources */ = {isa = PBXBuildFile; fileRef = 809B50CE18D814AC0032A48D /* tempUser.png */; };
 		809B51A618DABBA90032A48D /* License in Resources */ = {isa = PBXBuildFile; fileRef = 809B51A518DABBA90032A48D /* License */; };
 		EC02802019C6C505003C9CAD /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC02801F19C6C505003C9CAD /* AudioToolbox.framework */; };
+		EC03870E1A8604650066B2FA /* NavigationBarTextColor.m in Sources */ = {isa = PBXBuildFile; fileRef = EC03870D1A8604650066B2FA /* NavigationBarTextColor.m */; };
+		EC120FCF1A90531500106DCA /* TestTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC120FCE1A90531500106DCA /* TestTableViewController.m */; };
 		EC18ECA51915D507004B4215 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC18ECA41915D507004B4215 /* SettingViewController.m */; };
 		EC18ECA91915DE48004B4215 /* Previous2.png in Resources */ = {isa = PBXBuildFile; fileRef = EC18ECA81915DE48004B4215 /* Previous2.png */; };
 		EC2EE4DE1A503D4F0096CAA2 /* actionBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = EC2EE4DD1A503D4F0096CAA2 /* actionBtn.png */; };
@@ -125,6 +127,10 @@
 		809B50CE18D814AC0032A48D /* tempUser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tempUser.png; sourceTree = "<group>"; };
 		809B51A518DABBA90032A48D /* License */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License; sourceTree = "<group>"; };
 		EC02801F19C6C505003C9CAD /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		EC03870C1A8604650066B2FA /* NavigationBarTextColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationBarTextColor.h; sourceTree = "<group>"; };
+		EC03870D1A8604650066B2FA /* NavigationBarTextColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationBarTextColor.m; sourceTree = "<group>"; };
+		EC120FCD1A90531500106DCA /* TestTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestTableViewController.h; sourceTree = "<group>"; };
+		EC120FCE1A90531500106DCA /* TestTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestTableViewController.m; sourceTree = "<group>"; };
 		EC18ECA31915D507004B4215 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		EC18ECA41915D507004B4215 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		EC18ECA81915DE48004B4215 /* Previous2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Previous2.png; path = ChatController/Previous2.png; sourceTree = "<group>"; };
@@ -300,6 +306,8 @@
 				ECFFF57A1A45909A00F06F15 /* UserData.m */,
 				EC2EE4E51A516AE40096CAA2 /* KeywordData.h */,
 				EC2EE4E61A516AE40096CAA2 /* KeywordData.m */,
+				EC120FCD1A90531500106DCA /* TestTableViewController.h */,
+				EC120FCE1A90531500106DCA /* TestTableViewController.m */,
 				EC9AC03819E0D4F10098707E /* Launch Screen.xib */,
 				809B508218D7B55B0032A48D /* Images.xcassets */,
 				809B507118D7B55B0032A48D /* Supporting Files */,
@@ -353,6 +361,8 @@
 				809B50C418D80E040032A48D /* MessageCell.m */,
 				809B50C518D80E040032A48D /* MyMacros.h */,
 				809B51A518DABBA90032A48D /* License */,
+				EC03870C1A8604650066B2FA /* NavigationBarTextColor.h */,
+				EC03870D1A8604650066B2FA /* NavigationBarTextColor.m */,
 			);
 			path = ChatController;
 			sourceTree = "<group>";
@@ -576,11 +586,13 @@
 				809B507718D7B55B0032A48D /* main.m in Sources */,
 				EC5C20051A3D6F1F00D4C794 /* TimeSpecViewController.m in Sources */,
 				ECC2ADB6197AA5AB0015CCF5 /* AddTalkViewController.m in Sources */,
+				EC03870E1A8604650066B2FA /* NavigationBarTextColor.m in Sources */,
 				ECFFF57B1A45909A00F06F15 /* UserData.m in Sources */,
 				ECD9E1911A1745C9007EF34F /* RNBlurModalView.m in Sources */,
 				809B50CB18D80E040032A48D /* MessageCell.m in Sources */,
 				ECAC824C19CAEB1800A32514 /* EditFriendViewController.m in Sources */,
 				ECD9E1991A17740B007EF34F /* TalkTableViewCell.m in Sources */,
+				EC120FCF1A90531500106DCA /* TestTableViewController.m in Sources */,
 				EC2EE4E71A516AE40096CAA2 /* KeywordData.m in Sources */,
 				ECD9E1A11A186037007EF34F /* FriendsCell.m in Sources */,
 				ECD9E1A81A187FC1007EF34F /* CustomAlertView.m in Sources */,
