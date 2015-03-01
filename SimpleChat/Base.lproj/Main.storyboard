@@ -732,6 +732,7 @@
                     <connections>
                         <segue destination="a2d-Q5-8mg" kind="relationship" relationship="viewControllers" id="b5Z-28-eDO"/>
                         <segue destination="CkY-Vk-Cwu" kind="relationship" relationship="viewControllers" id="OhB-hZ-1NF"/>
+                        <segue destination="zqt-7i-rf8" kind="relationship" relationship="viewControllers" id="XVc-Ot-ZVy"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="85u-dP-7q8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -756,6 +757,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6t7-6y-R7v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1180" y="10"/>
+        </scene>
+        <!--暇つぶし-->
+        <scene sceneID="ZL3-zQ-0kK">
+            <objects>
+                <viewController id="zqt-7i-rf8" customClass="AdViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y7r-eH-8FS"/>
+                        <viewControllerLayoutGuide type="bottom" id="Gbc-O5-gW4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7zJ-mo-6DO">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="暇つぶし" id="YHb-5I-M0O"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Ad-Wx-mx8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1180" y="647"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="iXD-33-XtE">
@@ -796,7 +816,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="cancel.png" width="25" height="25"/>
+        <image name="cancel.png" width="22" height="22"/>
         <image name="done.png" width="25" height="25"/>
         <image name="friends.png" width="35" height="25"/>
         <image name="savebt.png" width="439" height="108"/>
