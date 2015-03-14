@@ -8,6 +8,7 @@
 
 #import "FriendsViewController.h"
 
+#import "NavigationBarTextColor.h"
 #import "FriendsCell.h"
 #import "CustomAlertView.h"
 
@@ -40,9 +41,7 @@
     //self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
     self.tabBarController.tabBar.barTintColor = [UIColor colorWithRed:0.227 green:0.114 blue:0.369 alpha:1.0];
-    
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.227 green:0.114 blue:0.369 alpha:1.0];
-    
+        
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     searchArray = [NSMutableArray array];
@@ -98,7 +97,7 @@
     
     [self.tableView reloadData];
     
-    [self createNavTitle:[NSString stringWithFormat:@"友だち (%lu人)", (unsigned long)_userDatas.count]];
+    [NavigationBarTextColor setNavigationTitleColor:self.navigationItem withString:[NSString stringWithFormat:@"友だち (%lu人)", (unsigned long)_userDatas.count]];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     

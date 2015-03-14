@@ -9,6 +9,7 @@
 #import "AddUserViewController.h"
 
 #import "UserData.h"
+#import "NavigationBarTextColor.h"
 
 @interface AddUserViewController ()
 
@@ -51,8 +52,7 @@
     
     self.tableView.allowsSelection = NO;
     
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.227 green:0.114 blue:0.369 alpha:1.0];
-    self.title = @"友だち追加";
+    [NavigationBarTextColor setNavigationTitleColor:self.navigationItem withString:@"友だち追加"];
     
     imgView.userInteractionEnabled = YES;
     imgView.image = [UIImage imageNamed:@"pimage.png"];

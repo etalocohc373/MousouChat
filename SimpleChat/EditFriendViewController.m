@@ -9,6 +9,7 @@
 #import "EditFriendViewController.h"
 
 #import "UserData.h"
+#import "NavigationBarTextColor.h"
 
 @interface EditFriendViewController ()
 
@@ -28,13 +29,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.227 green:0.114 blue:0.369 alpha:1.0];
-    
+        
     self.tableView.allowsMultipleSelection = YES;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     self.tableView.separatorColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
+    
+    [NavigationBarTextColor setNavigationTitleColor:self.navigationItem withString:@"プロフィール"];
 }
 
 -(void)viewWillAppear:(BOOL)animated{

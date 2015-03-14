@@ -152,6 +152,7 @@ static int chatInputStartingHeight = 40;
     [NavigationBarTextColor setNavigationTitleColor:self.navigationItem withString:[array objectAtIndex:talkIndex]];
     
     self.title = [array objectAtIndex:talkIndex];
+    [NavigationBarTextColor setNavigationTitleColor:self.navigationItem withString:self.title];
     
     [store setObject:self.title forKey:@"controllerOpen"];
     [store synchronize];

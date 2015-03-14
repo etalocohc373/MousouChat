@@ -39,9 +39,7 @@
     [store synchronize];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
-    
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.227 green:0.114 blue:0.369 alpha:1.0];
-    
+        
     [tf becomeFirstResponder];
     
     talks = [NSArray arrayWithArray:[store objectForKey:@"talks"]];
@@ -60,7 +58,6 @@
         KeywordData *keywordData = [[KeywordData alloc] init];
         if(_keywordDatas.count) keywordData = [_keywordDatas objectAtIndex:[store integerForKey:@"selectedrow"]];
         
-        self.title = @"キーワード編集";
         [NavigationBarTextColor setNavigationTitleColor:self.navigationItem withString:@"キーワード編集"];
         
         NSDateFormatter *df = [[NSDateFormatter alloc] init];
@@ -298,6 +295,38 @@
             [[UIApplication sharedApplication] cancelLocalNotification:row];
         }
     }
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 23)];
+    headerView.backgroundColor = [UIColor colorWithRed:0.92 green:0.92 blue:0.945 alpha:1.0];
+    tableView.sectionHeaderHeight = headerView.frame.size.height;
+    //235 235 241
+    
+    UILabel *label;
+    switch (section) {
+        case 0:
+            label = [[UILabel alloc] initWithFrame:CGRectMake(10, 8, headerView.frame.size.width - 10, 23)];
+            label.text = @"キーワード";
+            break;
+            
+        case 1:
+            label = [[UILabel alloc] initWithFrame:CGRectMake(12, -2, headerView.frame.size.width - 12, 23)];
+            label.text = @"返答";
+            break;
+            
+        default:
+            break;
+    }
+    
+    
+    label.font = [UIFont fontWithName:@"Hiragino Kaku Gothic ProN" size:12.5];
+    label.textColor = [UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:1.0];
+    
+    [headerView addSubview:label];
+    
+    return headerView;
 }
 
 @end

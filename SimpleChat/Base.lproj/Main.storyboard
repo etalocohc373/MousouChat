@@ -430,7 +430,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4XO-c5-o87" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2338" y="-1367"/>
+            <point key="canvasLocation" x="2338" y="-1363"/>
         </scene>
         <!--友だち-->
         <scene sceneID="ypm-g6-f9g">
@@ -555,11 +555,6 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="トーク" image="words.png" id="Jki-R3-47j"/>
                     <navigationItem key="navigationItem" title="トーク" id="kiB-bB-LfL">
-                        <barButtonItem key="leftBarButtonItem" title="編集" id="3Bk-RY-nuz">
-                            <connections>
-                                <action selector="edit" destination="1en-54-erm" id="OZg-Mm-8Xm"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="Rhn-Ii-Pac">
                             <connections>
                                 <segue destination="4Sw-Kv-Sh8" kind="modal" id="TF7-RT-RkE"/>
@@ -598,7 +593,7 @@
                                                 </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="画像" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4s1-N4-CyD">
                                                     <rect key="frame" x="16" y="20" width="81" height="29"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="HiraKakuProN-W3" family="Hiragino Kaku Gothic ProN" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -619,7 +614,7 @@
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="名前" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jKz-aH-yFO">
                                                     <rect key="frame" x="15" y="11" width="34" height="21"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="HiraKakuProN-W3" family="Hiragino Kaku Gothic ProN" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -661,7 +656,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="プロフィール変更" id="weI-DW-uei">
-                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="ZHs-wR-Xvo">
+                        <barButtonItem key="leftBarButtonItem" image="cancel.png" style="plain" id="ZHs-wR-Xvo">
                             <connections>
                                 <action selector="dismiss" destination="fRX-zI-Bgn" id="hSv-fy-clJ"/>
                             </connections>
@@ -732,7 +727,7 @@
                     <connections>
                         <segue destination="a2d-Q5-8mg" kind="relationship" relationship="viewControllers" id="b5Z-28-eDO"/>
                         <segue destination="CkY-Vk-Cwu" kind="relationship" relationship="viewControllers" id="OhB-hZ-1NF"/>
-                        <segue destination="zqt-7i-rf8" kind="relationship" relationship="viewControllers" id="XVc-Ot-ZVy"/>
+                        <segue destination="Pco-3S-13Z" kind="relationship" relationship="viewControllers" id="XVc-Ot-ZVy"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="85u-dP-7q8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -758,7 +753,7 @@
             </objects>
             <point key="canvasLocation" x="1180" y="10"/>
         </scene>
-        <!--暇つぶし-->
+        <!--その他-->
         <scene sceneID="ZL3-zQ-0kK">
             <objects>
                 <viewController id="zqt-7i-rf8" customClass="AdViewController" sceneMemberID="viewController">
@@ -769,13 +764,85 @@
                     <view key="view" contentMode="scaleToFill" id="7zJ-mo-6DO">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XwA-xT-kSO">
+                                <rect key="frame" x="0.0" y="64" width="106" height="100"/>
+                                <state key="normal" title="友だち追加">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="1dA-Ul-KrY" kind="modal" id="PFR-AW-y7W"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v9i-eD-fw7">
+                                <rect key="frame" x="107" y="64" width="106" height="100"/>
+                                <state key="normal" title="Ad">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showAd" destination="zqt-7i-rf8" eventType="touchUpInside" id="sye-DE-cK5"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g9H-kp-tWM">
+                                <rect key="frame" x="0.0" y="280" width="106" height="100"/>
+                                <state key="normal" title="Ad">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ly5-IK-5k1">
+                                <rect key="frame" x="107" y="280" width="106" height="100"/>
+                                <state key="normal" title="Ad">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="loe-Om-8ha">
+                                <rect key="frame" x="214" y="64" width="106" height="100"/>
+                                <state key="normal" title="設定">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cDI-qf-ZG9">
+                                <rect key="frame" x="0.0" y="172" width="106" height="100"/>
+                                <state key="normal" title="Facebook">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="makeShare" destination="zqt-7i-rf8" eventType="touchUpInside" id="ECv-bl-5qT"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FbZ-FA-3Ue">
+                                <rect key="frame" x="107" y="172" width="106" height="100"/>
+                                <state key="normal" title="Twitter">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="makeTweet" destination="zqt-7i-rf8" eventType="touchUpInside" id="DHj-GM-bWr"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IYb-x6-6kS">
+                                <rect key="frame" x="214" y="172" width="106" height="100"/>
+                                <state key="normal" title="LINE">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="makeLine" destination="zqt-7i-rf8" eventType="touchUpInside" id="B2a-qj-VYH"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pen-yY-0gT">
+                                <rect key="frame" x="214" y="280" width="106" height="100"/>
+                                <state key="normal" title="Ad">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="暇つぶし" id="YHb-5I-M0O"/>
+                    <navigationItem key="navigationItem" title="その他" id="bX3-YH-kyu"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Ad-Wx-mx8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1180" y="647"/>
+            <point key="canvasLocation" x="1567" y="671"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="iXD-33-XtE">
@@ -814,6 +881,25 @@
             </objects>
             <point key="canvasLocation" x="2702" y="10"/>
         </scene>
+        <!--その他-->
+        <scene sceneID="UsO-TY-Ch3">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Pco-3S-13Z" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="その他" id="YHb-5I-M0O"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ngq-oz-TDW">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="zqt-7i-rf8" kind="relationship" relationship="rootViewController" id="te0-Aq-0wd"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3vw-hv-xjf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1180" y="671"/>
+        </scene>
     </scenes>
     <resources>
         <image name="cancel.png" width="22" height="22"/>
@@ -827,4 +913,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="PFR-AW-y7W"/>
+    </inferredMetricsTieBreakers>
 </document>

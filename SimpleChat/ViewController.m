@@ -14,6 +14,7 @@
 #import "WSCoachMarksView.h"
 #import "UserData.h"
 #import "KeywordData.h"
+#import "NavigationBarTextColor.h"
 
 #define SCREEN_HEIGHT [UIScreen mainScreen].applicationFrame.size.height
 
@@ -29,6 +30,16 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     [self back];
+    [NavigationBarTextColor setNavigationTitleColor:self.navigationItem withString:@"トーク"];
+    
+    UIBarButtonItem *editBtn = [[UIBarButtonItem alloc] initWithTitle:@"編集" style:UIBarButtonItemStylePlain target:self action:@selector(edit)];
+    [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"Hiragino Kaku Gothic ProN" size:16]} forState:UIControlStateNormal];
+    self.navigationItem.leftBarButtonItem = editBtn;
+    
+    tv.separatorInset = UIEdgeInsetsZero;
+    if ([tv respondsToSelector:@selector(layoutMargins)]) {
+        tv.layoutMargins = UIEdgeInsetsZero;
+    }
     
     NSLog(@"%@", self);
 }
@@ -69,7 +80,6 @@
         notReadRows = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"notReadRows"]];
     
     tv.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    
 }
 
 /*- (void) handleTap:(UITapGestureRecognizer *)tap {
@@ -105,9 +115,7 @@
     tv.bounces = NO;
     //tv.separatorColor = [UIColor colorWithRed:0.01 green:0.01 blue:0.01 alpha:1.0];
     tv.separatorColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
-    
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.227 green:0.114 blue:0.369 alpha:1.0];
-    
+        
     searchArray = [NSMutableArray array];
     searchArrayImg = [NSMutableArray array];
     
@@ -121,7 +129,7 @@
     [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
     [UINavigationBar appearance].tintColor = [UIColor whiteColor];
     
-    [self createNavTitle:@"トーク"];
+    [NavigationBarTextColor setNavigationTitleColor:self.navigationItem withString:@"トーク"];
     
     UINib *nib = [UINib nibWithNibName:@"TalkTableViewCell" bundle:nil];
     [tv registerNib:nib forCellReuseIdentifier:@"Cell"];
@@ -131,7 +139,7 @@
     if([self isFirstRun]) [self activateTutorial];
 }
 
--(IBAction)edit{
+-(void)edit{
     if(tv.editing) [tv setEditing:NO animated:YES];
     else [tv setEditing:YES animated:YES];
 }
@@ -286,6 +294,13 @@
             }
         }
     }
+    
+    //線を左端まで
+    cell.separatorInset = UIEdgeInsetsZero;
+    if ([cell respondsToSelector:@selector(layoutMargins)]) {
+        cell.layoutMargins = UIEdgeInsetsZero;
+    }
+    //ここまで
     
     /*//重複ラベルの消去
      for (UILabel *subview in [cell.contentView subviews]) [subview removeFromSuperview];
@@ -446,17 +461,6 @@
     
     search.showsCancelButton = NO;
     [search resignFirstResponder];
-}
-
--(void)createNavTitle:(NSString *)title{
-    UILabel* tLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];
-    tLabel.text = title;
-    tLabel.textColor = [UIColor whiteColor];
-    tLabel.backgroundColor = [UIColor clearColor];
-    tLabel.textAlignment = NSTextAlignmentCenter;
-    tLabel.adjustsFontSizeToFitWidth = YES;
-    tLabel.font = [UIFont fontWithName:@"MS ゴシック" size:17];
-    self.navigationItem.titleView = tLabel;
 }
 
 - (BOOL)isFirstRun

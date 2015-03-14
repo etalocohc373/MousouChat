@@ -8,6 +8,7 @@
 
 #import "TimeSpecViewController.h"
 #import "KeywordData.h"
+#import "NavigationBarTextColor.h"
 
 @interface TimeSpecViewController ()
 
@@ -21,6 +22,8 @@
     NSDate *d = [NSDate dateWithTimeIntervalSinceNow:60 * 5];
     [datePicker setDate:d animated:NO];
     [self dateChanged];
+    
+    [NavigationBarTextColor setNavigationTitleColor:self.navigationItem withString:@"時間指定"];
 }
 
 - (void)didReceiveMemoryWarning {

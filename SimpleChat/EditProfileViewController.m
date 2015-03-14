@@ -9,6 +9,7 @@
 #import "EditProfileViewController.h"
 
 #import "UserData.h"
+#import "NavigationBarTextColor.h"
 
 @interface EditProfileViewController ()
 
@@ -29,6 +30,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    [NavigationBarTextColor setNavigationTitleColor:self.navigationItem withString:@"プロフィール"];
 }
 
 -(void)viewWillAppear:(BOOL)animated{

@@ -51,7 +51,6 @@
     
     [NavigationBarTextColor setNavigationTitleColor:self.navigationItem withString:@"キーワード設定"];
     
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.227 green:0.114 blue:0.369 alpha:1.0];
     
     back = [[UIBarButtonItem alloc] initWithTitle:@"＜" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     self.navigationItem.leftBarButtonItem = back;

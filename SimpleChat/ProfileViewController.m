@@ -9,6 +9,7 @@
 #import "ProfileViewController.h"
 
 #import "UserData.h"
+#import "NavigationBarTextColor.h"
 
 @interface ProfileViewController ()
 
@@ -20,7 +21,7 @@
 {
     [super viewDidLoad];
     
-    [self createNavTitle:@"プロフィール"];
+    [NavigationBarTextColor setNavigationTitleColor:self.navigationItem withString:@"プロフィール"];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -54,7 +55,6 @@
         about.text = userData.intro;
     }
     
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.227 green:0.114 blue:0.369 alpha:1.0];
     
     [self save];
 }
@@ -161,17 +161,6 @@
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
--(void)createNavTitle:(NSString *)title{
-    UILabel* tLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 40)];
-    tLabel.text = title;
-    tLabel.textColor = [UIColor whiteColor];
-    tLabel.backgroundColor = [UIColor clearColor];
-    tLabel.textAlignment = NSTextAlignmentCenter;
-    tLabel.adjustsFontSizeToFitWidth = YES;
-    tLabel.font = [UIFont fontWithName:@"MS Gothic" size:19];
-    self.navigationItem.titleView = tLabel;
 }
 
 @end
