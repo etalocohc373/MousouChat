@@ -398,13 +398,15 @@ static int chatInputStartingHeight = 40;
 
 - (void) topRightPressed {
     // Currently Inactive
-    UIStoryboard *storyBoard = [self.delegate getStoryBoard];
+    //UIStoryboard *storyBoard = [self.delegate getStoryBoard];
     
     /*UINavigationController *gameViewController = [storyBoard instantiateViewControllerWithIdentifier:@"waaaa"];
     
     [self presentViewController:gameViewController animated:YES completion:nil];*/
     
-    MasterViewController *master = [storyBoard instantiateViewControllerWithIdentifier:@"keyword"];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    MasterViewController *master = [storyboard instantiateViewControllerWithIdentifier:@"keyword"];
     
     [self.navigationController pushViewController:master animated:YES];
 }
