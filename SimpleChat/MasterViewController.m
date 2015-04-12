@@ -53,7 +53,7 @@
     
     
     back = [[UIBarButtonItem alloc] initWithTitle:@"＜" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    self.navigationItem.leftBarButtonItem = back;
+    //self.navigationItem.leftBarButtonItem = back;
     
     /*
     NSMutableArray *items = [NSMutableArray array];
@@ -74,6 +74,11 @@
     tv.delegate = self;
     tv.dataSource = self;
     tv.rowHeight = 50.0;
+    
+    tv.separatorInset = UIEdgeInsetsZero;
+    if ([tv respondsToSelector:@selector(layoutMargins)]) {
+        tv.layoutMargins = UIEdgeInsetsZero;
+    }
     
     UINib *nib = [UINib nibWithNibName:@"KeywordsCell" bundle:nil];
     [tv registerNib:nib forCellReuseIdentifier:@"Cell"];
@@ -147,6 +152,11 @@
     if(!cell) cell = [[KeywordsCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
     
     cell.delegate = (id<KeywordsCellDelegate>)self;
+    
+    cell.separatorInset = UIEdgeInsetsZero;
+    if ([cell respondsToSelector:@selector(layoutMargins)]) {
+        cell.layoutMargins = UIEdgeInsetsZero;
+    }
     
     KeywordData *keywordData = [_keywordDatas objectAtIndex:indexPath.row];
     

@@ -69,11 +69,9 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-    if (selected){
-        _keywordLabel.textColor = [UIColor whiteColor];
-    }else{
-        _keywordLabel.textColor = [UIColor blackColor];
-    }
+    
+    if (selected) _keywordLabel.textColor = [UIColor whiteColor];
+    else _keywordLabel.textColor = [UIColor blackColor];
 }
 
 @end

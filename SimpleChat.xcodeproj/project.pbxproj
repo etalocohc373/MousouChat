@@ -315,11 +315,11 @@
 			children = (
 				ECC2ADBA197B8BC10015CCF5 /* APJapanesefont.ttf */,
 				ECD9E0F91A14E821007EF34F /* KozGoPro-Medium.otf */,
+				809B507918D7B55B0032A48D /* AppDelegate.h */,
+				809B507A18D7B55B0032A48D /* AppDelegate.m */,
 				809B50BE18D80E040032A48D /* ChatController */,
 				EC6800D51917ADB400DEE8CF /* images */,
 				ECD9E16E1A174500007EF34F /* RNBlurModalExample */,
-				809B507918D7B55B0032A48D /* AppDelegate.h */,
-				809B507A18D7B55B0032A48D /* AppDelegate.m */,
 				809B507C18D7B55B0032A48D /* Main.storyboard */,
 				ECD9E19D1A186008007EF34F /* FriendsTableViewController */,
 				ECF3657819171928002EFD3A /* AddUserViewController.h */,

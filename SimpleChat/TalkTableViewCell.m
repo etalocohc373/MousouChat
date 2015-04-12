@@ -25,4 +25,9 @@
     return 70.0f;
 }
 
+- (UIEdgeInsets)layoutMargins
+{
+    return UIEdgeInsetsZero;
+}
+
 @end

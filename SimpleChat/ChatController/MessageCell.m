@@ -233,7 +233,7 @@ static int minimumHeight = 30;
         
         NSArray *array = [NSArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"talks"]];
         _nameLabel.text = [array objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"selecteduser"]];
-        _nameLabel.frame = CGRectMake(_imageView.frame.origin.x+minimumHeight+5, 0, _bgLabel.frame.size.width + 10, 13);
+        _nameLabel.frame = CGRectMake(_imageView.frame.origin.x + minimumHeight + 5, 0, _bgLabel.frame.size.width + 10, 13);
     }
     
     // Add image if we have one

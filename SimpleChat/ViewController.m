@@ -35,11 +35,7 @@
     UIBarButtonItem *editBtn = [[UIBarButtonItem alloc] initWithTitle:@"編集" style:UIBarButtonItemStylePlain target:self action:@selector(edit)];
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"Hiragino Kaku Gothic ProN" size:16]} forState:UIControlStateNormal];
     self.navigationItem.leftBarButtonItem = editBtn;
-    
-    tv.separatorInset = UIEdgeInsetsZero;
-    if ([tv respondsToSelector:@selector(layoutMargins)]) {
-        tv.layoutMargins = UIEdgeInsetsZero;
-    }
+
     
     NSLog(@"%@", self);
 }
@@ -295,13 +291,6 @@
         }
     }
     
-    //線を左端まで
-    cell.separatorInset = UIEdgeInsetsZero;
-    if ([cell respondsToSelector:@selector(layoutMargins)]) {
-        cell.layoutMargins = UIEdgeInsetsZero;
-    }
-    //ここまで
-    
     /*//重複ラベルの消去
      for (UILabel *subview in [cell.contentView subviews]) [subview removeFromSuperview];
      
@@ -352,7 +341,7 @@
     
     cell.introLabel.text = dic[@"content"];
     
-    if(!cell.introLabel.text) cell.introLabel.text = @"トーク内容がまだありません";
+    if(!cell.introLabel.text) cell.introLabel.text = @"トークがまだありません";
     
     //日付比較
     NSDateFormatter *df = [[NSDateFormatter alloc]init];
