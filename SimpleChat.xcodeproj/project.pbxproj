@@ -340,10 +340,6 @@
 				EC5C20041A3D6F1F00D4C794 /* TimeSpecViewController.m */,
 				EC8877F41A98A0D30055E9E3 /* AdViewController.h */,
 				EC8877F51A98A0D30055E9E3 /* AdViewController.m */,
-				ECFFF5791A45909A00F06F15 /* UserData.h */,
-				ECFFF57A1A45909A00F06F15 /* UserData.m */,
-				EC2EE4E51A516AE40096CAA2 /* KeywordData.h */,
-				EC2EE4E61A516AE40096CAA2 /* KeywordData.m */,
 				EC9AC03819E0D4F10098707E /* Launch Screen.xib */,
 				809B508218D7B55B0032A48D /* Images.xcassets */,
 				809B507118D7B55B0032A48D /* Supporting Files */,
@@ -354,6 +350,10 @@
 		809B507118D7B55B0032A48D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				ECFFF5791A45909A00F06F15 /* UserData.h */,
+				ECFFF57A1A45909A00F06F15 /* UserData.m */,
+				EC2EE4E51A516AE40096CAA2 /* KeywordData.h */,
+				EC2EE4E61A516AE40096CAA2 /* KeywordData.m */,
 				ECF3658019177D6B002EFD3A /* CoreImageHelper.h */,
 				ECF3658119177D6B002EFD3A /* CoreImageHelper.m */,
 				EC6800DA1917B3EF00DEE8CF /* TouchableTableView.h */,

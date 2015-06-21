@@ -113,6 +113,9 @@
                                                      name:UIKeyboardWillHideNotification
                                                    object:nil];
     
+        
+        NSNumber *hoge = [NSNumber numberWithInt:15];
+        //_maxCharacters = hoge;
     }
     
     return self;
@@ -249,7 +252,6 @@
 }
 
 - (BOOL) textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    
     if (_maxCharacters) {
         return textView.text.length + (text.length - range.length) <= _maxCharacters.intValue;
     }
@@ -261,6 +263,23 @@
         _placeholderLabel.hidden = NO;
     }
 }
+
+/*- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    int maxInputLength = 15;
+    
+    // 入力済みのテキストを取得
+    NSMutableString *str = [textView.text mutableCopy];
+    
+    // 入力済みのテキストと入力が行われたテキストを結合
+    [str replaceCharactersInRange:range withString:text];
+    
+    if ([str length] > maxInputLength)
+        return NO;
+    
+    
+    return YES;
+}*/
 
 #pragma mark TEXT VIEW RESIZE | ALIGN
 
@@ -437,9 +456,11 @@
 - (void) willRotate {
     isAnimatingRotation = YES;
 }
+
 - (void) isRotating {
     if (!isKeyboardVisible) [self resizeView];
 }
+
 - (void) didRotate {
     isAnimatingRotation = NO;
     // clean it up now that we're done!

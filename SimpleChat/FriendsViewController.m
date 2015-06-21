@@ -7,6 +7,7 @@
 //
 
 #import "FriendsViewController.h"
+#import "ViewController.h"
 
 #import "NavigationBarTextColor.h"
 #import "FriendsCell.h"
@@ -354,7 +355,9 @@
     [store synchronize];
     
     if (!_chatController) _chatController = [ChatController new];
-    _chatController.delegate = (id<ChatControllerDelegate>)self;
+    
+    ViewController *viewCon = [[ViewController alloc] init];
+    _chatController.delegate = (id<ChatControllerDelegate>)viewCon;
     _chatController.opponentImg = [[UIImage alloc] initWithData:userData.image];
     
     _chatController.hidesBottomBarWhenPushed = YES;

@@ -35,9 +35,6 @@
     UIBarButtonItem *editBtn = [[UIBarButtonItem alloc] initWithTitle:@"編集" style:UIBarButtonItemStylePlain target:self action:@selector(edit)];
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"Hiragino Kaku Gothic ProN" size:16]} forState:UIControlStateNormal];
     self.navigationItem.leftBarButtonItem = editBtn;
-
-    
-    NSLog(@"%@", self);
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -160,7 +157,6 @@
     
     //既読遅れ
     float kidokuDelay = arc4random()% 5 + 5;
-    NSLog(@"delay: %.0f", kidokuDelay);
     
     [store setFloat:kidokuDelay forKey:@"kidokuDelay"];
     [store synchronize];
@@ -169,12 +165,19 @@
     message[kMessageRuntimeSentBy] = @"0";
     
     // Must add message to controller for it to show
-    [_chatController addNewMessage:message];
+    id delegate = chatController;
+    
+    //self.delegate = viewController;
+    
+    if ([delegate respondsToSelector:@selector(addNewMessage:)]) {
+        [delegate addNewMessage:message];
+    }
     
     NSString *str = message[@"content"];
     
     NSString *key = [NSString stringWithFormat:@"keywords%@", [talks objectAtIndex:[store integerForKey:@"selecteduser"]]];
     _keywordDatas = [NSArray array];
+    
     if([store objectForKey:key]){
         NSData *data = (NSData *)[store objectForKey:key];
         _keywordDatas = [NSKeyedUnarchiver unarchiveObjectWithData:data];

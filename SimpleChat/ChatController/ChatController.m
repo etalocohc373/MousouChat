@@ -354,11 +354,13 @@ static int chatInputStartingHeight = 40;
     // Help Animation
     [_chatInput willRotate];
 }
+
 - (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [_chatInput isRotating];
     _myCollectionView.frame = (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) ? CGRectMake(0, 0, ScreenHeight(), ScreenWidth() - height(_chatInput)) : CGRectMake(0, 0, ScreenWidth(), ScreenHeight() - chatInputStartingHeight);
     [_myCollectionView reloadData];
 }
+
 - (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [_chatInput didRotate];
     [self scrollToBottom];
@@ -372,7 +374,14 @@ static int chatInputStartingHeight = 40;
     newMessageOb[kMessageContent] = messageString;
     newMessageOb[kMessageTimestamp] = TimeStamp();
     
+    
+    ViewController *viewController = [[ViewController alloc] init];
+    _delegate = viewController;
+     
+    //self.delegate = viewController;
+    
     if ([(NSObject *)_delegate respondsToSelector:@selector(chatController:didSendMessage:)]) {
+        NSLog(@"delegate: %@", self.delegate );
         [_delegate chatController:self didSendMessage:newMessageOb];
     }
     else {

@@ -39,6 +39,7 @@
     [store synchronize];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    self.tableView.allowsSelection = NO;
         
     [tf becomeFirstResponder];
     
@@ -119,6 +120,15 @@
             break;
     }
 }
+
+/*-(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"index: %@", indexPath);
+    if ([indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:2]])
+        return indexPath;
+    else
+        return indexPath;
+}*/
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:NO];

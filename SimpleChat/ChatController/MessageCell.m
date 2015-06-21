@@ -57,7 +57,7 @@ static int minimumHeight = 30;
 @property (strong, nonatomic) UILabel *nameLabel;
 @property (strong, nonatomic) UILabel *textLabel;
 @property (strong, nonatomic) UILabel *bgLabel;
-@property (strong, nonatomic) UILabel *readLabel;
+//@property (strong, nonatomic) UILabel *readLabel;
 @property (strong, nonatomic) UILabel *timeLabel;
 @property (strong, nonatomic) UIImageView *imageView;
 
@@ -118,7 +118,7 @@ static int minimumHeight = 30;
             [self.contentView addSubview:_timeLabel];
         }
         
-        if(!_readLabel) {
+        /*if(!_readLabel) {
             _readLabel = [UILabel new];
             // _readLabel.frame = CGRectMake(_textLabel.center.x - (_textLabel.bounds.size.width / 2 + 40), _textLabel.bounds.size.height / 2, 25, _textLabel.bounds.size.height / 2);
             _readLabel.text = @"既読";
@@ -127,7 +127,7 @@ static int minimumHeight = 30;
             _readLabel.numberOfLines = 1;
             _readLabel.hidden = YES;
             [self.contentView addSubview:_readLabel];
-        }
+        }*/
     }
     
     //FIXME: [NSObject cancelPreviousPerformRequestsWithTarget:nil selector:@selector(makeReadLabel) object:nil];
@@ -143,10 +143,10 @@ static int minimumHeight = 30;
     //NSLog(@"%@", _message[kMessageRuntimeSentBy]);
     if([_message[kMessageRuntimeSentBy] isEqualToString:@"0"]) {
         
-        if(!_readLabel.frame.size.width) _readLabel.frame = CGRectMake(_timeLabel.frame.origin.x, 0, 40, _timeLabel.frame.size.height);
+        /*if(!_readLabel.frame.size.width) _readLabel.frame = CGRectMake(_timeLabel.frame.origin.x, 0, 40, _timeLabel.frame.size.height);
         
         //[self.contentView addSubview:_readLabel];
-        _readLabel.hidden = NO;
+        _readLabel.hidden = NO;*/
     }
 }
 
@@ -256,14 +256,14 @@ static int minimumHeight = 30;
         
         _timeLabel.frame = CGRectMake(_textLabel.center.x - (_textLabel.bounds.size.width / 2 + 40), _textLabel.bounds.size.height / 2, 30, _textLabel.bounds.size.height / 2);
         
-        _readLabel.frame = CGRectMake(_timeLabel.frame.origin.x, _timeLabel.frame.origin.y - _timeLabel.frame.size.height, 30, _timeLabel.frame.size.height);
+        //_readLabel.frame = CGRectMake(_timeLabel.frame.origin.x, _timeLabel.frame.origin.y - _timeLabel.frame.size.height, 30, _timeLabel.frame.size.height);
     }
     else {
         _textLabel.frame = CGRectMake(_bgLabel.frame.origin.x + (outlineSpace / 2), 15, _bgLabel.bounds.size.width - outlineSpace, _bgLabel.bounds.size.height);
         
         _timeLabel.frame = CGRectMake(_textLabel.center.x + (_textLabel.bounds.size.width / 2 + 15), _textLabel.bounds.size.height / 2, 30, _textLabel.bounds.size.height / 2);
         
-        _readLabel.frame = CGRectMake(_timeLabel.frame.origin.x, _timeLabel.frame.origin.y - _timeLabel.frame.size.height, 30, _timeLabel.frame.size.height);
+        //_readLabel.frame = CGRectMake(_timeLabel.frame.origin.x, _timeLabel.frame.origin.y - _timeLabel.frame.size.height, 30, _timeLabel.frame.size.height);
         
     }
     
